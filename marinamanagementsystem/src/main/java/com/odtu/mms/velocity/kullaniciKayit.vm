@@ -1,0 +1,8 @@
+<span>${sayinLabel} : ${adSoyad} </span><br/>
+<br/>
+<font color="Blue" size="3"> RoyalCert </font> ${kullaniciGirisTitle} <br/><br>
+${kullaniciAdiLabel}        :<font color="blue">${kullaniciAdi}</font><br>
+${parolaLabel}        		:<font color="blue">${parola}</font><br>
+${appLabel} <a href="${uygulamaAdresi}"><font color="blue">${tiklayiniz}</font></a><br><br>
+
+                         
