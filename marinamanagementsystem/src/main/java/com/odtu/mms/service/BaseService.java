@@ -229,7 +229,7 @@ public class BaseService {
 		
 		String sql =	" select * " +
 						" from Kullanici k " +
-						" where kullanici.id="+id;
+						" where k.id="+id;
 		
 		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sql);
 		query.addEntity("k", Kullanici.class);

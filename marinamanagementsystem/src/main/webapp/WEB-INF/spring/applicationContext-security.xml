@@ -26,10 +26,10 @@
 		<intercept-url pattern="/font/**" filters="none" />
 		<intercept-url pattern="/**" access="isAuthenticated()" />
 		
-		<form-login login-page="/views/loginDiger.htm"
-			authentication-failure-url="/views/loginDiger.htm?login_error=1"
+		<form-login login-page="/views/login.htm"
+			authentication-failure-url="/views/login.htm?login_error=1"
 			default-target-url="/views/yonlendir.htm" />
-		<logout logout-url="/views/logout.htm" invalidate-session="true" logout-success-url="/views/loginDiger.htm" />
+		<logout logout-url="/views/logout.htm" invalidate-session="true" logout-success-url="/views/login.htm" />
 	</http>
 
   	<beans:bean id="concurrencyFilter" class="org.springframework.security.web.session.ConcurrentSessionFilter">
