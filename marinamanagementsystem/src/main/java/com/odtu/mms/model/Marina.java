@@ -31,7 +31,7 @@ public class Marina extends BaseModel implements Serializable{
 	@Type(type = "org.hibernate.type.NumericBooleanType")
 	private Boolean status;
 
-	@JsonIgnore
+//	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="location_id")
 	private Location location;
