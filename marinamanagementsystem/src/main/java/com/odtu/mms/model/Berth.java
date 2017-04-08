@@ -29,12 +29,12 @@ public class Berth extends BaseModel implements Serializable{
 	 */
 	private static final long serialVersionUID = 6856029243937739896L;
 
-	@JsonIgnore
+//	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="berth_type_id")
 	private BerthType berthType;
 
-	@JsonIgnore
+//	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="marina_id")
 	private Marina marina;
@@ -71,6 +71,14 @@ public class Berth extends BaseModel implements Serializable{
 	@ManyToMany(targetEntity = Service.class, fetch = FetchType.EAGER,cascade=CascadeType.ALL)
 	@JoinTable(name = "berth_service", joinColumns = @JoinColumn(name = "berth_id"), inverseJoinColumns = @JoinColumn(name = "service_id"))
 	private List<Service> roller = new ArrayList<Service>();
+
+	@Column(name = "latitude", columnDefinition="text")
+	@Type(type = "org.hibernate.type.TextType")
+	private String latitude="";
+
+	@Column(name = "longitude", columnDefinition="text")
+	@Type(type = "org.hibernate.type.TextType")
+	private String longitude="";
 
 	public BerthType getBerthType() {
 		return berthType;
@@ -166,6 +174,22 @@ public class Berth extends BaseModel implements Serializable{
 
 	public void setRoller(List<Service> roller) {
 		this.roller = roller;
+	}
+
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
 	}
 
 }
