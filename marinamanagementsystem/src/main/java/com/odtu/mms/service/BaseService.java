@@ -26,9 +26,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.odtu.mms.model.Berth;
 import com.odtu.mms.model.Kullanici;
+import com.odtu.mms.model.Marina;
 import com.odtu.mms.model.Person;
 import com.odtu.mms.model.Role;
+import com.odtu.mms.util.Constant;
 
 @Service("baseService")
 @Transactional
@@ -276,6 +279,23 @@ public class BaseService {
 			return false;
 		return true;
 				
+	}
+	
+	public List<Berth> listBerthByMarina(Marina marina){
+		
+		String sql = 	" select * " + 
+						" from "+Constant.SCHEMA_ADI+".berth b " + 
+						" where b.marina_id :=marinaid" + 
+						" ";
+		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sql);
+		
+		query.setLong("marinaid", marina.getId());
+		query.addEntity("b", Berth.class);
+		List<Berth> list = query.list();
+		
+		if(list != null && !list.isEmpty())
+			return list;
+		return null;
 	}
 	
 }
