@@ -281,15 +281,15 @@ public class BaseService {
 				
 	}
 	
-	public List<Berth> listBerthByMarina(Marina marina){
+	public List<Berth> listBerthByMarinaId(Long marinaid){
 		
 		String sql = 	" select * " + 
 						" from "+Constant.SCHEMA_ADI+".berth b " + 
-						" where b.marina_id :=marinaid" + 
+						" where b.marina_id =:marinaid" + 
 						" ";
 		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sql);
 		
-		query.setLong("marinaid", marina.getId());
+		query.setLong("marinaid", marinaid);
 		query.addEntity("b", Berth.class);
 		List<Berth> list = query.list();
 		
