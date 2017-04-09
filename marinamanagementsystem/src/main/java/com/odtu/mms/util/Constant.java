@@ -47,6 +47,6 @@ public class Constant {
 
 //	public final static String SCHEMA_ADI="royalcert";// eğer deneme yapılacaksa 
 //	public final static String SCHEMA_ADI="SBUP_DB";
-	public final static String UYGULAMA_ADRESI="http://localhost:8080/marinamanagementsystem/";
+	public final static String UYGULAMA_ADRESI="http://localhost:9090/marinamanagementsystem/";
 	public final static String SCHEMA_ADI="dbo";
 }

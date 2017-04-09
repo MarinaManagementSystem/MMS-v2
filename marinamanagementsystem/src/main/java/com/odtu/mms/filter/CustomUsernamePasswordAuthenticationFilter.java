@@ -8,7 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
-public class CustomUsernamePasswordAuthenticationFilter extends  UsernamePasswordAuthenticationFilter{
+public class CustomUsernamePasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter{
 	
 	public CustomUsernamePasswordAuthenticationFilter(){
 		super();
@@ -26,7 +26,7 @@ public class CustomUsernamePasswordAuthenticationFilter extends  UsernamePasswor
 			
 			return auth;
 		}catch (BadCredentialsException e) {
-			throw new BadCredentialsException("Kullanýcý Adý veya Parola Hatalý");
+			throw new BadCredentialsException("Kullanï¿½cï¿½ Adï¿½ veya Parola Hatalï¿½");
 		}
      	
 	}

@@ -93,6 +93,6 @@ public class RegisterController {
 			TemplateMailCreator.sendKullaniciKayit(kullanici, messageSource);
 		}
 		
-		return "redirect:loginDiger.htm";
+		return "redirect:login.htm";
 	}
 }

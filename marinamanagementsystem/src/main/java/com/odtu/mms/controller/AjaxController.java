@@ -31,7 +31,7 @@ import com.odtu.mms.util.MyUser;
 import mva.util.MVAUtil;
 
 @Controller
-@RequestMapping(value="/pages")
+@RequestMapping(value="/views")
 public class AjaxController {
 
 	@Resource(name = "baseService")
