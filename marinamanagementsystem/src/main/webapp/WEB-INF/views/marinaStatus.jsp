@@ -29,7 +29,7 @@
         var mapOptions = {
             //give latitude and long
             //40.977206, 29.036826
-            center: new google.maps.LatLng("40.974266", "29.036588"),
+            center: new google.maps.LatLng("40.974262", "29.036456"),
             zoom: 15,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
@@ -37,11 +37,10 @@
         var infoWindow = new google.maps.InfoWindow();
         var map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
 
-        
-        var locations = [
-        	{lat: ${listBerth.get(0).latitude}, lng: ${listBerth.get(0).longitude}},
-        	{lat: 40.976021, lng: 29.038989}
-        	];
+        var locations = [];
+        <c:forEach items="${listBerth}" var="berth">
+        		locations.push({lat: ${berth.latitude}, lng: ${berth.longitude}});
+        </c:forEach>
         
         
         var markers = locations.map(function(location, i) {
@@ -54,12 +53,15 @@
         var markerCluster = new MarkerClusterer(map, markers,
                 {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
         
-       	
-        google.maps.event.addListener(markers, 'click', function () {
-            var markerContent = "marker <strong>content</strong> <span style=\"font-size: 30px;\">here</span>";
-            infoWindow.setContent(markerContent);
-            infoWindow.open(map, this);
-        });
+
+        for (i = 0; i < markers.length; i++)
+       	{
+       		google.maps.event.addListener(markers[i], 'click', function () {
+                var markerContent = "marker <strong>content</strong> <span style=\"font-size: 30px;\">here</span>";
+                infoWindow.setContent(markerContent);
+                infoWindow.open(map, this);
+            });
+       	}
     }
 </script>
 
