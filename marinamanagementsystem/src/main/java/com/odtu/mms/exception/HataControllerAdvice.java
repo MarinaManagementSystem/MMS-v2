@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.odtu.mms.service.BaseService;
+import com.odtu.mms.util.MyUser;
 
 @ControllerAdvice
 public class HataControllerAdvice {

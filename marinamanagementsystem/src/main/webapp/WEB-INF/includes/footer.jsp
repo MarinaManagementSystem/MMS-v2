@@ -9,9 +9,9 @@
         <div class="row">
             <aside class="col-md-6">
 
-                <p class="lighter">Made with <i class="fa fa-heart-o"></i> by <a title="About Us">ETS Engineers.</a></p>
+                <p class="lighter">Made with <i class="fa fa-heart-o"></i> by <a title="About Us">MMS Engineers.</a></p>
 
-                <p class="darker">Environment Tracking Software v1.3 <br/> Copyright © 2014-. All rights reserved.</p>
+                <p class="darker">Marina Management System v1.3 <br/> Copyright © 2017-. All rights reserved.</p>
 
             </aside>
 

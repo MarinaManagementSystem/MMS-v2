@@ -46,7 +46,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.jsp" data-logo="../resources/images/ETS-Logo.png"><img src="../resources/images/ETS-Logo.png" alt="" title=""></a>
+            <a class="navbar-brand" href="index.jsp" data-logo="../resources/images/mmslogo.jpeg"><img src="../resources/images/mmslogo.jpeg" alt="" title=""  style="height: 65px; width:75px"></a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
