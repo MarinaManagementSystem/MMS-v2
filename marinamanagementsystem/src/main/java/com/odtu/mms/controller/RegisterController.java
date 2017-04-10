@@ -26,7 +26,6 @@ import com.odtu.mms.mail.TemplateMailCreator;
 import com.odtu.mms.model.Kullanici;
 import com.odtu.mms.model.Person;
 import com.odtu.mms.model.Role;
-import com.odtu.mms.model.SBFStokKalanLog;
 import com.odtu.mms.service.BaseService;
 import com.odtu.mms.util.CustomStringEditor;
 
