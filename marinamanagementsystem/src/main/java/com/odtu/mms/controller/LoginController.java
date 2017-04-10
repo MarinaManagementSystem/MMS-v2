@@ -47,9 +47,9 @@ public class LoginController {
 			return "redirect:../views/listPersonRoleSelection.htm";
 		
 		if(request.isUserInRole(Role.ROLE_SYSTEM_ADMINISTRATOR))
-			return "redirect:../views/aboutUs.htm";
+			return "redirect:../views/marinaStatus.htm";
 		else 
-			return "redirect:../views/aboutUs.htm";
+			return "redirect:../views/marinaStatus.htm";
 		
 	}
 	
