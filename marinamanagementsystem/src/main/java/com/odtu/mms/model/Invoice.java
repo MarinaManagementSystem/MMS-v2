@@ -1,6 +1,7 @@
 package com.odtu.mms.model;
 
 import java.io.Serializable;
+import java.util.Calendar;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,6 +36,9 @@ public class Invoice extends BaseModel implements Serializable{
 	@Column(name = "consumption")
 	private Double consumption;
 
+	@Column(name = "cut_off_date")
+	private Calendar cutOffDate;
+
 	public Person getPerson() {
 		return person;
 	}
@@ -57,6 +61,14 @@ public class Invoice extends BaseModel implements Serializable{
 
 	public void setConsumption(Double consumption) {
 		this.consumption = consumption;
+	}
+
+	public Calendar getCutOffDate() {
+		return cutOffDate;
+	}
+
+	public void setCutOffDate(Calendar cutOffDate) {
+		this.cutOffDate = cutOffDate;
 	}
 
 }

@@ -37,7 +37,12 @@ public class YachtService extends BaseModel implements Serializable{
 	@ManyToOne
 	@JoinColumn(name="marina_id")
 	private Marina marina;
-	
+
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name="berth_id")
+	private Berth berth;
+
 	@Column(name = "timestamp")
 	private Calendar timestamp;
 	
@@ -66,6 +71,14 @@ public class YachtService extends BaseModel implements Serializable{
 
 	public void setMarina(Marina marina) {
 		this.marina = marina;
+	}
+	
+	public Berth getBerth() {
+		return berth;
+	}
+
+	public void setBerth(Berth berth) {
+		this.berth = berth;
 	}
 
 	public Calendar getTimestamp() {

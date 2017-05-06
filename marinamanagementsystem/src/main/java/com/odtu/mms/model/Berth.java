@@ -68,9 +68,9 @@ public class Berth extends BaseModel implements Serializable{
 	@Column(name = "max_width")
 	private Double maxWidth;
 
-	@ManyToMany(targetEntity = Service.class, fetch = FetchType.EAGER,cascade=CascadeType.ALL)
-	@JoinTable(name = "berth_service", joinColumns = @JoinColumn(name = "berth_id"), inverseJoinColumns = @JoinColumn(name = "service_id"))
-	private List<Service> roller = new ArrayList<Service>();
+//	@ManyToMany(targetEntity = Service.class, fetch = FetchType.EAGER,cascade=CascadeType.ALL)
+//	@JoinTable(name = "berth_service", joinColumns = @JoinColumn(name = "berth_id"), inverseJoinColumns = @JoinColumn(name = "service_id"))
+//	private List<Service> roller = new ArrayList<Service>();
 
 	@Column(name = "latitude", columnDefinition="text")
 	@Type(type = "org.hibernate.type.TextType")
@@ -168,13 +168,13 @@ public class Berth extends BaseModel implements Serializable{
 		this.maxWidth = maxWidth;
 	}
 
-	public List<Service> getRoller() {
-		return roller;
-	}
-
-	public void setRoller(List<Service> roller) {
-		this.roller = roller;
-	}
+//	public List<Service> getRoller() {
+//		return roller;
+//	}
+//
+//	public void setRoller(List<Service> roller) {
+//		this.roller = roller;
+//	}
 
 	public String getLatitude() {
 		return latitude;
