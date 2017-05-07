@@ -36,7 +36,7 @@
 <%@include file="../includes/header.jsp"%>
 
 	<!--  section icon box -->
-	<div class="grey content-area" id="iconbuttons" style="background-color: #FBFBFB;">
+	<div class="grey content-area" id="iconbuttons" style="background-color: #FBFBFB; text-align: center;">
 	
 		<%	
 			// If the viewing device is a computer, print the message for computers
@@ -44,45 +44,43 @@
 			{
 		%>
 				<br/><br/><br/><br/>
-				<div id="loginContainer" style="width: 600px;">
-					<center>
-						<img src="images/successful.png" alt="Successful image" height="100" width="100" />
+				<div id="loginContainer" style="width: 600px; display: inline-block;">
+						<img src="../resources/images/successful.png" alt="Successful image" height="100" width="100" />
 						<br/>
 						<br/>
 						<p>
 							<%
-								String logoutMessage = "<font size='2.5px' color='black'><b>You are successfully logged out!</b><br>You will be redirected in <b><span id='container'>5</span></b> seconds.</font>";
+								String logoutMessage = "<span style='font-size:14px; color:black;'><b>You are successfully logged out!</b><br>You will be redirected in <b><span id='container'>5</span></b> seconds.</span>";
 								
 								if(request.getParameter("passwordChanged") != null)
 								{
 									if(request.getParameter("passwordChanged").toString().equalsIgnoreCase("true"))
 									{
-										logoutMessage = "<font size='2.5px' color='black'><b>Your password is successfully changed!</b><br>To ensure the system security, you will be logged out to activate your new password.<br>You will be redirected in <b><span id='container'>5</span></b> seconds.</font>";
+										logoutMessage = "<span style='font-size:14px; color:black;'><b>Your password is successfully changed!</b><br>To ensure the system security, you will be logged out to activate your new password.<br>You will be redirected in <b><span id='container'>5</span></b> seconds.</span>";
 									}
 								}
 								else if(request.getParameter("userRoleOrEmailChanged") != null)
 								{
 									if(request.getParameter("userRoleOrEmailChanged").toString().equalsIgnoreCase("true"))
 									{
-										logoutMessage = "<font size='2.5px' color='black'><b>Your user role/e-mail is successfully changed!</b><br>To ensure the system security, you will be logged out to activate your new user role/e-mail.<br>You will be redirected in <b><span id='container'>5</span></b> seconds.</font>";
+										logoutMessage = "<span style='font-size:14px; color:black;'><b>Your user role/e-mail is successfully changed!</b><br>To ensure the system security, you will be logged out to activate your new user role/e-mail.<br>You will be redirected in <b><span id='container'>5</span></b> seconds.</span>";
 									}
 								}
 								
 								out.print(logoutMessage);
 							%>
 						</p>
-					</center>
 				</div>
 			<%
 			}
 			else
 			{
 				%>
-			    <div class="container">
+			    <div class="container" style="text-align: center;">
 			        <div class="row">
 			            <div class="col-md-6">
 			                <header class="section-header">
-			                    <img src="images/successful.png" alt="You are successfully logged out!" height="100" width="100" />
+			                    <img src="../resources/images/successful.png" alt="You are successfully logged out!" height="100" width="100" />
 			                    <br/><br/>
 			                    <p class="summary">You are successfully logged out!<br/>You will be redirected in <b>5</b> seconds.</p>
 			                </header>
