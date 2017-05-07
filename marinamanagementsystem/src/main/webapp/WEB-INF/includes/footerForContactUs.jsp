@@ -73,33 +73,33 @@
 
 <!-- js -->
 
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="../resources/assets/js/jquery.min.js"></script>
+<script src="../resources/assets/bootstrap/js/bootstrap.min.js"></script>
 
-<script src="assets/js/detectmobilebrowser.js"></script>
-<script src="assets/js/gmap3.min.js"></script>
-<script src="assets/js/jquery.appear.js"></script>
-<script src="assets/js/jquery.ba-bbq.min.js"></script>
-<script src="assets/js/jquery.fitvids.js"></script>
-<script src="assets/js/jquery.flexslider-min.js"></script>
-<script src="assets/js/jquery.placeholder.min.js"></script>
-<script src="assets/js/retina-1.1.0.min.js"></script>
-<script src="assets/js/snap.js"></script>
-<script src="assets/js/jquery.stellar.min.js"></script>
+<script src="../resources/assets/js/detectmobilebrowser.js"></script>
+<script src="../resources/assets/js/gmap3.min.js"></script>
+<script src="../resources/assets/js/jquery.appear.js"></script>
+<script src="../resources/assets/js/jquery.ba-bbq.min.js"></script>
+<script src="../resources/assets/js/jquery.fitvids.js"></script>
+<script src="../resources/assets/js/jquery.flexslider-min.js"></script>
+<script src="../resources/assets/js/jquery.placeholder.min.js"></script>
+<script src="../resources/assets/js/retina-1.1.0.min.js"></script>
+<script src="../resources/assets/js/snap.js"></script>
+<script src="../resources/assets/js/jquery.stellar.min.js"></script>
 
 <!-- Contact form validation -->
-<script src="assets/form/js/contact-form.js"></script>
+<script src="../resources/assets/form/js/contact-form.js"></script>
 <!-- Twitter -->
-<script src="assets/twitter/js/jquery.tweet.js"></script>
+<script src="../resources/assets/twitter/js/jquery.tweet.js"></script>
 
-<script src="assets/js/jquery.easing.1.3.min.js"></script>
-<script src="assets/js/main.js"></script>
+<script src="../resources/assets/js/jquery.easing.1.3.min.js"></script>
+<script src="../resources/assets/js/main.js"></script>
 
 <!-- init scripts -->
-<script src="assets/js/scripts/flexslider.js"></script>
-<script src="assets/js/scripts/google-map.js"></script>
-<script src="assets/js/scripts/parallax-stellar-section.js"></script>
-<script src="assets/js/scripts/onepager.js"></script>
+<script src="../resources/assets/js/scripts/flexslider.js"></script>
+<script src="../resources/assets/js/scripts/google-map.js"></script>
+<script src="../resources/assets/js/scripts/parallax-stellar-section.js"></script>
+<script src="../resources/assets/js/scripts/onepager.js"></script>
 
 <!-- </div> closure for <div id="boxedWrapper" class="snap-content"> -->
 </div>

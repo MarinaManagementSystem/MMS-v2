@@ -1,16 +1,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@ page session="true" %>
 <%@page contentType="text/html; charset=UTF-8"%>
-<%@include file="../include/include.jsp"%>
+<%@include file="../includes/include.jsp"%>
 <html>
 
 <head>
 
     <title><fmt:message key="label.application.title"/></title>
     
-	<%@include file="../include/ortakMeta.jsp"%>
-	<%@include file="../include/ortakStyle.jsp"%>
-	<%@include file="../include/ortakScript.jsp"%>
+	<%@include file="../includes/commonMeta.jsp"%>
+	<%@include file="../includes/commonStyles.jsp"%>
+	<%@include file="../includes/commonScripts.jsp"%>
 	
 	
 	<script>
@@ -41,8 +41,8 @@
 
 <body>
 
-<%@include file="../include/header.jsp"%>
-<%@include file="../include/tab.jsp"%>
+<%@include file="../includes/header.jsp"%>
+<%@include file="../includes/tab.jsp"%>
 
     
 	<div class="main">
@@ -77,10 +77,10 @@
 								
 								<div class="tab-content">
 									<div class="tab-pane ${giris}" id="kisiBilgiForm">
-										<%@include file="../include/kisiBilgiForm.jsp"%>	
+										<%@include file="../includes/kisiBilgiForm.jsp"%>	
 									</div>
 									<div class="tab-pane ${kaydet}" id="ekleSosyalMedyaTab">
-							            <%@include file="../include/ekleSosyalMedya.jsp"%>											
+							            <%@include file="../includes/ekleSosyalMedya.jsp"%>											
 									</div>									
 								</div>
 								
@@ -100,7 +100,7 @@
 		</div> <!-- main -->
 	
 
-<%@include file="../include/footer.jsp"%>    
+<%@include file="../includes/footer.jsp"%>    
     
 
 

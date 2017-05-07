@@ -1,18 +1,19 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@ page session="true" %>
 <%@page contentType="text/html; charset=UTF-8"%>
-<%@include file="../includes/include.jsp"%>
+<%@include file="../includes/springTagLibraries.jsp"%>
+
 <html>
-  
+
 <head>
 
-    <title><fmt:message key="label.application.title"/></title>
+    <title>List Person Role Selection - <fmt:message key="label.application.title"/></title>
     
-	<%@include file="../includes/ortakMeta.jsp"%>
-	<%@include file="../includes/ortakStyle.jsp"%>
-	<%@include file="../includes/ortakScript.jsp"%>
+	<%@include file="../includes/commonMeta.jsp"%>
+	<%@include file="../includes/commonStyles.jsp"%>
+	<%@include file="../includes/commonScripts.jsp"%>
 	
-	<script type="text/javascript">
+	<script type="text/JavaScript">
       
  		$(document).ready(function(){
 			$('.date-pick').datepicker();
@@ -30,11 +31,17 @@
 	</script>
 		
   </head>
+<%@include file="../includes/openingDivTagsForMobileViews.jsp"%>
 
-<body>
-		<div class="account-container">
-			
-			<div class="content clearfix">
+<body class="withAnimation" >
+	<%@include file="../includes/header.jsp"%>
+	
+	<div id="boxedWrapper" class="snap-content">
+	
+		<div class="grey content-area" id="iconbuttons" style="background-color: #FBFBFB;">
+	
+			<div class="container">
+				<div class="row">
 				
 					<h1><fmt:message key="label.gorev.listesi"/></h1>		
 					
@@ -54,15 +61,16 @@
 						
 					</div> <!-- /login-fields -->
 				
-			</div> <!-- /content -->
-			
-		</div> <!-- /account-container -->
+					<br/>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<%@include file="../includes/footer.jsp"%>
 	
+</body>
 
-<%@include file="../includes/footer.jsp"%>    
-    
-
-
-  </body>
+<%@include file="../includes/closingDivTagsForMobileViews.jsp"%>
 
 </html>
