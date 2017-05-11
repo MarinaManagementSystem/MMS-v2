@@ -216,7 +216,7 @@
 								</c:when>
 								<c:otherwise>
 									<tr>
-										<td colspan="7" style="border: 2px solid #DDDDDD; height:190px; vertical-align:middle">No data found!</td>
+										<td colspan="4" style="border: 2px solid #DDDDDD; height:190px; vertical-align:middle">No data found!</td>
 									</tr>
 								</c:otherwise>
 							</c:choose>
