@@ -106,29 +106,44 @@
 	                <th><span style="color:white;">Options</span></th>
 	                <th><span style="color:white;">Full Name</span></th>
 	                <th><span style="color:white;">E-mail</span></th>
+					<th><span style="color:white;">Phone Number</span></th>
+	                <th><span style="color:white;">Associated Roles</span></th>
 	            </tr>
 	            </thead>
 	            
 	            <tbody>
 					<c:choose>
 						<c:when test="${!empty listPerson}">
-							<c:forEach items="${listPerson}" var="invoice">
+							<c:forEach items="${listPerson}" var="person">
 	            	            <tr>
 	            	            	<td style="border: 2px solid #DDDDDD;">
-					                    <input type="checkbox" name="selectedUsers" value="${listPerson.id}" onChange="enableOrDisableDeleteUsersButton();" tabindex="1">
+					                    <input type="checkbox" name="selectedUsers" value="${person.id}" onChange="enableOrDisableDeleteUsersButton();" tabindex="1">
 			                   			&nbsp;&nbsp;&nbsp;
-	            	                	<a href="editSystemUser.jsp?userID=${listPerson.id}%>">
+	            	                	<a href="editSystemUser.jsp?userID=${person.id}%>">
 	            	                		<img src="../resources/images/edit.png" alt="Edit" height="16" width="16">
 	            	                	</a>&nbsp;&nbsp;&nbsp;
-        	                			<a href="#" onclick="return askIfSureToDeleteUser(${listPerson.id}, '${listPerson.name} ${listPerson.surname}', ${listPerson.roller});" >
-        	                				<img src="images/delete.png" alt="Delete" height="16" width="16">
-        	                			</a>
+	            	                	<c:choose>
+		            	                	<c:when test="${person.id == kisiSessiondaBulunan.id}">
+		        	                			<a href="#" onclick="return askIfSureToDeleteUser(${person.id}, '${person.name} ${person.surname}', ${person.roller});" >
+		        	                				<img src="../resources/images/deleteDisabled.png" alt="Delete" height="16" width="16">
+		        	                			</a>
+		            	                	</c:when>
+		            	                	<c:otherwise>
+												<img src="../resources/images/delete.png" alt="Delete" height="16" width="16">
+		            	                	</c:otherwise>
+	            	                	</c:choose>
 	            					</td>
 	            	                <td style="border: 2px solid #DDDDDD;">
-	            	                	${listPerson.name} ${listPerson.surname}
+	            	                	${person.name} ${person.surname}
 	            					</td>
 	            	                <td style="border: 2px solid #DDDDDD;">
-	            	                	${listPerson.email}
+	            	                	${person.email}
+	            					</td>
+	            	                <td style="border: 2px solid #DDDDDD;">
+	            	                	${person.phoneNumber}
+	            					</td>
+	            	                <td style="border: 2px solid #DDDDDD;">
+	            	                	${person.roller}
 	            					</td>
 	            				</tr>
 							</c:forEach>
