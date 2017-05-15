@@ -54,7 +54,7 @@
         for (i = 0; i < markers.length; i++)
        	{
        		google.maps.event.addListener(markers[i], 'click', function () {
-                var markerContent = '${listBerth.get(i).waterCapacity}';
+                var markerContent = '${listBerth.get(i).name}';
                 infoWindow.setContent(markerContent);
                 infoWindow.open(map, this);
             });
@@ -83,6 +83,15 @@ window.onclick = function(event) {
     }
   }
 }
+
+$(function() {
+    $(".clickableRow").on("click", function() {
+        location.href="http://google.com";
+
+    });
+
+});
+
 </script>
 </head>
 
@@ -103,7 +112,7 @@ window.onclick = function(event) {
 							<table>
 								<tbody>
         						<c:forEach items="${listBerth}" var="berth">
-									<tr>
+									<tr class='clickableRow'>
 										<td> Name: ${berth.getName() }
 											Type: ${ berth.getBerthType()}
 											Status: ${berth.getStatus() }
@@ -111,7 +120,7 @@ window.onclick = function(event) {
 											Water Capacity ${berth.getWaterCapacity() }
 											Fuel Capacity: ${berth.getFuelCapacity() }
 											Length: ${berth.getMinLength()} - ${berth.getMaxLength()} 
-											Width: $ {berth.getMinWidth()} - $ {berth.getMaxWidth()}
+											Width: $ {berth.minWidth} - $ {berth.maxWidth}
 											<br></br>
 										</td>
 									</tr>
@@ -125,103 +134,6 @@ window.onclick = function(event) {
 		</div>
 	</div>
 	<div>
-	</div>
-	<div class="dropdown">
-  		<button onclick="myFunction()" class="dropbtn">Advance Search</button>
-  		<div id="myDropdown" class="dropdown-content">
-    		<a href="#">Link 1</a>
-    		<a href="#">Link 2</a>
-    		<a href="#">Link 3</a>
-    		<form class="user-form">
-    		Length<br/>
-    		<div>
-    			<input type="text" name="minLen" value="min"/>
-    		</div>
-    		<div>
-    			<input type="text" name="maxLen" value="max"/>
-    		</div>
-    		<div class="container-fluid">
-	<div class="row">
-		<div class="col-md-12">
-			<form role="form" class="form-inline">
-				<div class="form-group">
-					 
-					<label for="exampleInputEmail1">
-						Email address
-					</label>
-					<input type="email" class="form-control" id="exampleInputEmail1" />
-				</div>
-				<div class="form-group">
-					 
-					<label for="exampleInputPassword1">
-						Password
-					</label>
-					<input type="password" class="form-control" id="exampleInputPassword1" />
-				</div>
-				<div class="form-group">
-					 
-					<label for="exampleInputFile">
-						File input
-					</label>
-					<input type="file" id="exampleInputFile" />
-					<p class="help-block">
-						Example block-level help text here.
-					</p>
-				</div>
-				<div class="checkbox">
-					 
-					<label>
-						<input type="checkbox" /> Check me out
-					</label>
-				</div> 
-				<button type="submit" class="btn btn-default">
-					Submit
-				</button>
-			</form>
-			<form role="form" class="form-inline">
-				<div class="form-group">
-					 
-					<label for="exampleInputEmail1">
-						Email address
-					</label>
-					<input type="email" class="form-control" id="exampleInputEmail1" />
-				</div>
-				<div class="form-group">
-					 
-					<label for="exampleInputPassword1">
-						Password
-					</label>
-					<input type="password" class="form-control" id="exampleInputPassword1" />
-				</div>
-				<div class="form-group">
-					 
-					<label for="exampleInputFile">
-						File input
-					</label>
-					<input type="file" id="exampleInputFile" />
-					<p class="help-block">
-						Example block-level help text here.
-					</p>
-				</div>
-				<div class="checkbox">
-					 
-					<label>
-						<input type="checkbox" /> Check me out
-					</label>
-				</div> 
-				<button type="submit" class="btn btn-default">
-					Submit
-				</button>
-			</form>
-		</div>
-	</div>
-</div>
-    		</form>
-    	</link>
-  		</div>
-	</div>
-	
-	<br/><br/><br/><br/><br/><br/>
 <%-- 	<%@include file="../includes/footer.jsp"%> --%>
 
 </body>
