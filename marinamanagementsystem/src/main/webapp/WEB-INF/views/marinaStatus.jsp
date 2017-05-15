@@ -8,19 +8,16 @@
 <head>
 
     <title><fmt:message key="label.application.title"/></title>
-    
+    <link rel="stylesheet" href="../resources/assets/css/AdvanceSearchDropDownMenu.css"></link>
 	<%@include file="../includes/commonMeta.jsp"%>
 	<%@include file="../includes/commonStyles.jsp"%>
 	<%@include file="../includes/commonScripts.jsp"%>
 	<script src="../resources/js/markerclusterer.js"></script>
 	
-	
-	<script>
-      
+	<script>    
  		$(document).ready(function(){
  			
  		});
-
 	</script>
 
 <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDkK3LRevjeZz0nrdm5k6tKX0EBihlS5jo&sensor=false"></script>
@@ -46,18 +43,18 @@
         var markers = locations.map(function(location, i) {
             return new google.maps.Marker({
               position: location,
-              label: "Berth_"+i
+              label: "" + i
             });
           });
         
         var markerCluster = new MarkerClusterer(map, markers,
                 {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
         
-
+//         "marker <strong>content</strong> <span style=\"font-size: 30px;\">here</span>";
         for (i = 0; i < markers.length; i++)
        	{
        		google.maps.event.addListener(markers[i], 'click', function () {
-                var markerContent = "marker <strong>content</strong> <span style=\"font-size: 30px;\">here</span>";
+                var markerContent = '${listBerth.get(i).waterCapacity}';
                 infoWindow.setContent(markerContent);
                 infoWindow.open(map, this);
             });
@@ -65,24 +62,167 @@
     }
 </script>
 
+<script type="text/javascript">
+// When the user clicks on the button, 
+// toggle between hiding and showing the dropdown content
+function myFunction() {
+    document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown menu if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+</script>
 </head>
 
 <body class="withAnimation">
 
 	<%@include file="../includes/header.jsp"%>
 
-	
+	<br/><br/>
 	<div id="boxedWrapper" class="snap-content">	
 		<div class="grey content-area" id="iconbuttons" style="background-color: #FBFBFB;">	
 			<div class="container">
 				<div class="row">
-					<div id="dvMap" style="width: 500px; height: 500px;"></div>
+					<div class="col-sm-9">
+						<div id="dvMap" style="height: 500px;"></div>
+					</div>
+					<div class="col-sm-3">
+						<div>
+							<table>
+								<tbody>
+        						<c:forEach items="${listBerth}" var="berth">
+									<tr>
+										<td> Name: ${berth.getName() }
+											Type: ${ berth.getBerthType()}
+											Status: ${berth.getStatus() }
+											Electricity Capacity: ${berth.getElectricityCapacity() }
+											Water Capacity ${berth.getWaterCapacity() }
+											Fuel Capacity: ${berth.getFuelCapacity() }
+											Length: ${berth.getMinLength()} - ${berth.getMaxLength()} 
+											Width: $ {berth.getMinWidth()} - $ {berth.getMaxWidth()}
+											<br></br>
+										</td>
+									</tr>
+								</c:forEach>
+								</tbody>
+							</table>
+						</div>
+					</div>
 				</div>
 			</div>			
 		</div>
 	</div>
+	<div>
+	</div>
+	<div class="dropdown">
+  		<button onclick="myFunction()" class="dropbtn">Advance Search</button>
+  		<div id="myDropdown" class="dropdown-content">
+    		<a href="#">Link 1</a>
+    		<a href="#">Link 2</a>
+    		<a href="#">Link 3</a>
+    		<form class="user-form">
+    		Length<br/>
+    		<div>
+    			<input type="text" name="minLen" value="min"/>
+    		</div>
+    		<div>
+    			<input type="text" name="maxLen" value="max"/>
+    		</div>
+    		<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<form role="form" class="form-inline">
+				<div class="form-group">
+					 
+					<label for="exampleInputEmail1">
+						Email address
+					</label>
+					<input type="email" class="form-control" id="exampleInputEmail1" />
+				</div>
+				<div class="form-group">
+					 
+					<label for="exampleInputPassword1">
+						Password
+					</label>
+					<input type="password" class="form-control" id="exampleInputPassword1" />
+				</div>
+				<div class="form-group">
+					 
+					<label for="exampleInputFile">
+						File input
+					</label>
+					<input type="file" id="exampleInputFile" />
+					<p class="help-block">
+						Example block-level help text here.
+					</p>
+				</div>
+				<div class="checkbox">
+					 
+					<label>
+						<input type="checkbox" /> Check me out
+					</label>
+				</div> 
+				<button type="submit" class="btn btn-default">
+					Submit
+				</button>
+			</form>
+			<form role="form" class="form-inline">
+				<div class="form-group">
+					 
+					<label for="exampleInputEmail1">
+						Email address
+					</label>
+					<input type="email" class="form-control" id="exampleInputEmail1" />
+				</div>
+				<div class="form-group">
+					 
+					<label for="exampleInputPassword1">
+						Password
+					</label>
+					<input type="password" class="form-control" id="exampleInputPassword1" />
+				</div>
+				<div class="form-group">
+					 
+					<label for="exampleInputFile">
+						File input
+					</label>
+					<input type="file" id="exampleInputFile" />
+					<p class="help-block">
+						Example block-level help text here.
+					</p>
+				</div>
+				<div class="checkbox">
+					 
+					<label>
+						<input type="checkbox" /> Check me out
+					</label>
+				</div> 
+				<button type="submit" class="btn btn-default">
+					Submit
+				</button>
+			</form>
+		</div>
+	</div>
+</div>
+    		</form>
+    	</link>
+  		</div>
+	</div>
+	
 	<br/><br/><br/><br/><br/><br/>
-	<%@include file="../includes/footer.jsp"%>
+<%-- 	<%@include file="../includes/footer.jsp"%> --%>
 
 </body>
 </html>
