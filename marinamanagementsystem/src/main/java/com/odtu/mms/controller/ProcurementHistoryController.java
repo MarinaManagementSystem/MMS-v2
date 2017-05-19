@@ -36,14 +36,19 @@ public class ProcurementHistoryController {
 
 	@RequestMapping(value = "/procurementHistory", method = RequestMethod.GET)
 	public String marinaStatusGet(
-			@RequestParam(value = "fromDate" , required = false) Calendar fromDate,
-			@RequestParam(value = "toDate" , required = false) Calendar toDate,
+			@RequestParam(value = "fromDate" , required = false) String fromDate,
+			@RequestParam(value = "toDate" , required = false) String toDate,
+			@RequestParam(value = "hiddenFromDate" , required = false) String fromDateForDB,
+			@RequestParam(value = "hiddenToDate" , required = false) String toDateForDB,
+			@RequestParam(value = "submitCount" , required = false) Long submitCount,
 			HttpServletRequest request, HttpServletResponse response, Model model, Locale locale) {
 		
-		if(fromDate != null && toDate != null){
-			model.addAttribute("foundInvoices", dao.findInvoices(fromDate, toDate));
+		if(fromDate != null && fromDateForDB != null && toDate != null && toDateForDB != null && submitCount != null){
 			
-			return "redirect:procurementHistory?fromDate="+fromDate+"toDate="+toDate;
+			submitCount++;
+			model.addAttribute("foundInvoices", dao.findInvoices(fromDateForDB, toDateForDB));
+			
+			return "redirect:procurementHistory?fromDate="+fromDate+"&toDate="+toDate+"&submitCount="+submitCount;
 		}
 		
 		return "procurementHistory";

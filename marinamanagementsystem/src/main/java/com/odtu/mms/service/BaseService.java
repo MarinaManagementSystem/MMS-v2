@@ -104,7 +104,7 @@ public class BaseService {
 
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public List find(String hql, List parameters, Integer firstResult, Integer dataCount) {
+	public List find(String hql, List<Object[]> parameters, Integer firstResult, Integer dataCount) {
 		Session session = sessionFactory.getCurrentSession();
 
 		Query query = session.createQuery(hql);
@@ -119,7 +119,7 @@ public class BaseService {
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public Object uniqueResult(String hql, List parameters) {
+	public Object uniqueResult(String hql, List<Object[]> parameters) {
 		Session session = sessionFactory.getCurrentSession();
 
 		Query query = session.createQuery(hql);
@@ -299,16 +299,18 @@ public class BaseService {
 		return null;
 	}
 	
-	public List<Invoice> findInvoices(Calendar fromDate, Calendar toDate) {
+	public List<Invoice> findInvoices(String fromDate, String toDate) {
 		
 		String sql =	" SELECT * " +
 						" FROM "+Constant.SCHEMA_ADI+".invoice i " +
-						" WHERE i.cut_off_date BETWEEN '"+fromDate+"' AND '"+toDate+"'";
+						" WHERE i.cut_off_date BETWEEN CONVERT(Datetime, '"+fromDate+"', 120) AND CONVERT(Datetime, '"+toDate+"', 120)";
+		
+		
 		
 		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sql);
 		query.addEntity("i" , Invoice.class);
 		
-		List list = query.list();
+		List<Invoice> list = query.list();
 
 		if (list != null && !list.isEmpty()) {
 			return list;
@@ -327,7 +329,7 @@ public class BaseService {
 		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sql);
 		query.setLong("invoceid", invoceId);	
 
-		List list = query.list();
+		List<Invoice> list = query.list();
 
 		if (list != null && !list.isEmpty()) {
 			return list;

@@ -24,8 +24,8 @@ public class ConsumptionsController {
 
 	@RequestMapping(value = "/consumptions", method = RequestMethod.GET)
 	public String marinaStatusGet(
-			@RequestParam(value = "fromDate" , required = false) Calendar fromDate,
-			@RequestParam(value = "toDate" , required = false) Calendar toDate,
+			@RequestParam(value = "fromDate" , required = false) String fromDate,
+			@RequestParam(value = "toDate" , required = false) String toDate,
 			HttpServletRequest request, HttpServletResponse response, Model model, Locale locale) {
 		
 		if(fromDate != null && toDate != null){

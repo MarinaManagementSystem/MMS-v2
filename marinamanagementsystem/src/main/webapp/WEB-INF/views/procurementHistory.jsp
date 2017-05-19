@@ -177,12 +177,15 @@
 									<input class="btn btn-default" name="submit" id="submit" tabindex="522" value="Submit" type="submit" tabindex="13">
 									<input type="hidden" name="hiddenFromDate" id="hiddenFromDate" value="" />
 									<input type="hidden" name="hiddenToDate" id="hiddenToDate" value="" />
+									<input type="hidden" name="submitCount" id="submitCount" value="<% if(request.getParameter("submitCount") != null) { out.print(request.getParameter("submitCount")); } else { out.print("0"); } %>" />
 								</td>
 							</tr>
 						</table>
 					</form>
 				
 					<br/><br/>
+					
+					<% if (request.getParameter("submitCount") != null && Integer.parseInt(request.getParameter("submitCount")) >= 1) { %>
 
 			        <table class="table table-hover" style="overflow:scroll;height:80px;width:100%;overflow:auto">
 			            <thead>
@@ -222,6 +225,8 @@
 							</c:choose>
 			            </tbody>
 			        </table>
+			        
+			        <% } %>
 	    </div>
 	</div>
 	<!-- / section -->

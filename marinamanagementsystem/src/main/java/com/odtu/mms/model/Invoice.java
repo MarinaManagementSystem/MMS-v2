@@ -23,12 +23,10 @@ public class Invoice extends BaseModel implements Serializable{
 	 */
 	private static final long serialVersionUID = -807231933457603258L;
 
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="person_id")
 	private Person person;
 
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="yacht_id")
 	private Yacht yacht;

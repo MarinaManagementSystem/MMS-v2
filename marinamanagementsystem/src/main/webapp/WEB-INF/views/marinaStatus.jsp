@@ -161,41 +161,38 @@ window.onclick = function(event) {
 	<%@include file="../includes/header.jsp"%>
 
 	<br/><br/>
-	<div id="boxedWrapper" class="snap-content">	
-		<div class="grey content-area" id="iconbuttons" style="background-color: #FBFBFB;">	
-			<div class="container">
-				<div class="row">
-					<div class="col-sm-9">
-						<div id="dvMap" style="height: 500px;"></div>
-					</div>
-					<div class="col-sm-3">
-						<div>
-							<table style="max-height: 550px !important;  overflow-y: scroll; display: -webkit-box;">
-								<tbody>
-        						<c:forEach items="${listBerth}" var="berth">
-									<tr class='clickableRow${berth.id}' >
-										<td> Name: ${berth.getName() }
-<%-- 											Type: ${ berth.getBerthType()} --%>
-											</br>Status: ${berth.getStatus() }
-											</br>Electricity Capacity: ${berth.getElectricityCapacity() }
-											</br>Water Capacity ${berth.getWaterCapacity() }
-											</br>Fuel Capacity: ${berth.getFuelCapacity() }
-											</br>Length: ${berth.getMinLength()} - ${berth.getMaxLength()} 
-											</br>Width: ${berth.minWidth} - ${berth.maxWidth}
-											<br></br>
-										</td>
-									</tr>
-								</c:forEach>
-								</tbody>
-							</table>
-						</div>
-					</div>
+	<div class="grey content-area" id="iconbuttons" style="background-color: #FBFBFB;">	
+		<div class="container" style="padding-top: 50px;">
+			<div class="row">
+				<div class="col-sm-9">
+					<div id="dvMap" style="height: 500px;"></div>
 				</div>
-			</div>			
-		</div>
+				<div class="col-sm-3">
+					<table style="max-height: 550px !important;  overflow-y: scroll; display: -webkit-box;">
+						<tbody>
+      						<c:forEach items="${listBerth}" var="berth">
+								<tr class='clickableRow${berth.id}' >
+									<td> Name: ${berth.getName() }
+										<%-- Type: ${ berth.getBerthType()} --%>
+										</br>Status: ${berth.getStatus() }
+										</br>Electricity Capacity: ${berth.getElectricityCapacity() }
+										</br>Water Capacity ${berth.getWaterCapacity() }
+										</br>Fuel Capacity: ${berth.getFuelCapacity() }
+										</br>Length: ${berth.getMinLength()} - ${berth.getMaxLength()} 
+										</br>Width: ${berth.minWidth} - ${berth.maxWidth}
+										<br></br>
+									</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>			
 	</div>
-	<div>
-<%-- 	<%@include file="../includes/footer.jsp"%> --%>
 
 </body>
+
+<%@include file="../includes/footer.jsp"%>
+
 </html>
