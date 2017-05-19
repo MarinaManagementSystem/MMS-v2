@@ -185,13 +185,13 @@
 				
 					<br/><br/>
 					
-					<% if (request.getParameter("submitCount") != null && Integer.parseInt(request.getParameter("submitCount")) >= 1) { %>
 
 			        <table class="table table-hover" style="overflow:scroll;height:80px;width:100%;overflow:auto">
 			            <thead>
 			            <tr style="background-color:#4A4744; table-layout:fixed">
 			                <th><span style="color:white;">Invoice ID</span></th>
-			                <th><span style="color:white;">Related Yacht ID</span></th>
+			                <th><span style="color:white;">Invoice Date</span></th>
+			                <th><span style="color:white;">Related Yacht Name</span></th>
 			                <th><span style="color:white;">Invoice Total</span></th>
 			                <th><span style="color:white;">Consumptions</span></th>
 			            </tr>
@@ -206,13 +206,17 @@
 			            	                	${invoice.id}
 			            					</td>
 			            	                <td style="border: 2px solid #DDDDDD;">
-			            	                	${invoice.yacht_id}
+			            	                <fmt:formatDate pattern = "dd-MM-yyyy" value = "${invoice.cutOffDate.time}" />
+			            	                	
+			            					</td>
+			            	                <td style="border: 2px solid #DDDDDD;">
+			            	                	${invoice.yacht.name}
 			            					</td>
 			            	                <td style="border: 2px solid #DDDDDD;">
 			            	                	${invoice.consumption}
 			            					</td>
 			            	                <td style="border: 2px solid #DDDDDD;">
-			            	                	<a class="btn btn-sm btn-border" href="consumptions?yacht_id=${invoice.yacht_id}" target="_blank">Consumptions</a>
+			            	                	<a class="btn btn-sm btn-border" href="consumptions?yacht_id=${invoice.yacht.id}" target="_blank">Consumptions</a>
 			            					</td>
 			            				</tr>
 									</c:forEach>
@@ -226,7 +230,6 @@
 			            </tbody>
 			        </table>
 			        
-			        <% } %>
 	    </div>
 	</div>
 	<!-- / section -->

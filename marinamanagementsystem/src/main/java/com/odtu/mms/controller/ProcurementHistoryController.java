@@ -1,7 +1,9 @@
 package com.odtu.mms.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 import javax.annotation.Resource;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.odtu.mms.model.Invoice;
 import com.odtu.mms.service.BaseService;
 import com.odtu.mms.util.CustomCalendarEditor;
 import com.odtu.mms.util.CustomStringEditor;
@@ -46,12 +49,15 @@ public class ProcurementHistoryController {
 		if(fromDate != null && fromDateForDB != null && toDate != null && toDateForDB != null && submitCount != null){
 			
 			submitCount++;
-			model.addAttribute("foundInvoices", dao.findInvoices(fromDateForDB, toDateForDB));
+			List<Invoice> foundInvoiceList = null;
+			foundInvoiceList = dao.findInvoices(fromDateForDB, toDateForDB);
 			
-			return "redirect:procurementHistory?fromDate="+fromDate+"&toDate="+toDate+"&submitCount="+submitCount;
+			model.addAttribute("foundInvoices", foundInvoiceList);
+			model.addAttribute("fromDate", fromDate);
+			model.addAttribute("toDate", toDate);
+			model.addAttribute("submitCount", submitCount);
 		}
 		
 		return "procurementHistory";
-		//return null;
 	}
 }
