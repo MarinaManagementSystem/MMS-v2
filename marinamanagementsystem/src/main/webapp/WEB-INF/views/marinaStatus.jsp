@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@ page session="true" %>
 <%@page contentType="text/html; charset=UTF-8"%>
-<%@include file="../includes/include.jsp"%>
+<%@include file="../includes/springTagLibraries.jsp"%>
 
 <html>
 
@@ -20,7 +20,7 @@
  		});
 	</script>
 
-<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDkK3LRevjeZz0nrdm5k6tKX0EBihlS5jo&sensor=false"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkK3LRevjeZz0nrdm5k6tKX0EBihlS5jo&sensor=false"></script>
 <script type="text/javascript">
     window.onload = function () {
         var mapOptions = {
@@ -54,11 +54,79 @@
         for (i = 0; i < markers.length; i++)
        	{
        		google.maps.event.addListener(markers[i], 'click', function () {
-                var markerContent = '${listBerth.get(i).name}';
+                var markerContent = 'Name : ${listBerth.get(i).name} </br>' + 
+                'Status: ${listBerth.get(i).getStatus() } </br>' +
+				'Electricity Capacity: ${listBerth.get(i).getElectricityCapacity() } </br>'+
+				'Water Capacity ${listBerth.get(i).getWaterCapacity() } </br>'+
+				'Fuel Capacity: ${listBerth.get(i).getFuelCapacity() } </br>'+
+				'Length: ${listBerth.get(i).getMinLength()} - ${listBerth.get(i).getMaxLength()} </br> '+
+				'Width: ${listBerth.get(i).minWidth} - ${listBerth.get(i).maxWidth} </br>';
                 infoWindow.setContent(markerContent);
                 infoWindow.open(map, this);
             });
        	}
+
+        
+
+        $(function() {
+            $(".clickableRow3").on("click", function() {
+            	
+            	google.maps.event.trigger(markers[3], "click", {});
+            	map.setCenter(markers[3].getPosition());
+            	map.setZoom(18);
+
+            });
+
+        });
+
+        $(function() {
+            $(".clickableRow1").on("click", function() {
+            	
+            	google.maps.event.trigger(markers[1], "click", {});
+            	map.setCenter(markers[1].getPosition());
+            	map.setZoom(18);
+
+            });
+
+        });
+        
+
+        $(function() {
+            $(".clickableRow2").on("click", function() {
+            	
+            	google.maps.event.trigger(markers[2], "click", {});
+            	map.setCenter(markers[2].getPosition());
+            	map.setZoom(18);
+            });
+
+        });
+        
+
+        $(function() {
+            $(".clickableRow4").on("click", function() {
+            	
+            	google.maps.event.trigger(markers[4], "click", {});
+            	map.setCenter(markers[4].getPosition());
+            	map.setZoom(18);
+            });
+
+        });
+        
+
+        $(function() {
+            $(".clickableRow5").on("click", function() {
+            	
+            	google.maps.event.trigger(markers[0], "click", {});
+            	map.setCenter(markers[0].getPosition());
+            	map.setZoom(18);
+            });
+
+        });
+        
+        function cagir(id){
+
+        	google.maps.event.trigger(markers[id], "click", {});
+        }
     }
 </script>
 
@@ -84,13 +152,6 @@ window.onclick = function(event) {
   }
 }
 
-$(function() {
-    $(".clickableRow").on("click", function() {
-        location.href="http://google.com";
-
-    });
-
-});
 
 </script>
 </head>
@@ -109,18 +170,18 @@ $(function() {
 					</div>
 					<div class="col-sm-3">
 						<div>
-							<table>
+							<table style="max-height: 550px !important;  overflow-y: scroll; display: -webkit-box;">
 								<tbody>
         						<c:forEach items="${listBerth}" var="berth">
-									<tr class='clickableRow'>
+									<tr class='clickableRow${berth.id}' >
 										<td> Name: ${berth.getName() }
-											Type: ${ berth.getBerthType()}
-											Status: ${berth.getStatus() }
-											Electricity Capacity: ${berth.getElectricityCapacity() }
-											Water Capacity ${berth.getWaterCapacity() }
-											Fuel Capacity: ${berth.getFuelCapacity() }
-											Length: ${berth.getMinLength()} - ${berth.getMaxLength()} 
-											Width: $ {berth.minWidth} - $ {berth.maxWidth}
+<%-- 											Type: ${ berth.getBerthType()} --%>
+											</br>Status: ${berth.getStatus() }
+											</br>Electricity Capacity: ${berth.getElectricityCapacity() }
+											</br>Water Capacity ${berth.getWaterCapacity() }
+											</br>Fuel Capacity: ${berth.getFuelCapacity() }
+											</br>Length: ${berth.getMinLength()} - ${berth.getMaxLength()} 
+											</br>Width: ${berth.minWidth} - ${berth.maxWidth}
 											<br></br>
 										</td>
 									</tr>

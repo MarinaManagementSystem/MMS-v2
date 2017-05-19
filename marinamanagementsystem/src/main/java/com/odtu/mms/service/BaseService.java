@@ -299,7 +299,7 @@ public class BaseService {
 		return null;
 	}
 	
-	public List<Invoice> findInvoices(Date fromDate, Date toDate) {
+	public List<Invoice> findInvoices(Calendar fromDate, Calendar toDate) {
 		
 		String sql =	" SELECT * " +
 						" FROM "+Constant.SCHEMA_ADI+".invoice i " +

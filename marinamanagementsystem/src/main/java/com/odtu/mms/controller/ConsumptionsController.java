@@ -1,16 +1,12 @@
-package com.odtu.mms.model;
+package com.odtu.mms.controller;
 
-import java.text.DateFormat;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.Locale;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,8 +24,8 @@ public class ConsumptionsController {
 
 	@RequestMapping(value = "/consumptions", method = RequestMethod.GET)
 	public String marinaStatusGet(
-			@RequestParam(value = "fromDate" , required = false) @DateTimeFormat(pattern="dd.MM.yyyy") Date fromDate,
-			@RequestParam(value = "toDate" , required = false) @DateTimeFormat(pattern="dd.MM.yyyy") Date toDate,
+			@RequestParam(value = "fromDate" , required = false) Calendar fromDate,
+			@RequestParam(value = "toDate" , required = false) Calendar toDate,
 			HttpServletRequest request, HttpServletResponse response, Model model, Locale locale) {
 		
 		if(fromDate != null && toDate != null){
