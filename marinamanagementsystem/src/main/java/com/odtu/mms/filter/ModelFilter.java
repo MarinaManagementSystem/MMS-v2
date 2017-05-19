@@ -285,23 +285,23 @@ public class ModelFilter {
 	}	
 	
 	
-	public Integer getCount(BaseService bus){
-		parameters = new ArrayList();
-		createCountHqlQuery();
-		List<Long> l = bus.find(hql, parameters, null, null);
-		if(l != null && !l.isEmpty())
-			return l.get(0).intValue();
-		
-		return 0;
-	}
+//	public Integer getCount(BaseService bus){
+//		parameters = new ArrayList();
+//		createCountHqlQuery();
+//		List<Long> l = bus.find(hql, parameters, null, null);
+//		if(l != null && !l.isEmpty())
+//			return l.get(0).intValue();
+//		
+//		return 0;
+//	}
 	
-	public List runHql(BaseService bus){
-		createHqlQuery();
-		return bus.find(hql, parameters,startCount,Constant.LIST_SIZE);
-	}
-	
-	public List runObjectArrayHql(BaseService bus){
-		createObjectArrayHqlQuery();
-		return bus.find(hql, parameters,startCount,endCount);
-	}	
+//	public List runHql(BaseService bus){
+//		createHqlQuery();
+//		return bus.find(hql, parameters,startCount,Constant.LIST_SIZE);
+//	}
+//	
+//	public List runObjectArrayHql(BaseService bus){
+//		createObjectArrayHqlQuery();
+//		return bus.find(hql, parameters,startCount,endCount);
+//	}	
 }
