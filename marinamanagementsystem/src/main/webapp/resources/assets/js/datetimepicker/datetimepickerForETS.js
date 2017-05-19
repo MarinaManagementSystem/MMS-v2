@@ -103,7 +103,7 @@ $('#toDate').datetimepicker({
 
 });
 
-$('#startOfDateForPlot').datetimepicker({
+$('#fromDate').datetimepicker({
 	timepicker:false,
 	format:'d.m.Y',
 	formatDate:'d.m.Y',
@@ -111,12 +111,12 @@ $('#startOfDateForPlot').datetimepicker({
 	
 	onGenerate: function(current_date, $input){
 
-		document.getElementById("hiddenStartDateForPlot").value=current_date.dateFormat('Y-m-d');
+		document.getElementById("hiddenFromDate").value=current_date.dateFormat('Y-m-d');
 	}
 
 });
 
-$('#endOfDateForPlot').datetimepicker({
+$('#toDate').datetimepicker({
 	timepicker:false,
 	format:'d.m.Y',
 	formatDate:'d.m.Y',
@@ -124,7 +124,7 @@ $('#endOfDateForPlot').datetimepicker({
 	
 	onGenerate: function(current_date, $input){
 
-		document.getElementById("hiddenEndDateForPlot").value=current_date.dateFormat('Y-m-d');
+		document.getElementById("hiddenToDate").value=current_date.dateFormat('Y-m-d');
 	}
 
 });
