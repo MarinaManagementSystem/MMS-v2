@@ -34,75 +34,61 @@
 		    	<%
 			}
 		    %>
-					    
-			<%  
-				String browser = request.getHeader("User-Agent");
-				boolean isChrome = (browser != null && browser.indexOf("Chrome/") != -1);
-			    int year = Calendar.getInstance().get(Calendar.YEAR);
-			    int month = Calendar.getInstance().get(Calendar.MONTH);
-			    int day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
-			    
-			    month++;
-			    
-			    int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-			    int minutes = Calendar.getInstance().get(Calendar.MINUTE);
-			    
-			    DecimalFormat decimalFormatter = new DecimalFormat("00");
-			    
-			    if(request.getParameter("fromDate") != null && request.getParameter("toDate") != null) {
-			    	
-			    }
-			
-			%>
 			
 			<h2>Consumptions</h2>
-			<p style="font-size: 15px;">Consumption details for the invoce id # ... are listed below.</p>
+			<p style="font-size: 15px;">Consumption details for the invoce ID #${invoiceId} are listed below.</p>
 			<br/> 
 				
 					<br/><br/>
 					
-					<% if (request.getParameter("submitCount") != null && Integer.parseInt(request.getParameter("submitCount")) >= 1) { %>
+					<% /* Check if the page is supplied with the invoceId parameter */ 
+					if (request.getParameter("invoiceId") != null) { %>
 
 			        <table class="table table-hover" style="overflow:scroll;height:80px;width:100%;overflow:auto">
 			            <thead>
 			            <tr style="background-color:#4A4744; table-layout:fixed">
 			                <th><span style="color:white;">Invoice ID</span></th>
-			                <th><span style="color:white;">Related Yacht ID</span></th>
-			                <th><span style="color:white;">Invoice Total</span></th>
-			                <th><span style="color:white;">Consumptions</span></th>
+			                <th><span style="color:white;">Related Yacht Name</span></th>
+			                <th><span style="color:white;">Service Name</span></th>
+			                <th><span style="color:white;">Service Cost</span></th>
+			                <th><span style="color:white;">Date of the Bill</span></th>
 			            </tr>
 			            </thead>
 			            
 			            <tbody>
 							<c:choose>
-								<c:when test="${!empty foundInvoices}">
-									<c:forEach items="${foundInvoices}" var="invoice">
+								<c:when test="${!empty foundConsumptions}">
+									<c:forEach items="${foundConsumptions}" var="consumption">
 			            	            <tr>
 			            	                <td style="border: 2px solid #DDDDDD;">
-			            	                	${invoice.id}
+			            	                	${consumption[0]}
 			            					</td>
 			            	                <td style="border: 2px solid #DDDDDD;">
-			            	                	${invoice.yacht_id}
+			            	                	${consumption[2]}
 			            					</td>
 			            	                <td style="border: 2px solid #DDDDDD;">
-			            	                	${invoice.consumption}
+			            	                	${consumption[5]}
 			            					</td>
 			            	                <td style="border: 2px solid #DDDDDD;">
-			            	                	<a class="btn btn-sm btn-border" href="consumptions?yacht_id=${invoice.yacht_id}" target="_blank">Consumptions</a>
+			            	                	$${consumption[7]}
+			            					</td>
+			            	                <td style="border: 2px solid #DDDDDD;">
+			            	                	${consumption[6]}
 			            					</td>
 			            				</tr>
 									</c:forEach>
 								</c:when>
 								<c:otherwise>
 									<tr>
-										<td colspan="4" style="border: 2px solid #DDDDDD; height:190px; vertical-align:middle">No data found!</td>
+										<td colspan="5" style="border: 2px solid #DDDDDD; height:190px; vertical-align:middle">No data found!</td>
 									</tr>
 								</c:otherwise>
 							</c:choose>
 			            </tbody>
 			        </table>
 			        
-			        <% } %>
+					<% } %>
+			        
 	    </div>
 	</div>
 	<!-- / section -->

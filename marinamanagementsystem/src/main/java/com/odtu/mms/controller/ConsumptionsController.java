@@ -1,6 +1,5 @@
 package com.odtu.mms.controller;
 
-import java.util.Calendar;
 import java.util.Locale;
 
 import javax.annotation.Resource;
@@ -23,15 +22,15 @@ public class ConsumptionsController {
 	private BaseService dao;
 
 	@RequestMapping(value = "/consumptions", method = RequestMethod.GET)
-	public String marinaStatusGet(
-			@RequestParam(value = "fromDate" , required = false) String fromDate,
-			@RequestParam(value = "toDate" , required = false) String toDate,
+	public String consumptionsGet(
+			@RequestParam(value = "invoiceId" , required = false) Long invoiceId,
 			HttpServletRequest request, HttpServletResponse response, Model model, Locale locale) {
 		
-		if(fromDate != null && toDate != null){
-			model.addAttribute("foundInvoices", dao.findInvoices(fromDate, toDate));
+		if(invoiceId != null){
+			model.addAttribute("invoiceId", invoiceId);
+			model.addAttribute("foundConsumptions", dao.findConsumptions(invoiceId));
 		}
 		
-		return "redirect:consumptions?fromDate="+fromDate+"toDate="+toDate; 
+		return "consumptions"; 
 	}
 }

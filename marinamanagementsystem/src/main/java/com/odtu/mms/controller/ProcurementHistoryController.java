@@ -1,7 +1,6 @@
 package com.odtu.mms.controller;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -38,7 +37,7 @@ public class ProcurementHistoryController {
 	}
 
 	@RequestMapping(value = "/procurementHistory", method = RequestMethod.GET)
-	public String marinaStatusGet(
+	public String procurementHistoryGet(
 			@RequestParam(value = "fromDate" , required = false) String fromDate,
 			@RequestParam(value = "toDate" , required = false) String toDate,
 			@RequestParam(value = "hiddenFromDate" , required = false) String fromDateForDB,
@@ -56,6 +55,8 @@ public class ProcurementHistoryController {
 			model.addAttribute("fromDate", fromDate);
 			model.addAttribute("toDate", toDate);
 			model.addAttribute("submitCount", submitCount);
+			
+			return "redirect:procurementHistory?fromDate="+fromDate+"&toDate="+toDate+"&submitCount="+submitCount;
 		}
 		
 		return "procurementHistory";

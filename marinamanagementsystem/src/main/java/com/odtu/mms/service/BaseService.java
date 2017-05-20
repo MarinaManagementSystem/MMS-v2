@@ -319,17 +319,17 @@ public class BaseService {
 
 	}
 	
-	public List<Invoice> findConsumptions(Long invoceId) {
+	public List<Object[]> findConsumptions(Long invoceId) {
 		
-		String sql =	" SELECT i.id, i.yacht_id, i.consumption, y_s.service_id, s.name, y_s.timestamp, y_s.price " +
-						" FROM "+Constant.SCHEMA_ADI+".invoice i, "+Constant.SCHEMA_ADI+".invoice_yacht_service i_y_s, "+Constant.SCHEMA_ADI+".yacht_service y_s, "+Constant.SCHEMA_ADI+".service s " +
-						" WHERE i.yacht_id=i_y_s.invoice_id AND i_y_s.yacht_service_id=y_s.id AND y_s.service_id=s.id AND " +
-						" i.id=:invoceid";
+		String sql =	" SELECT i.id, i.yacht_id, y.name, i.consumption, y_s.service_id, s.name, CONVERT(VARCHAR(10), y_s.timestamp, 104) as ys_timestamp, y_s.price " +
+						" FROM "+Constant.SCHEMA_ADI+".invoice i, "+Constant.SCHEMA_ADI+".invoice_yactht_service i_y_s, "+Constant.SCHEMA_ADI+".yacht_service y_s, "+Constant.SCHEMA_ADI+".service s, "+Constant.SCHEMA_ADI+".yacht y " +
+						" WHERE i.id=i_y_s.invoice_id AND i_y_s.yacht_service_id=y_s.id AND y_s.service_id=s.id AND y_s.yacht_id=y.id AND" +
+						" i.id="+invoceId+" ORDER BY y_s.timestamp DESC";
 		
 		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sql);
-		query.setLong("invoceid", invoceId);	
+		//query.setLong("invoceid", invoceId);
 
-		List<Invoice> list = query.list();
+		List<Object[]> list = query.list();
 
 		if (list != null && !list.isEmpty()) {
 			return list;
