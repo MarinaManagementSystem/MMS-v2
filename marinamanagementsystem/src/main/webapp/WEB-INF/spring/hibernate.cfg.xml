@@ -14,7 +14,7 @@
 		<property name="org.hibernate.envers.do_not_audit_optimistic_locking_field">true</property>
 <!-- 		<property name="default_schema">SBUP_DB</property> -->
 		<property name="default_schema">dbo</property>
-<!-- 		<property name="hibernate.hbm2ddl.auto">update</property> -->
+		<property name="hibernate.hbm2ddl.auto">update</property>
 		<property name="hibernate.query.substitutions">true=1, false=0</property>
 	</session-factory>
 	

@@ -30,7 +30,7 @@ public class MarinaService extends BaseModel implements Serializable{
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="service_id")
-	private Service service;
+	private GeneralService service;
 	
 	@Column(name = "price")
 	private Double price;
@@ -43,11 +43,11 @@ public class MarinaService extends BaseModel implements Serializable{
 		this.marina = marina;
 	}
 
-	public Service getService() {
+	public GeneralService getService() {
 		return service;
 	}
 
-	public void setService(Service service) {
+	public void setService(GeneralService service) {
 		this.service = service;
 	}
 

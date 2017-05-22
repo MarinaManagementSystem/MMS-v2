@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.odtu.mms.editor.CustomPersonEditor;
+import com.odtu.mms.editor.CustomRoleEditor;
 import com.odtu.mms.mail.TemplateMailCreator;
 import com.odtu.mms.model.Kullanici;
 import com.odtu.mms.model.Person;
@@ -48,6 +49,7 @@ public class PersonController {
 	public void initBinder(WebDataBinder binder,HttpServletRequest request) throws Exception{
 		binder.registerCustomEditor(java.lang.String.class, new CustomStringEditor());		
 		binder.registerCustomEditor(Person.class, new CustomPersonEditor(dao));
+		binder.registerCustomEditor(Role.class, new CustomRoleEditor(dao));
 	}
 	
 	@ModelAttribute("editPersonInformation")
@@ -84,21 +86,21 @@ public class PersonController {
 			HttpServletRequest request, HttpServletResponse response, Model model, Locale locale) {
 		
 
-		String[] roller = request.getParameterValues("roller");
-
-		if(roller.length > 0){
-			
-			List<Role> roleList = new ArrayList<Role>();
-			
-			for(int i=0; i<roller.length; i++){
-
-				Long roleId = MVAUtil.uLong(roller[i]);
-				Role role = (Role) dao.get(Role.class, roleId);
-				roleList.add(role);
-			}
-			
-			person.setRoller(roleList);
-		}
+//		String[] roller = request.getParameterValues("roller");
+//
+//		if(roller.length > 0){
+//			
+//			List<Role> roleList = new ArrayList<Role>();
+//			
+//			for(int i=0; i<roller.length; i++){
+//
+//				Long roleId = MVAUtil.uLong(roller[i]);
+//				Role role = (Role) dao.get(Role.class, roleId);
+//				roleList.add(role);
+//			}
+//			
+//			person.setRoller(roleList);
+//		}
 		
 		dao.saveOrUpdate(person);
 		

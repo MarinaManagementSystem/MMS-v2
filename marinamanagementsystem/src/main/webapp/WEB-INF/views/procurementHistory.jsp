@@ -216,7 +216,7 @@
 			            	                	${invoice.consumption}
 			            					</td>
 			            	                <td style="border: 2px solid #DDDDDD;">
-			            	                	<a class="btn btn-sm btn-border" href="consumptions?yacht_id=${invoice.yacht.id}" target="_blank">Consumptions</a>
+			            	                	<a class="btn btn-sm btn-border" href="consumptions?invoiceId=${invoice.id}" target="_blank">Consumptions</a>
 			            					</td>
 			            				</tr>
 									</c:forEach>

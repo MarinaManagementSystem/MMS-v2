@@ -70,7 +70,7 @@
 			            	                	${consumption[5]}
 			            					</td>
 			            	                <td style="border: 2px solid #DDDDDD;">
-			            	                	$${consumption[7]}
+			            	                	${consumption[7]}
 			            					</td>
 			            	                <td style="border: 2px solid #DDDDDD;">
 			            	                	${consumption[6]}
@@ -85,6 +85,19 @@
 								</c:otherwise>
 							</c:choose>
 			            </tbody>
+			            <tfoot>
+			            	<c:forEach items="${listService }" var="service">
+			            	<tr>
+			            		<td>${service.name }</td>
+			            	</tr>
+			            	<tr>
+			            		<td>${service.status }</td>
+			            	</tr>
+			            	<tr>
+			            		<td>${service.id }</td>
+			            	</tr>
+			            	</c:forEach>
+			            </tfoot>
 			        </table>
 			        
 					<% } %>

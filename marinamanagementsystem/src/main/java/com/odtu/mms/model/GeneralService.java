@@ -12,7 +12,7 @@ import org.hibernate.envers.Audited;
 @Entity
 @Audited
 @Table(name="service")
-public class Service extends BaseModel implements Serializable{
+public class GeneralService extends BaseModel implements Serializable{
 
 	/**
 	 * 

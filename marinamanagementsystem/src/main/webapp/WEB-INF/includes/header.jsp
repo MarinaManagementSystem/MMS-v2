@@ -44,7 +44,7 @@
 				            <li <% if (currentPage.contains("systemUsers")) { out.print("class=\"active\""); } %>><a class="dropdown" href="systemUsers">System Users</a></li>
 			                <li><a class="btn btn-border <% if (currentPage.equalsIgnoreCase("logout")) { out.print("class=\" active\""); } %>" style="border-color: #DF2D1C; background: #DF2D1C; font-size: 14px; font-weight: normal;" href="#" onclick="return askForLogout();">Logout</a></li>
 			                <br/>
-			                <div align="right">Welcome, <a href="systemUsers">${kisiSessiondaBulunan.name}.</a></div>
+			                <div align="right">Welcome, <a href="editPersonInfo?id=${kisiSessiondaBulunan.id}">${kisiSessiondaBulunan.name}.</a></div>
 			                <br/>
 			            <% } %>
 	                </ul>
@@ -92,7 +92,7 @@
 	            <li <% if (currentPage.contains("systemUsers")) { out.print("class=\"active\""); } %>><a class="dropdown" href="systemUsers">System Users</a></li>
                 <li><a class="btn btn-border <% if (currentPage.equalsIgnoreCase("logout")) { out.print("class=\" active\""); } %>" style="border-color: #DF2D1C; background: #DF2D1C; font-size: 14px; font-weight: normal;" href="#" onclick="return askForLogout();">Logout</a></li>
                 <br/>
-                <div align="right">Welcome, <a href="userSettings">${kisiSessiondaBulunan.name}.</a></div>
+                <div align="right">Welcome, <a href="editPersonInfo?id=${kisiSessiondaBulunan.id}">${kisiSessiondaBulunan.name}.</a></div>
                 <br/>
             <% } %>
             </ul>

@@ -27,6 +27,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.odtu.mms.model.Berth;
+import com.odtu.mms.model.GeneralService;
 import com.odtu.mms.model.Invoice;
 import com.odtu.mms.model.Kullanici;
 import com.odtu.mms.model.Marina;
@@ -321,10 +322,18 @@ public class BaseService {
 	
 	public List<Object[]> findConsumptions(Long invoceId) {
 		
-		String sql =	" SELECT i.id, i.yacht_id, y.name, i.consumption, y_s.service_id, s.name, CONVERT(VARCHAR(10), y_s.timestamp, 104) as ys_timestamp, y_s.price " +
-						" FROM "+Constant.SCHEMA_ADI+".invoice i, "+Constant.SCHEMA_ADI+".invoice_yactht_service i_y_s, "+Constant.SCHEMA_ADI+".yacht_service y_s, "+Constant.SCHEMA_ADI+".service s, "+Constant.SCHEMA_ADI+".yacht y " +
-						" WHERE i.id=i_y_s.invoice_id AND i_y_s.yacht_service_id=y_s.id AND y_s.service_id=s.id AND y_s.yacht_id=y.id AND" +
-						" i.id="+invoceId+" ORDER BY y_s.timestamp DESC";
+		String sql =	" SELECT i.id, i.yacht_id, y.name as yachtname, i.consumption, ys.service_id, s.name as servicename, CONVERT(VARCHAR(10), ys.timestamp, 104) as ys_timestamp, ys.price " +
+						" FROM "+Constant.SCHEMA_ADI+".invoice i, " +
+						" "+Constant.SCHEMA_ADI+".invoice_yactht_service iys, "+
+						" "+Constant.SCHEMA_ADI+".yacht_service ys, "+
+						" "+Constant.SCHEMA_ADI+".service s, "+
+						" "+Constant.SCHEMA_ADI+".yacht y " +
+						" WHERE i.id=iys.invoice_id " + 
+						" AND iys.yacht_service_id=ys.id " + 
+						" AND ys.service_id=s.id " + 
+						" AND ys.yacht_id=y.id " + 
+						" AND i.id="+invoceId+" " + 
+						" ORDER BY ys.timestamp DESC";
 		
 		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sql);
 		//query.setLong("invoceid", invoceId);
@@ -336,6 +345,23 @@ public class BaseService {
 		}
 		return null;
 
+	}
+	
+	public List<GeneralService> listService(){
+		
+		String sql =	" select * " +
+						" from "+Constant.SCHEMA_ADI+".service p ";
+		
+		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sql);
+		query.addEntity("p", GeneralService.class);
+		
+		List<GeneralService> list = query.list();
+
+		if (list != null && !list.isEmpty()) {
+			return list;
+		}
+		return null;
+		
 	}
 	
 }

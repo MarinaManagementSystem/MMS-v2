@@ -31,7 +31,7 @@ public class YachtService extends BaseModel implements Serializable{
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="service_id")
-	private Service service;
+	private GeneralService service;
 
 	@JsonIgnore
 	@ManyToOne
@@ -57,11 +57,11 @@ public class YachtService extends BaseModel implements Serializable{
 		this.yacht = yacht;
 	}
 
-	public Service getService() {
+	public GeneralService getService() {
 		return service;
 	}
 
-	public void setService(Service service) {
+	public void setService(GeneralService service) {
 		this.service = service;
 	}
 
