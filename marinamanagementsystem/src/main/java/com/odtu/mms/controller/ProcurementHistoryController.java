@@ -1,6 +1,7 @@
 package com.odtu.mms.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -55,8 +56,6 @@ public class ProcurementHistoryController {
 			model.addAttribute("fromDate", fromDate);
 			model.addAttribute("toDate", toDate);
 			model.addAttribute("submitCount", submitCount);
-			
-			return "redirect:procurementHistory?fromDate="+fromDate+"&toDate="+toDate+"&submitCount="+submitCount;
 		}
 		
 		return "procurementHistory";

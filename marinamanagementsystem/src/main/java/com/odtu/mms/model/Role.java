@@ -38,7 +38,9 @@ public class Role extends BaseModel implements Serializable{
 	public static final String ROLE_MARINA_OWNER = "ROLE_MARINA_OWNER";
 	public static final String ROLE_YACHT_OWNER = "ROLE_YACHT_OWNER";
 	
-	public static final Long ROL_MARINA_MANAGER_ID = 1L;
+	public static final Long ROLE_SYSTEM_ADMINISTRATOR_ID = 1L;
+	public static final Long ROLE_MARINA_OWNER_ID = 2L;
+	public static final Long ROLE_YACHT_OWNER_ID = 3L;
 	
 	@Column(name = "name", columnDefinition="text")
 	@Type(type = "org.hibernate.type.TextType")

@@ -74,7 +74,7 @@ public class RegisterController {
 			@ModelAttribute("personRegister") @Valid Person person,
 			HttpServletRequest request, HttpServletResponse response, Model model, Locale locale) {
 
-		Role role = (Role) dao.get(Role.class, 1L);
+		Role role = (Role) dao.get(Role.class, Role.ROLE_YACHT_OWNER_ID);
 		List<Role> roller = new ArrayList<Role>();
 		roller.add(role);
 		person.setRoller(roller);

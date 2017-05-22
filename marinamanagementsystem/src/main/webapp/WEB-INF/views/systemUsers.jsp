@@ -23,7 +23,7 @@
 			return false;
 		}
 		else if (confirm("Are you sure you want to delete "+fullNameOfUser+"?") == true) {
-	    	window.location.href = "systemUsers.jsp?deleteUser="+userID+"&name="+fullNameOfUser;
+	    	window.location.href = "deletePerson.htm?id="+userID;
 	    	return true;
 	    } else {
 	        return false;
@@ -66,6 +66,14 @@
 		  }
 	}
 	
+	function editPerson(id){
+		location.href="editPersonInfo?id="+id;
+	}
+	
+	function addPerson(){
+		location.href="editPersonInfo";
+	}
+	
 </script>
 
 </head>
@@ -95,8 +103,8 @@
 			<br/>
 			
 			<div id="addAndRemoveButtons" align="right">
-				<a class="btn btn btn-success" href="newSystemUser.jsp">Add a new user</a>
-				<input class="btn btn btn-danger" name="deleteUsersButton" id="deleteUsersButton" value="Delete selected users" type="submit" tabindex="10" disabled="disable" >
+				<a href="javascript:void(0)" class="btn btn btn-success" onclick="addPerson()">Add a new user</a>
+				<input class="btn btn btn-danger" name="deleteUsersButton" id="deleteUsersButton" value="Delete selected users" type="submit" tabindex="10" disabled="disable" />
 			</div>
 			<br/>
 			
@@ -117,19 +125,19 @@
 							<c:forEach items="${listPerson}" var="person">
 	            	            <tr>
 	            	            	<td style="border: 2px solid #DDDDDD;">
-					                    <input type="checkbox" name="selectedUsers" value="${person.id}" onChange="enableOrDisableDeleteUsersButton();" tabindex="1">
+					                    <input type="checkbox" name="selectedUsers" value="${person.id}" onChange="enableOrDisableDeleteUsersButton();" tabindex="1"/>
 			                   			&nbsp;&nbsp;&nbsp;
-	            	                	<a href="editSystemUser.jsp?userID=${person.id}%>">
-	            	                		<img src="../resources/images/edit.png" alt="Edit" height="16" width="16">
+	            	                	<a href="javascript:void(0)" onclick="editPerson('${person.id}')">
+	            	                		<img src="../resources/images/edit.png" alt="Edit" height="16" width="16"/>
 	            	                	</a>&nbsp;&nbsp;&nbsp;
 	            	                	<c:choose>
 		            	                	<c:when test="${person.id == kisiSessiondaBulunan.id}">
-		        	                			<a href="#" onclick="return askIfSureToDeleteUser(${person.id}, '${person.name} ${person.surname}', ${person.roller});" >
-		        	                				<img src="../resources/images/deleteDisabled.png" alt="Delete" height="16" width="16">
-		        	                			</a>
+		        	                				<img src="../resources/images/deleteDisabled.png" alt="Delete" height="16" width="16"/>
 		            	                	</c:when>
 		            	                	<c:otherwise>
-												<img src="../resources/images/delete.png" alt="Delete" height="16" width="16">
+		        	                			<a href="#" onclick="return askIfSureToDeleteUser(${person.id}, '${person.nameSurname}', ${person.roller});" >
+													<img src="../resources/images/delete.png" alt="Delete" height="16" width="16"/>
+		        	                			</a>
 		            	                	</c:otherwise>
 	            	                	</c:choose>
 	            					</td>
@@ -143,7 +151,12 @@
 	            	                	${person.phoneNumber}
 	            					</td>
 	            	                <td style="border: 2px solid #DDDDDD;">
-	            	                	${person.roller}
+										<c:forEach items="${person.roller}" var="role" varStatus="index">
+	            	                		${role.displayNmae}
+	            	                		<c:if test="${index.last}">
+	            	                			</br>
+	            	                		</c:if>
+										</c:forEach>
 	            					</td>
 	            				</tr>
 							</c:forEach>
