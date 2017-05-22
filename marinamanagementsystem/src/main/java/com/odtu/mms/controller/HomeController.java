@@ -10,12 +10,15 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.odtu.mms.model.Person;
 import com.odtu.mms.service.BaseService;
+import com.odtu.mms.util.MyUser;
 
 @Controller
 @RequestMapping(value="/views")
@@ -27,6 +30,17 @@ public class HomeController {
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 //	@RequestMapping(value = {"/","/sifremiDegistir" }, method = RequestMethod.GET)
 	public String homeGet(HttpServletRequest request, HttpServletResponse response, Model model, Locale locale) {
+		
+		MyUser user = (MyUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Person person = user.getPerson();
+		person.getId();
+		
+		//GET SESSION ROLE
+		if(request.isUserInRole("ROLE_SYSTEM_ADMINISTRATOR")  ){
+			int i = 0;
+		}else if (request.isUserInRole("ROLE_MARINA_OWNER")){
+			int ii=0;
+		}
 		
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
