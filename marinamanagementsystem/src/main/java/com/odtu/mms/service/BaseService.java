@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -292,6 +293,88 @@ public class BaseService {
 		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sql);
 		
 		query.setLong("marinaid", marinaid);
+		query.addEntity("b", Berth.class);
+		List<Berth> list = query.list();
+		
+		if(list != null && !list.isEmpty())
+			return list;
+		return null;
+	}
+	
+	
+	public List<Berth> listBerthByFilteringCriterias(HashMap<String, String> filterMap)
+	{
+		String criterias = "";
+		String queryStr = "";
+		
+		if(filterMap.isEmpty() == false)
+		{
+			if(filterMap.containsKey("status") == true)
+			{
+				criterias += " b.status='" + filterMap.get("status") + "'";
+			}
+			if(filterMap.containsKey("electricity_capacity") == true)
+			{
+				criterias += " b.electricity_capacity=" + filterMap.get("electricity_capacity");
+			}
+			if(filterMap.containsKey("water_capacity") == true)
+			{
+				criterias += " b.water_capacity=" +filterMap.get("water_capacity");
+			}
+			if(filterMap.containsKey("fuel_capacity") == true)
+			{
+				criterias += " b.fuel_capacity=" + filterMap.get("fuel_capacity");
+			}
+			/*
+			 * MAX & MIN WIDTH  
+			 *
+			 */
+			if(filterMap.containsKey("min_width") == true && filterMap.containsKey("max_width") == false)
+			{
+				criterias += " b.min_width>=" + filterMap.get("min_width");
+			}
+			if(filterMap.containsKey("max_width") == true && filterMap.containsKey("min_width") == false)
+			{
+				criterias += " b.max_width<=" + filterMap.get("max_width");
+			}
+			if(filterMap.containsKey("max_width") == true && filterMap.containsKey("min_width") == true)
+			{
+				criterias += " b.max_width BETWEEN " + filterMap.get("min_width")+  " AND " + filterMap.get("max_width");
+			}
+			
+			/*
+			 *  
+			 *  MAX & MIN LENGTH
+			 * 
+			 */
+			if(filterMap.containsKey("min_length") == true && filterMap.containsKey("max_length") == false)
+			{
+				criterias += " b.min_length>=" + filterMap.get("min_length");
+			}
+			if(filterMap.containsKey("max_length") == true && filterMap.containsKey("min_length") == false)
+			{
+				criterias += " b.max_length<=" + filterMap.get("max_length");
+			}
+			if(filterMap.containsKey("max_length") == true && filterMap.containsKey("min_length") == true)
+			{
+				criterias += " b.max_length BETWEEN " + filterMap.get("min_length")+  " AND " + filterMap.get("max_width");
+			}
+		}
+		
+		if(criterias != "")
+		{
+			queryStr = " select * from " + Constant.SCHEMA_ADI + ".berth b where " + criterias;
+		}
+		else
+		{
+			queryStr = " select * from " + Constant.SCHEMA_ADI + ".berth";
+			//return null;
+		}
+		
+		System.out.println("Filter Query: "+ queryStr);
+		
+		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(queryStr);
+		
 		query.addEntity("b", Berth.class);
 		List<Berth> list = query.list();
 		

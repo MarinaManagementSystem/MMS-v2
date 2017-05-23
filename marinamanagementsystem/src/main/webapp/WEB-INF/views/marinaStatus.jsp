@@ -160,39 +160,162 @@ window.onclick = function(event) {
 
 	<%@include file="../includes/header.jsp"%>
 
+
 	<br/><br/>
-	<div class="grey content-area" id="iconbuttons" style="background-color: #FBFBFB;">	
-		<div class="container" style="padding-top: 50px;">
-			<div class="row">
-				<div class="col-sm-9">
-					<div id="dvMap" style="height: 500px;"></div>
+	<div id="boxedWrapper" class="snap-content">	
+		<div class="grey content-area" id="iconbuttons" style="background-color: #FBFBFB;">	
+			<div class="container">
+				<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+			  		Advanced Search
+				</button>
+				<!-- Modal -->
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+				      </div>
+				      <div class="modal-body">
+							<form action="marinaStatus" id="marinaStatusFilterForm" name="marinaStatusFilterForm" method="get">
+								<table align="center" width="100%" style="table-layout: fixed;">
+									<tr>
+										<td align="right" style="vertical-align:top" width="300px;">
+											<h4 class="hr-left uppercase">Date Range:</h4>
+											<p><i>Please select the date range you want to filter. Invoices generated between these dates will be fetched from the database.</i></p>
+										</td>
+										<td width="25px;">
+											<!-- Empty column -->
+										</td>
+										<td>
+											<table>
+												<tr>
+													<td>
+														<table>
+															<tr>
+																<td>
+																	Min Length:
+																</td>
+																<td width="10px;">
+																	<!-- Empty column -->
+																</td>
+																<td>
+																	<input type="text" value="" name="minLength" id="minLength" class="form-control input-sm" tabindex="1" />
+																</td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td align="right">
+											<!-- Empty column -->
+										</td>
+										<td width="25px;">
+											<!-- Empty column -->
+										</td>
+										<td align="left">
+											<input class="btn btn-default" name="submit" id="submit" tabindex="522" value="Submit" type="submit" tabindex="2">
+										</td>
+									</tr>
+								</table>
+							</form>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				        <button type="button" class="btn btn-primary">Save changes</button>
+				      </div>
+				    </div>
+				  </div>
 				</div>
-				<div class="col-sm-3">
-					<table style="max-height: 550px !important;  overflow-y: scroll; display: -webkit-box;">
-						<tbody>
-      						<c:forEach items="${listBerth}" var="berth">
-								<tr class='clickableRow${berth.id}' >
-									<td> Name: ${berth.getName() }
-										<%-- Type: ${ berth.getBerthType()} --%>
-										</br>Status: ${berth.getStatus() }
-										</br>Electricity Capacity: ${berth.getElectricityCapacity() }
-										</br>Water Capacity ${berth.getWaterCapacity() }
-										</br>Fuel Capacity: ${berth.getFuelCapacity() }
-										</br>Length: ${berth.getMinLength()} - ${berth.getMaxLength()} 
-										</br>Width: ${berth.minWidth} - ${berth.maxWidth}
-										<br></br>
-									</td>
-								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
+				
+				
+				
+				
+				
+				
+							<form action="marinaStatus" id="marinaStatusFilterForm" name="marinaStatusFilterForm" method="get">
+								<table align="center" width="100%" style="table-layout: fixed;">
+									<tr>
+										<td align="right" style="vertical-align:top" width="300px;">
+											<h4 class="hr-left uppercase">Date Range:</h4>
+											<p><i>Please select the date range you want to filter. Invoices generated between these dates will be fetched from the database.</i></p>
+										</td>
+										<td width="25px;">
+											<!-- Empty column -->
+										</td>
+										<td>
+											<table>
+												<tr>
+													<td>
+														<table>
+															<tr>
+																<td>
+																	Min Length:
+																</td>
+																<td width="10px;">
+																	<!-- Empty column -->
+																</td>
+																<td>
+																	<input type="text" value="" name="minLength" id="minLength" class="form-control input-sm" tabindex="1" />
+																</td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td align="right">
+											<!-- Empty column -->
+										</td>
+										<td width="25px;">
+											<!-- Empty column -->
+										</td>
+										<td align="left">
+											<input class="btn btn-default" name="submit" id="submit" tabindex="522" value="Submit" type="submit" tabindex="2">
+										</td>
+									</tr>
+								</table>
+							</form>
+				
+				
+				
+				<div class="row">
+					<div class="col-sm-9">
+						<div id="dvMap" style="height: 500px;"></div>
+					</div>
+					<div class="col-sm-3">
+						<div>
+							<table style="max-height: 550px !important;  overflow-y: scroll; display: -webkit-box;">
+								<tbody>
+        						<c:forEach items="${listBerth}" var="berth">
+									<tr class='clickableRow${berth.id}' >
+										<td> Name: ${berth.getName() }
+<%-- 											Type: ${ berth.getBerthType()} --%>
+											</br>Status: ${berth.getStatus() }
+											</br>Electricity Capacity: ${berth.getElectricityCapacity() }
+											</br>Water Capacity ${berth.getWaterCapacity() }
+											</br>Fuel Capacity: ${berth.getFuelCapacity() }
+											</br>Length: ${berth.getMinLength()} - ${berth.getMaxLength()} 
+											</br>Width: ${berth.minWidth} - ${berth.maxWidth}
+											<br></br>
+										</td>
+									</tr>
+								</c:forEach>
+								</tbody>
+							</table>
+						</div>
+					</div>
 				</div>
-			</div>
-		</div>			
+			</div>			
+		</div>
 	</div>
+	<div>
+	<%@include file="../includes/footer.jsp"%>
 
 </body>
-
-<%@include file="../includes/footer.jsp"%>
-
 </html>
