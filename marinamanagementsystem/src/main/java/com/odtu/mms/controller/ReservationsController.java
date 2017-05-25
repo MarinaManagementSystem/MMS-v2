@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
@@ -19,13 +20,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.odtu.mms.model.Invoice;
+import com.odtu.mms.model.Person;
+import com.odtu.mms.model.Reservation;
 import com.odtu.mms.service.BaseService;
 import com.odtu.mms.util.CustomCalendarEditor;
 import com.odtu.mms.util.CustomStringEditor;
+import com.odtu.mms.util.MyUser;
 
 @Controller
 @RequestMapping(value="/views")
-public class ProcurementHistoryController {
+public class ReservationsController {
 	
 	@Resource(name = "baseService")
 	private BaseService dao;
@@ -37,8 +41,8 @@ public class ProcurementHistoryController {
 		binder.registerCustomEditor(Calendar.class, ccExpireDateditor);
 	}
 
-	@RequestMapping(value = "/procurementHistory", method = RequestMethod.GET)
-	public String procurementHistoryGet(
+	@RequestMapping(value = "/reservations", method = RequestMethod.GET)
+	public String reservationsGet(
 			@RequestParam(value = "fromDate" , required = false) String fromDate,
 			@RequestParam(value = "toDate" , required = false) String toDate,
 			@RequestParam(value = "hiddenFromDate" , required = false) String fromDateForDB,
@@ -48,18 +52,31 @@ public class ProcurementHistoryController {
 		
 		if(fromDate != null && fromDateForDB != null && toDate != null && toDateForDB != null && submitCount != null){
 			
-			List<Invoice> foundInvoiceList = null;
-			foundInvoiceList = dao.findInvoices(fromDateForDB, toDateForDB);
+			MyUser user = (MyUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			Person person = user.getPerson();
+			Long userId = person.getId();
 			
-			model.addAttribute("foundInvoices", foundInvoiceList);
+			String userRole = "";
+			
+			// Get session role and generate the query at Base Service accordingly
+			if (request.isUserInRole("ROLE_SYSTEM_ADMINISTRATOR")) {
+				userRole = "System Administrator";
+			} else if (request.isUserInRole("ROLE_MARINA_OWNER")) {
+				userRole = "Marina Owner";
+			} else {
+				userRole = "Yacht Owner";
+			}
+			
+			model.addAttribute("foundReservations", dao.findReservations(fromDateForDB, toDateForDB, userId, userRole));
 			model.addAttribute("fromDate", fromDate);
 			model.addAttribute("toDate", toDate);
+			model.addAttribute("userRole", userRole);
 			
 			// Increment the submitCount so that the page can understand that a query was run
 			submitCount++;
 			model.addAttribute("submitCount", submitCount);
 		}
 		
-		return "procurementHistory";
+		return "reservations";
 	}
 }

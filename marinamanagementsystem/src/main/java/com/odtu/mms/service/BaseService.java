@@ -33,6 +33,7 @@ import com.odtu.mms.model.Invoice;
 import com.odtu.mms.model.Kullanici;
 import com.odtu.mms.model.Marina;
 import com.odtu.mms.model.Person;
+import com.odtu.mms.model.Reservation;
 import com.odtu.mms.model.Role;
 import com.odtu.mms.util.Constant;
 
@@ -445,6 +446,92 @@ public class BaseService {
 		}
 		return null;
 		
+	}
+	
+	public List<Object[]> findReservations(String fromDate, String toDate, Long userId, String userRole) {
+		
+		String sql ="";
+		
+		if (userRole.equalsIgnoreCase("System Administrator")) {
+			
+			/*
+			sql =	" SELECT * " +
+					" FROM "+Constant.SCHEMA_ADI+".reservation r " +
+					" WHERE r.reservation_start_date >= CONVERT(Datetime, '"+fromDate+"', 120) " +
+					" AND r.reservation_end_date <= CONVERT(Datetime, '"+toDate+"', 120)";
+			*/
+			
+			
+			sql =	" SELECT r.id as reservation_id, r.status, CONVERT(VARCHAR(10), r.reservation_start_date, 104) as r_start_date, CONVERT(VARCHAR(10), r.reservation_end_date, 104) as r_end_date, y.name as yacht_name, b.name as berth_name, m.name as marina_name " +
+					" FROM "+Constant.SCHEMA_ADI+".reservation r, " +
+					" "+Constant.SCHEMA_ADI+".person p, "+
+					" "+Constant.SCHEMA_ADI+".kullanici k, "+
+					" "+Constant.SCHEMA_ADI+".yacht y, " +
+					" "+Constant.SCHEMA_ADI+".berth b, " +
+					" "+Constant.SCHEMA_ADI+".marina m " +
+					" WHERE k.person_id=p.id " +
+					" AND r.yacht_id=y.id " +
+					" AND r.berth_id=b.id " +
+					" AND y.owner_id=p.id " +
+					" AND b.marina_id=m.id " +
+					" AND r.reservation_start_date >= CONVERT(Datetime, '"+fromDate+"', 120) " +
+					" AND r.reservation_end_date <= CONVERT(Datetime, '"+toDate+"', 120) " +
+					" ORDER BY r.reservation_end_date DESC";
+			
+		} else if (userRole.equalsIgnoreCase("Marina Owner")) {
+			
+			sql =	" SELECT r.id as reservation_id, r.status, CONVERT(VARCHAR(10), r.reservation_start_date, 104) as r_start_date, CONVERT(VARCHAR(10), r.reservation_end_date, 104) as r_end_date, y.name as yacht_name, b.name as berth_name, m.name as marina_name " +
+					" FROM "+Constant.SCHEMA_ADI+".reservation r, " +
+					" "+Constant.SCHEMA_ADI+".person p, "+
+					" "+Constant.SCHEMA_ADI+".person_role pr, "+ //Additional part for role check
+					" "+Constant.SCHEMA_ADI+".role role, "+ //Additional part for role check
+					" "+Constant.SCHEMA_ADI+".kullanici k, "+
+					" "+Constant.SCHEMA_ADI+".yacht y, " +
+					" "+Constant.SCHEMA_ADI+".berth b, " +
+					" "+Constant.SCHEMA_ADI+".marina m " +
+					" WHERE k.person_id=p.id " +
+					" AND p.id=pr.person_id " + //Additional part for role check
+					" AND pr.role_id=role.id " + //Additional part for role check
+					" AND r.yacht_id=y.id " +
+					" AND r.berth_id=b.id " +
+					" AND y.owner_id=p.id " +
+					" AND b.marina_id=m.id " +
+					" AND role.display_name='"+userRole+"' " + //Additional part for role check
+					" AND r.reservation_start_date >= CONVERT(Datetime, '"+fromDate+"', 120) " +
+					" AND r.reservation_end_date <= CONVERT(Datetime, '"+toDate+"', 120) " +
+					" ORDER BY r.reservation_end_date DESC";
+			
+		} else {
+			
+			sql =	" SELECT r.id as reservation_id, r.status, CONVERT(VARCHAR(10), r.reservation_start_date, 104) as r_start_date, CONVERT(VARCHAR(10), r.reservation_end_date, 104) as r_end_date, y.name as yacht_name, b.name as berth_name, m.name as marina_name " +
+					" FROM "+Constant.SCHEMA_ADI+".reservation r, " +
+					" "+Constant.SCHEMA_ADI+".person p, "+
+					" "+Constant.SCHEMA_ADI+".kullanici k, "+
+					" "+Constant.SCHEMA_ADI+".yacht y, " +
+					" "+Constant.SCHEMA_ADI+".berth b, " +
+					" "+Constant.SCHEMA_ADI+".marina m " +
+					" WHERE k.person_id=p.id " +
+					" AND r.yacht_id=y.id " +
+					" AND r.berth_id=b.id " +
+					" AND y.owner_id=p.id " +
+					" AND b.marina_id=m.id " +
+					" AND k.id="+userId+" " +
+					" AND r.reservation_start_date >= CONVERT(Datetime, '"+fromDate+"', 120) " +
+					" AND r.reservation_end_date <= CONVERT(Datetime, '"+toDate+"', 120) " +
+					" ORDER BY r.reservation_end_date DESC";
+			
+		}
+		
+		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sql);
+		query.addEntity("i" , Invoice.class);
+		
+		List<Object[]> list = query.list();
+
+		if (list != null && !list.isEmpty()) {
+			return list;
+		}
+		return null;
+
 	}
 	
 }

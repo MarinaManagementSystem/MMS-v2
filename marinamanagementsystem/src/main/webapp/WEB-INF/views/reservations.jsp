@@ -7,7 +7,7 @@
 
 <head>
 
-    <title>Procurement History - <fmt:message key="label.application.title"/></title>
+    <title>Reservations - <fmt:message key="label.application.title"/></title>
     
 	<%@include file="../includes/commonMeta.jsp"%>
 	<%@include file="../includes/commonStyles.jsp"%>
@@ -118,15 +118,15 @@
 			
 			%>
 			
-			<h2>Procurement History</h2>
-			<p style="font-size: 15px;">In order to view the procurement history, please specify a date range accordingly and submit. If you directly hit the sumit button, all data stored in the database from the beginning of this year will be retrieved.</p>
+			<h2>Reservations</h2>
+			<p style="font-size: 15px;">In order to view the reservations, please specify a date range accordingly and submit. If you directly hit the sumit button, all data stored in the database from the beginning of this year will be retrieved.</p>
 			<br/> 
-					<form action="procurementHistory" id="procurementHistoryFilterForm" name="procurementHistoryFilterForm" method="get" onsubmit="return checkDateAndTimeValues();">
+					<form action="reservations" id="reservationsFilterForm" name="reservationsFilterForm" method="get" onsubmit="return checkDateAndTimeValues();">
 						<table align="center" width="100%" style="table-layout: fixed;">
 							<tr>
 								<td align="right" style="vertical-align:top" width="300px;">
 									<h4 class="hr-left uppercase">Date Range:</h4>
-									<p><i>Please select the date range you want to filter. Invoices generated between these dates will be fetched from the database.</i></p>
+									<p><i>Please select the date range you want to filter. Reservations made or completed between these dates will be fetched from the database.</i></p>
 								</td>
 								<td width="25px;">
 									<!-- Empty column -->
@@ -189,41 +189,48 @@
 				        <table class="table table-hover" style="overflow:scroll;height:80px;width:100%;overflow:auto">
 				            <thead>
 				            <tr style="background-color:#4A4744; table-layout:fixed">
-				                <th><span style="color:white;">Invoice ID</span></th>
-				                <th><span style="color:white;">Invoice Date</span></th>
+				                <th><span style="color:white;">Reservation ID</span></th>
+				                <th><span style="color:white;">Reservation Status</span></th>
+				                <th><span style="color:white;">Reservation Start Date</span></th>
+				                <th><span style="color:white;">Reservation End Date</span></th>
 				                <th><span style="color:white;">Related Yacht Name</span></th>
-				                <th><span style="color:white;">Invoice Total</span></th>
-				                <th><span style="color:white;">Consumptions</span></th>
+				                <th><span style="color:white;">Related Berth Name</span></th>
+				                <th><span style="color:white;">Related Marina Name</span></th>
 				            </tr>
 				            </thead>
 				            
 				            <tbody>
 								<c:choose>
-									<c:when test="${!empty foundInvoices}">
-										<c:forEach items="${foundInvoices}" var="invoice">
+									<c:when test="${!empty foundReservations}">
+										<c:forEach items="${foundReservations}" var="reservation">
 				            	            <tr>
 				            	                <td style="border: 2px solid #DDDDDD;">
-				            	                	${invoice.id}
+				            	                	${consumption[0]}
 				            					</td>
 				            	                <td style="border: 2px solid #DDDDDD;">
-				            	                <fmt:formatDate pattern = "dd-MM-yyyy" value = "${invoice.cutOffDate.time}" />
-				            	                	
+				            	                	${consumption[1]}
 				            					</td>
 				            	                <td style="border: 2px solid #DDDDDD;">
-				            	                	${invoice.yacht.name}
+				            	                	<fmt:formatDate pattern = "dd-MM-yyyy" value = "${consumption[2]}" />
 				            					</td>
 				            	                <td style="border: 2px solid #DDDDDD;">
-				            	                	${invoice.consumption}
+				            	                	<fmt:formatDate pattern = "dd-MM-yyyy" value = "${consumption[3]}" />
 				            					</td>
 				            	                <td style="border: 2px solid #DDDDDD;">
-				            	                	<a class="btn btn-sm btn-border" href="consumptions?invoiceId=${invoice.id}" target="_blank">Consumptions</a>
+				            	                	${consumption[4]}
+				            					</td>
+				            	                <td style="border: 2px solid #DDDDDD;">
+				            	                	${consumption[5]}
+				            					</td>
+				            	                <td style="border: 2px solid #DDDDDD;">
+				            	                	${consumption[6]}
 				            					</td>
 				            				</tr>
 										</c:forEach>
 									</c:when>
 									<c:otherwise>
 										<tr>
-											<td colspan="4" style="border: 2px solid #DDDDDD; height:190px; vertical-align:middle">No data found!</td>
+											<td colspan="7" style="border: 2px solid #DDDDDD; height:190px; vertical-align:middle">No data found!</td>
 										</tr>
 									</c:otherwise>
 								</c:choose>
