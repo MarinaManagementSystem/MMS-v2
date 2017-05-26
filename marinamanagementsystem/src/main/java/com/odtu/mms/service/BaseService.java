@@ -448,11 +448,11 @@ public class BaseService {
 		
 	}
 	
-	public List<Object[]> findReservations(String fromDate, String toDate, Long userId, String userRole) {
+	public List<Object[]> findReservations(String fromDate, String toDate, Long userId, String userRole, Long userRoleId) {
 		
 		String sql ="";
 		
-		if (userRole.equalsIgnoreCase("System Administrator")) {
+		if (userRoleId.equals(Role.ROLE_SYSTEM_ADMINISTRATOR_ID)) {
 			
 			/*
 			sql =	" SELECT * " +
@@ -478,7 +478,7 @@ public class BaseService {
 					" AND r.reservation_end_date <= CONVERT(Datetime, '"+toDate+"', 120) " +
 					" ORDER BY r.reservation_end_date DESC";
 			
-		} else if (userRole.equalsIgnoreCase("Marina Owner")) {
+		} else if (userRoleId.equals(Role.ROLE_MARINA_OWNER_ID)) {
 			
 			sql =	" SELECT r.id as reservation_id, r.status, CONVERT(VARCHAR(10), r.reservation_start_date, 104) as r_start_date, CONVERT(VARCHAR(10), r.reservation_end_date, 104) as r_end_date, y.name as yacht_name, b.name as berth_name, m.name as marina_name " +
 					" FROM "+Constant.SCHEMA_ADI+".reservation r, " +
@@ -496,7 +496,7 @@ public class BaseService {
 					" AND r.berth_id=b.id " +
 					" AND y.owner_id=p.id " +
 					" AND b.marina_id=m.id " +
-					" AND role.display_name='"+userRole+"' " + //Additional part for role check
+					" AND role.id="+userRoleId+" " + //Additional part for role check
 					" AND r.reservation_start_date >= CONVERT(Datetime, '"+fromDate+"', 120) " +
 					" AND r.reservation_end_date <= CONVERT(Datetime, '"+toDate+"', 120) " +
 					" ORDER BY r.reservation_end_date DESC";
@@ -523,7 +523,6 @@ public class BaseService {
 		}
 		
 		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sql);
-		query.addEntity("i" , Invoice.class);
 		
 		List<Object[]> list = query.list();
 

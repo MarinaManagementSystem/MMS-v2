@@ -205,25 +205,25 @@
 										<c:forEach items="${foundReservations}" var="reservation">
 				            	            <tr>
 				            	                <td style="border: 2px solid #DDDDDD;">
-				            	                	${consumption[0]}
+				            	                	${reservation[0]}
 				            					</td>
 				            	                <td style="border: 2px solid #DDDDDD;">
-				            	                	${consumption[1]}
+				            	                	${reservation[1]}
 				            					</td>
 				            	                <td style="border: 2px solid #DDDDDD;">
-				            	                	<fmt:formatDate pattern = "dd-MM-yyyy" value = "${consumption[2]}" />
+				            	                	${reservation[2]}
 				            					</td>
 				            	                <td style="border: 2px solid #DDDDDD;">
-				            	                	<fmt:formatDate pattern = "dd-MM-yyyy" value = "${consumption[3]}" />
+				            	                	${reservation[3]}
 				            					</td>
 				            	                <td style="border: 2px solid #DDDDDD;">
-				            	                	${consumption[4]}
+				            	                	${reservation[4]}
 				            					</td>
 				            	                <td style="border: 2px solid #DDDDDD;">
-				            	                	${consumption[5]}
+				            	                	${reservation[5]}
 				            					</td>
 				            	                <td style="border: 2px solid #DDDDDD;">
-				            	                	${consumption[6]}
+				            	                	${reservation[6]}
 				            					</td>
 				            				</tr>
 										</c:forEach>

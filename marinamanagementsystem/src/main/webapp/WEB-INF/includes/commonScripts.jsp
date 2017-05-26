@@ -2,7 +2,7 @@
 	function askForLogout()
 	{
 	    if (confirm("Are you sure you want to log out?") == true) {
-	    	window.location.href = "logout";
+	    	window.location.href = "logout2.htm";
 	    	return true;
 	    } else {
 	        return false;

@@ -42,11 +42,6 @@
 							                <div class="form-group">
 							                    <label class="col-sm-2 control-label" for="role">Role</label>
 							                    <div class="col-sm-10">
-<!-- 													<select name="roller" id="roller" required="required" multiple> -->
-<%-- 														<c:forEach items="${listRole}" var="role"> --%>
-<%-- 															<option value="${role.id}">${role.displayNmae}</option> --%>
-<%-- 														</c:forEach> --%>
-<!-- 													</select> -->
 													<form:select path="roller" id="roller" required="required">
 														<form:options items="${listRole}" itemLabel="displayNmae" itemValue="id"/>
 													</form:select>

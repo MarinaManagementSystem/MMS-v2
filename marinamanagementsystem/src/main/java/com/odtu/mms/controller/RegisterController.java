@@ -85,8 +85,8 @@ public class RegisterController {
 			Kullanici kullanici = new Kullanici();
 			kullanici.setPerson(person);
 			kullanici.setUsername(person.getEmail());
-//			kullanici.setPassword(dao.yeniParolaOlustur());
-			kullanici.setPassword("12345678");
+			kullanici.setPassword(dao.yeniParolaOlustur());
+//			kullanici.setPassword("12345678");
 			dao.saveOrUpdate(kullanici);
 			
 			TemplateMailCreator.sendKullaniciKayit(kullanici, messageSource);

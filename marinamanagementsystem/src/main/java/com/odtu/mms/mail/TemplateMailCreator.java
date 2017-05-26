@@ -32,7 +32,7 @@ public class TemplateMailCreator {
 		model.put("sayinLabel", "Sayın");
 		model.put("kullaniciKayitBilgiLabel", "Kullanıcı kayıt bilgileri");
 		model.put("kullaniciGirisTitle", "Kayıt Bilgileri");
-		model.put("kullaniciAdiLabel", "kullanıcı adı");
+		model.put("kullaniciAdiLabel", "kullanıcı Adı");
 		model.put("parolaLabel", "parola");
 		model.put("appLabel", "marinamanagementsystem");
 		         
@@ -42,7 +42,7 @@ public class TemplateMailCreator {
         	velocityEngine.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
         	velocityEngine.init();
         	String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "com/odtu/mms/velocity/kullaniciKayit.vm","UTF-8", model);
-        	MailSender.gonder(kullanici.getPerson().getEmail(), "Kullanıcı Kayıt Bilgileri", text);
+        	MailSender.gonder(kullanici.getPerson().getEmail(), "KullanÄ±cÄ± KayÄ±t Bilgileri", text);
         }catch(Exception e){
         	e.printStackTrace();
         }

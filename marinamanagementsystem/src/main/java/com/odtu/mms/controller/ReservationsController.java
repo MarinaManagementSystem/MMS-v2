@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.odtu.mms.model.Invoice;
 import com.odtu.mms.model.Person;
 import com.odtu.mms.model.Reservation;
+import com.odtu.mms.model.Role;
 import com.odtu.mms.service.BaseService;
 import com.odtu.mms.util.CustomCalendarEditor;
 import com.odtu.mms.util.CustomStringEditor;
@@ -57,17 +58,21 @@ public class ReservationsController {
 			Long userId = person.getId();
 			
 			String userRole = "";
+			Long userRoleId;
 			
 			// Get session role and generate the query at Base Service accordingly
-			if (request.isUserInRole("ROLE_SYSTEM_ADMINISTRATOR")) {
+			if (request.isUserInRole(Role.ROLE_SYSTEM_ADMINISTRATOR)) {
+				userRoleId = Role.ROLE_SYSTEM_ADMINISTRATOR_ID;
 				userRole = "System Administrator";
-			} else if (request.isUserInRole("ROLE_MARINA_OWNER")) {
+			} else if (request.isUserInRole(Role.ROLE_MARINA_OWNER)) {
+				userRoleId = Role.ROLE_MARINA_OWNER_ID;
 				userRole = "Marina Owner";
 			} else {
+				userRoleId = Role.ROLE_YACHT_OWNER_ID;
 				userRole = "Yacht Owner";
 			}
 			
-			model.addAttribute("foundReservations", dao.findReservations(fromDateForDB, toDateForDB, userId, userRole));
+			model.addAttribute("foundReservations", dao.findReservations(fromDateForDB, toDateForDB, userId, userRole, userRoleId));
 			model.addAttribute("fromDate", fromDate);
 			model.addAttribute("toDate", toDate);
 			model.addAttribute("userRole", userRole);

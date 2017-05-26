@@ -85,34 +85,15 @@ public class PersonController {
 			@RequestParam (value="newPerson", required=false) Boolean newPerson,
 			HttpServletRequest request, HttpServletResponse response, Model model, Locale locale) {
 		
-
-//		String[] roller = request.getParameterValues("roller");
-//
-//		if(roller.length > 0){
-//			
-//			List<Role> roleList = new ArrayList<Role>();
-//			
-//			for(int i=0; i<roller.length; i++){
-//
-//				Long roleId = MVAUtil.uLong(roller[i]);
-//				Role role = (Role) dao.get(Role.class, roleId);
-//				roleList.add(role);
-//			}
-//			
-//			person.setRoller(roleList);
-//		}
-		
 		dao.saveOrUpdate(person);
-		
-		
 		
 		if(newPerson != null && newPerson.equals(Boolean.TRUE)){
 			
 			Kullanici kullanici = new Kullanici();
 			kullanici.setPerson(person);
 			kullanici.setUsername(person.getEmail());
-//			kullanici.setPassword(dao.yeniParolaOlustur());
-			kullanici.setPassword("12345678");
+			kullanici.setPassword(dao.yeniParolaOlustur());
+//			kullanici.setPassword("1234");
 			dao.saveOrUpdate(kullanici);
 			
 			TemplateMailCreator.sendKullaniciKayit(kullanici, messageSource);

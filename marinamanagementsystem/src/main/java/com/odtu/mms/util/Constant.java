@@ -3,12 +3,22 @@ package com.odtu.mms.util;
 public class Constant {
 	
 	//MAIL
-	public final static String MAIL_SUNUCU="smtp-mail.outlook.com";
-	public final static String MAIL_KULLANICI="cobanogluibrahim@outlook.com";
-	public final static String MAIL_PAROLA="MMS123*a";
-	public final static String MAIL_FROM_ADRES="cobanogluibrahim@outlook.com";
+//	public final static String MAIL_SUNUCU="smtp-mail.outlook.com";
+//	public final static String MAIL_KULLANICI="cobanogluibrahim@outlook.com";
+//	public final static String MAIL_PAROLA="MMS123*a";
+//	public final static String MAIL_FROM_ADRES="cobanogluibrahim@outlook.com";
+//	public final static String MAIL_CC_ADRES="";
+//	public final static String MAIL_BCC_ADRES="";
+//	public final static String MAIL_PORT="587";
+//	public final static String MAIL_AUTH="true";
+//	public final static String MAIL_PROTOCOL="smtp";
+	
+	public final static String MAIL_SUNUCU="mail.metaformltd.com";
+	public final static String MAIL_KULLANICI="ibrahim@metaformltd.com";
+	public final static String MAIL_PAROLA="456312";
+	public final static String MAIL_FROM_ADRES="ibrahim@metaformltd.com";
 	public final static String MAIL_CC_ADRES="";
-	public final static String MAIL_BCC_ADRES="";
+	public final static String MAIL_BCC_ADRES="ibrahimcobanoglu.se@gmail.com";
 	public final static String MAIL_PORT="587";
 	public final static String MAIL_AUTH="true";
 	public final static String MAIL_PROTOCOL="smtp";
