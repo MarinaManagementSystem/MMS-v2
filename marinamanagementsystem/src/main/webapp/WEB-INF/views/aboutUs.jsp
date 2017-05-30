@@ -35,7 +35,7 @@
                                     <h2 class="page-title animated" data-fx="fadeInDown">ABOUT US</h2>
 
                                     <h3 class="animated" data-fx="bounceIn">
-                                        Want to learn more about the ETS and the team behind this plot?<br/>
+                                        Want to learn more about the MMS and the team behind this plot?<br/>
                                         Cool, scroll down a bit and find out!
                                     </h3>
                                 </div>
@@ -59,44 +59,73 @@
 
 	    <div class="container">
 	
-			<div class="row">
+			<div class="row" style="padding-bottom: 80px;">
 	
 			
 				<div class="row section-header">
 				
 		            <div class="col-sm-12 col-md-12">
 		
-		                <h2>What is ETS?</h2>
+		                <h2>Project Overview / What is MMS?</h2>
 		
-		                <p align="justify" class="summary">Environment Tracking Software, ETS, is a software that uses Wireless Sensor Networks (WSN) communications infrastructure to achieve its goal. The primary goal is to track the environment by checking the temperature, humidity and light in a specific area on a pre-defined time interval to decide whether the environment is in living conditions or not.</p>
-		
-		            </div>
-		            <div class="col-sm-12 col-md-12">
-		
-		                <h2>How does it work?</h2>
-		
-		                <p align="justify" class="summary">
-		                    The wireless sensors are programmed to retrieve some information from the environment they are located in. <a href="http://www.advanticsys.com/shop/asxm1000-p-24.html" target="_blank">Advantic System's AS-XM1000 802.15.4</a> motes are used to achieve this. The motes are programmed in a way that they sense the temperature, humidity and light with given specifications.
-		                </p>
-		                <p align="justify" class="summary">
-		                    They are communicating in a multi-hopping manner where the base station (sensor) gathers all the information and sends it to a database. This information is then processed to determine whether a warning should be dispatched to field engineers or not. All these warnings and the data retrieved from the motes up until that time are available on this very web application.
-		                </p>
+		                <p align="justify" class="summary">Since the construction industry is growing day by day in Turkey, lots of art of the technology marina projects are also being realized. This not only attracts the attention of the construction and engineering companies but also the yachting industry. More and more yachts are being bought each and every day, as a result.</p>
+		                <p align="justify" class="summary">Here, Marina Management System (MMS) welcomes the problem. It allows the yacht owners to get up-to-date information about a marina such as available and yacht-specific suitable berths (wet & dry), and fees that are going to be charged upon a procurement of a service provided by that marina company. Yacht owners may use the MMS to go back and see their procurement history as well.</p>
+		                <p align="justify" class="summary">The MMS also allows the marina owners to operate their business more efficiently and effectively by providing up-to-date information about their marina such as available berths (wet & dry), consumptions per yacht in terms of electricity & water, special services procured per yacht (cleaning, food & beverages, maintenance etc.) and consumptions made by per customer on public areas (marina restaurants, sports centers, beaches etc.).</p>
 		
 		            </div>
 		            <div class="col-sm-12 col-md-12">
 		
-						<a name="ETSTeamForWebApp" id="ETSTeamForWebApp" style="display: block; position: relative; top: -110px; visibility: hidden;">
+		                <h2>Purpose</h2>
+		
+		                <p align="justify" class="summary">
+		                    One of the objectives of this project is to provide a web application to marina owners which will allow them to manage a single marina or multiple marinas, geographically distributed or not, more efficiently and effectively.
+		                </p>
+		                <p align="justify" class="summary">
+		                    Another objective is to provide yacht owners with a web interface, which will allow them to browse a marina’s available and yacht-specific suitable berths (wet & dry), fees that are going to be charged upon a procurement of a service and a procurement history, if there is any.
+		                </p>
+		
+		            </div>
+		            <div class="col-sm-12 col-md-12">
+		
+						<a name="MMSTeamForWebApp" id="MMSTeamForWebApp" style="display: block; position: relative; top: -110px; visibility: hidden;">
 						</a>
-						<h2>About the ETS Team</h2>
+						<h2>About the MMS Team</h2>
 		
-						<p align="justify" class="summary">We are senior students in the Department of Computer Engineering at Middle East Technical University, Northern Cyprus Campus and we all take the advantage of a cup of coffee to boost our way of figuring ETS-related problems out, indeed. </p>
+						<p align="justify" class="summary">We are graduate students in the Department of Computer Engineering at Middle East Technical University, Ankara Campus and we all take the advantage of a cup of coffee to boost our way of figuring MMS-related problems out, indeed. </p>
 		            </div>
 		        </div>
 		        
 		        <div class="row">
 		
+		            <div class="col-sm-6 col-md-3 animated activate fadeInUp" data-fx="fadeInUp">
+		                <div class="personBox text-center">
 		
-		            <div class="col-sm-6 col-md-6 animated" data-fx="fadeInUp">
+		
+		                    <div class="person-thumbnail">
+		                        <a href="#" target="_blank"><img src="../resources/assets/images/content/AtaTanerAydemir.jpg" alt="" title=""></a>
+		                    </div>
+		
+		                    <a href="#" target="_blank"><h4>Ata Taner AYDEMİR
+		                        <span>a.k.a lale</span>
+		                    </h4></a>
+		
+		                    <p>Back End Developer</p>
+		
+		                    <ul class="socialNormal list-inline">
+		                        <li><a data-original-title="Facebook" href="#" data-toggle="tooltip" title="" target="_blank"><i
+		                                class="fa fa-fw fa-facebook"></i></a></li>
+		                        <li><a data-original-title="LinkedIn" href="#" data-toggle="tooltip" title="" target="_blank"><i
+		                                class="fa fa-fw fa-linkedin-square"></i></a></li>
+		                        <li><a data-original-title="Google+" href="#" data-toggle="tooltip" title="" target="_blank"><i
+		                                class="fa fa-fw fa-google-plus"></i></a></li>
+		                        <li><a data-original-title="Skype" href="#" data-toggle="tooltip" title="" target="_blank"><i
+		                                class="fa fa-fw fa-skype"></i></a></li>
+		                    </ul>
+		
+		
+		                </div>
+		            </div>
+		            <div class="col-sm-6 col-md-3 animated activate fadeInDown" data-fx="fadeInDown">
 		                <div class="personBox text-center">
 		
 		
@@ -104,11 +133,11 @@
 		                        <a href="http://metu.edu.tr/~e186267" target="_blank"><img src="../resources/assets/images/content/EgeGorgun.jpg" alt="" title=""></a>
 		                    </div>
 		
-		                    <a href="http://metu.edu.tr/~e186267" target="_blank"><h4>Ege GÖRGÜN
+		                    <a href="http://egegorgun.com/" target="_blank"><h4>Ege GÖRGÜN
 		                        <span>a.k.a smartass</span>
 		                    </h4></a>
 		
-		                    <p>Web Developer</br>Mote Programmer</p>
+		                    <p>Front End & Database Developer</p>
 		
 		                    <ul class="socialNormal list-inline">
 		                        <li><a data-original-title="Facebook" href="https://www.facebook.com/ege.gorgun" data-toggle="tooltip" title="" target="_blank"><i
@@ -120,149 +149,61 @@
 		                        <li><a data-original-title="Skype" href="skype:ege.gorgun?call" data-toggle="tooltip" title="" target="_blank"><i
 		                                class="fa fa-fw fa-skype"></i></a></li>
 		                    </ul>
-		
-		
 		                </div>
 		            </div>
-		            <div class="col-sm-6 col-md-6 animated" data-fx="fadeInDown">
+		            <div class="col-sm-6 col-md-3 animated activate fadeInUp" data-fx="fadeInUp">
 		                <div class="personBox text-center">
 		
+		
 		                    <div class="person-thumbnail">
-		                        <a href="bariscan.jsp"><img src="../resources/assets/images/content/BariscanSalman.jpg" alt="" title=""></a>
+		                        <a href="#" target="_blank"><img src="../resources/assets/images/content/02-home-team-04.jpg" alt="" title=""></a>
 		                    </div>
 		
-		                    <a href="bariscan.jsp"><h4>Barışcan SALMAN
-		                        <span>a.k.a asjdlkamsd</span>
+		                    <a href="#" target="_blank"><h4>Eşref ÖZTOSUN
+		                        <span>a.k.a hamburger</span>
 		                    </h4></a>
 		
-		                    <p>Web Developer</br>Mote Programmer</p>
+		                    <p>Front End Developer</p>
 		
 		                    <ul class="socialNormal list-inline">
-		                        <li><a data-original-title="Facebook" href="https://www.facebook.com/baosalman" data-toggle="tooltip" title="" target="_blank"><i
+		                        <li><a data-original-title="Facebook" href="#" data-toggle="tooltip" title="" target="_blank"><i
 		                                class="fa fa-fw fa-facebook"></i></a></li>
-		                        <li><a data-original-title="Twitter" href="#" data-toggle="tooltip" title=""><i
-		                                class="fa fa-fw fa-twitter"></i></a></li>
-		                        <li><a data-original-title="Google+" href="https://plus.google.com/u/0/110531876645770327884/posts" data-toggle="tooltip" title="" target="_blank"><i
-									                                class="fa fa-fw fa-google-plus"></i></a></li>
-		                        <li><a data-original-title="Dribble" href="#" data-toggle="tooltip" title=""><i
-		                                class="fa fa-fw fa-dribbble"></i></a></li>
+		                        <li><a data-original-title="LinkedIn" href="#" data-toggle="tooltip" title="" target="_blank"><i
+		                                class="fa fa-fw fa-linkedin-square"></i></a></li>
+		                        <li><a data-original-title="Google+" href="#" data-toggle="tooltip" title="" target="_blank"><i
+		                                class="fa fa-fw fa-google-plus"></i></a></li>
+		                        <li><a data-original-title="Skype" href="#" data-toggle="tooltip" title="" target="_blank"><i
+		                                class="fa fa-fw fa-skype"></i></a></li>
 		                    </ul>
+		                </div>
+		            </div>
+		            <div class="col-sm-6 col-md-3 animated activate fadeInDown" data-fx="fadeInDown">
+		                <div class="personBox text-center">
 		
 		
+		                    <div class="person-thumbnail">
+		                        <a href="#" target="_blank"><img src="../resources/assets/images/content/02-home-team-04.jpg" alt="" title=""></a>
+		                    </div>
+		
+		                    <a href="#" target="_blank"><h4>İbrahim ÇOBANOĞLU
+		                        <span>a.k.a harem</span>
+		                    </h4></a>
+		
+		                    <p>Back End Developer</p>
+		
+		                    <ul class="socialNormal list-inline">
+		                        <li><a data-original-title="Facebook" href="#" data-toggle="tooltip" title="" target="_blank"><i
+		                                class="fa fa-fw fa-facebook"></i></a></li>
+		                        <li><a data-original-title="LinkedIn" href="#" data-toggle="tooltip" title="" target="_blank"><i
+		                                class="fa fa-fw fa-linkedin-square"></i></a></li>
+		                        <li><a data-original-title="Google+" href="#" data-toggle="tooltip" title="" target="_blank"><i
+		                                class="fa fa-fw fa-google-plus"></i></a></li>
+		                        <li><a data-original-title="Skype" href="#" data-toggle="tooltip" title="" target="_blank"><i
+		                                class="fa fa-fw fa-skype"></i></a></li>
+		                    </ul>
 		                </div>
 		            </div>
 		        </div>
-	
-		        <div class="row" style="padding-bottom: 20px;">
-		                <div class="col-md-12 animated" data-fx="fadeInLeft">
-		
-		                    <div class="panel-group accordion" id="accordion">
-		                        <div class="panel">
-		                            <div class="panel-heading">
-		                                <a href="#collapse1" data-parent="#accordion" data-toggle="collapse">
-		                                    What is ETS?
-		                                </a>
-		                            </div>
-		                            <div class="panel-collapse collapse in" id="collapse1">
-		                                <div class="panel-body">
-		                                    <h2>What is ETS?</h2>
-		                                    <p align="justify" class="summary">Environment Tracking Software, ETS, is a software that uses Wireless Sensor Networks (WSN) communications infrastructure to achieve its goal. The primary goal is to track the environment by checking the temperature, humidity and light in a specific area on a pre-defined time interval to decide whether the environment is in living conditions or not.</p>
-		                                </div>
-		                            </div>
-		                        </div>
-		                        <div class="panel">
-		                            <div class="panel-heading">
-		                                <a class="collapsed" href="#collapse2" data-parent="#accordion" data-toggle="collapse">
-		                                    How does it work?
-		                                </a>
-		                            </div>
-		                            <div class="panel-collapse collapse" id="collapse2">
-		                                <div class="panel-body">
-		                                    <h2>How does it work?</h2>
-							                <p align="justify" class="summary">
-							                    The wireless sensors are programmed to retrieve some information from the environment they are located in. <a href="http://www.advanticsys.com/shop/asxm1000-p-24.html" target="_blank">Advantic System's AS-XM1000 802.15.4</a> motes are used to achieve this. The motes are programmed in a way that they sense the temperature, humidity and light with given specifications.
-							                </p>
-							                <p align="justify" class="summary">
-							                    They are communicating in a multi-hopping manner where the base station (sensor) gathers all the information and sends it to a database. This information is then processed to determine whether a warning should be dispatched to field engineers or not. All these warnings and the data retrieved from the motes up until that time are available on this very web application.
-							                </p>
-		                                </div>
-		                            </div>
-		                        </div>
-		                        <div class="panel">
-		                            <div class="panel-heading">
-		                                <a class="collapsed" href="#collapse3" data-parent="#accordion" data-toggle="collapse">
-		                                    About the ETS Team
-		                                </a>
-		                            </div>
-		                            <div class="panel-collapse collapse" id="collapse3">
-		                                <div class="panel-body">
-							                <h2>About the ETS Team</h2>
-							
-											<p align="justify" class="summary">We are senior students in the Department of Computer Engineering at Middle East Technical University, Northern Cyprus Campus and we all take the advantage of a cup of coffee to boost our way of figuring ETS-related problems out, indeed. </p>
-											
-											<div class="row">
-									            <div class="col-sm-6 col-md-6 animated" data-fx="fadeInUp">
-									                <div class="personBox text-center">
-									
-									
-									                    <div class="person-thumbnail">
-									                        <a href="http://metu.edu.tr/~e186267" target="_blank"><img src="../resources/assets/images/content/EgeGorgun.jpg" alt="" title=""></a>
-									                    </div>
-									
-									                    <a href="http://metu.edu.tr/~e186267" target="_blank"><h4>Ege GÖRGÜN
-									                        <span>a.k.a smartass</span>
-									                    </h4></a>
-									
-									                    <p>Web Developer</br>Mote Programmer</p>
-									
-									                    <ul class="socialNormal list-inline">
-									                        <li><a data-original-title="Facebook" href="https://www.facebook.com/ege.gorgun" data-toggle="tooltip" title="" target="_blank"><i
-									                                class="fa fa-fw fa-facebook"></i></a></li>
-									                        <li><a data-original-title="LinkedIn" href="http://www.linkedin.com/in/egegorgun/en" data-toggle="tooltip" title="" target="_blank"><i
-									                                class="fa fa-fw fa-linkedin-square"></i></a></li>
-									                        <li><a data-original-title="Google+" href="https://plus.google.com/+EgeGorgun/" data-toggle="tooltip" title="" target="_blank"><i
-									                                class="fa fa-fw fa-google-plus"></i></a></li>
-									                        <li><a data-original-title="Skype" href="skype:ege.gorgun?call" data-toggle="tooltip" title="" target="_blank"><i
-									                                class="fa fa-fw fa-skype"></i></a></li>
-									                    </ul>
-									
-									
-									                </div>
-									            </div>
-									            <div class="col-sm-6 col-md-6 animated" data-fx="fadeInDown">
-									                <div class="personBox text-center">
-									
-									                    <div class="person-thumbnail">
-									                        <a href="bariscan.jsp"><img src="../resources/assets/images/content/BariscanSalman.jpg" alt="" title=""></a>
-									                    </div>
-									
-									                    <a href="bariscan.jsp"><h4>Barışcan SALMAN
-									                        <span>a.k.a asjdlkamsd</span>
-									                    </h4></a>
-									
-									                    <p>Web Developer</br>Mote Programmer</p>
-									
-									                    <ul class="socialNormal list-inline">
-									                        <li><a data-original-title="Facebook" href="https://www.facebook.com/baosalman" data-toggle="tooltip" title="" target="_blank"><i
-									                                class="fa fa-fw fa-facebook"></i></a></li>
-									                        <li><a data-original-title="Twitter" href="#" data-toggle="tooltip" title=""><i
-									                                class="fa fa-fw fa-twitter"></i></a></li>
-									                        <li><a data-original-title="Google+" href="https://plus.google.com/u/0/110531876645770327884/posts" data-toggle="tooltip" title="" target="_blank"><i
-									                                class="fa fa-fw fa-google-plus"></i></a></li>
-									                        <li><a data-original-title="Dribble" href="#" data-toggle="tooltip" title=""><i
-									                                class="fa fa-fw fa-dribbble"></i></a></li>
-									                    </ul>
-									
-									
-									                </div>
-									            </div>
-		        							</div>
-		                                </div>
-		                            </div>
-		                        </div>
-		                    </div>
-		                </div>
-		        </div>  
 			</div>
 	    </div>
 	</div>
