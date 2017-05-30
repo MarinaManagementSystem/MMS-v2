@@ -572,7 +572,7 @@ public class BaseService {
 	}
 	
 	public void deletePersonByPersonId(Long personId) {
-		String hql = "update Person set durum=0 where id="+personId;
+		String hql = "update Person set status=0 where id="+personId;
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
 		query.executeUpdate();
 	}
