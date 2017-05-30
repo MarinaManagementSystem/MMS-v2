@@ -19,6 +19,8 @@
  		$(document).ready(function(){
 
 			<sec:authentication var="principal" property="principal" scope="request"/>
+			
+			$('.emailDiv').hide();
  		});
  		
 
@@ -43,10 +45,9 @@
 					async:false,
 					success:function(data){
 						if(data){
-							$('.epostaKullaniciAdiKontrolKurulusDiv').hide();
-							$('.epostaKontrolKurulusDiv').hide();
+							$('.emailDiv').hide();
 						}else{
-							$('.epostaKullaniciAdiKontrolKurulusDiv').show();
+							$('.emailDiv').show();
 							$('#email').val('');
 						}
 					}
@@ -115,6 +116,10 @@
 							                    <div class="col-sm-10">
 							                        <form:input class="form-control" placeholder="Please enter a valid e-mail address" path="email" id="email" maxlength="150" onchange="this.value=ePostaKontrolKisi(this.value); kullaniciAdiniKontrolEt(this.value);" required="required" />
 							                    </div>
+							                    <div class=" alert alert-danger alert-dismissable emailDiv">
+										            <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+										            <strong>Please enter your e-mail address again</strong>!!
+										        </div>
 							                </div>
 							                
 							                <div class="form-group">

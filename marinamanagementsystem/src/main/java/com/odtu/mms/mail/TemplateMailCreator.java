@@ -42,9 +42,30 @@ public class TemplateMailCreator {
         	velocityEngine.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
         	velocityEngine.init();
         	String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "com/odtu/mms/velocity/kullaniciKayit.vm","UTF-8", model);
-        	MailSender.gonder(kullanici.getPerson().getEmail(), "KullanÄ±cÄ± KayÄ±t Bilgileri", text);
+        	MailSender.gonder(kullanici.getPerson().getEmail(), "New User Information", text);
         }catch(Exception e){
         	e.printStackTrace();
         }
 	}
+    public static void sendYeniSifreToKullanici(String personNameSurname,String email,String newPassword,MessageSource messageSource){
+    	Map model  = new HashMap();
+		Locale locale = LocaleContextHolder.getLocale();
+		
+		model.put("dear", "Sayın");
+    	model.put("personNameSurname", personNameSurname);
+    	
+    	model.put("body","Your password has been renewed. Change your password when you log in. New password");
+    	model.put("password",newPassword);
+    	
+    	try{
+			VelocityEngine velocityEngine = new VelocityEngine();
+			velocityEngine.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
+			velocityEngine.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
+			velocityEngine.init();
+			String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "com/odtu/mms/velocity/sendNewPassword.vm", "UTF-8", model);
+			MailSender.gonder(email,"Password Reset Info", text);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+    }
 }

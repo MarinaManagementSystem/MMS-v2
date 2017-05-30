@@ -533,4 +533,48 @@ public class BaseService {
 
 	}
 	
+	public Person getPersonByEmail(String email){
+		
+		String sql =	" SELECT * " +
+						" FROM "+Constant.SCHEMA_ADI+".person p " +
+						" WHERE p.email LIKE '"+email+"' AND status = 1" + 
+						" ";
+		
+		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sql);
+//		query.setString("email", email);	
+		query.addEntity("p" , Person.class);
+		
+		List<Person> list = query.list();
+
+		if (list != null && !list.isEmpty()) {
+			return list.get(0);
+		}
+		return null;
+	}
+	
+	public Kullanici findKullaniciByPersonId(Long personid){
+		
+		String sql =	" SELECT * " +
+						" FROM "+Constant.SCHEMA_ADI+".kullanici k " +
+						" WHERE k.person_id =:personid AND status = 1" + 
+						" ";
+		
+		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sql);
+		query.setLong("personid", personid);	
+		query.addEntity("p" , Kullanici.class);
+
+		List<Kullanici> list = query.list();
+
+		if (list != null && !list.isEmpty()) {
+			return list.get(0);
+		}
+		return null;
+	}
+	
+	public void deletePersonByPersonId(Long personId) {
+		String hql = "update Person set durum=0 where id="+personId;
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		query.executeUpdate();
+	}
+	
 }

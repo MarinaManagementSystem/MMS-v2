@@ -15,6 +15,7 @@
 		<intercept-url pattern="/views/register*" filters="none" />
 		<intercept-url pattern="/views/aboutUs*" filters="none" />
 		<intercept-url pattern="/views/contactUs*" filters="none" />
+		<intercept-url pattern="/views/resetPassword*" filters="none" />
 		<intercept-url pattern="/views/ajaxKullaniciAdiUygunMu*" filters="none" />
 		
 		<intercept-url pattern="/views/hata*" filters="none" />

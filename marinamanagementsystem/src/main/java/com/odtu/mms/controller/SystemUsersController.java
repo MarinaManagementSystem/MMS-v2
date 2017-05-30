@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.odtu.mms.service.BaseService;
 
@@ -23,7 +24,10 @@ public class SystemUsersController {
 	private BaseService dao;
 
 	@RequestMapping(value = "/systemUsers", method = RequestMethod.GET)
-	public String homeGet(HttpServletRequest request, HttpServletResponse response, Model model, Locale locale) {
+	public String homeGet(
+
+			@RequestParam (value="updatedStatus", required=false) Integer updatedStatus,
+			HttpServletRequest request, HttpServletResponse response, Model model, Locale locale) {
 		
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
@@ -31,6 +35,7 @@ public class SystemUsersController {
 		String formattedDate = dateFormat.format(date);
 		
 		model.addAttribute("listPerson", dao.listPerson());
+		model.addAttribute("updatedStatus", updatedStatus);
 		
 		return "systemUsers"; 
 	}

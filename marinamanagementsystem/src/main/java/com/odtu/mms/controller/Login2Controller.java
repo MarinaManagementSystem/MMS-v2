@@ -61,14 +61,14 @@ public class Login2Controller {
 	}
 	
 
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@RequestMapping(value = "/login2", method = RequestMethod.GET)
 	public String login(HttpServletRequest request, HttpServletResponse response, Model model, Locale locale) {
 		String url="pages/login";
 		
 		return url; 
 	}
 	
-	@RequestMapping(value = "/resetpassword", method = RequestMethod.GET)
+	@RequestMapping(value = "/resetpassword2", method = RequestMethod.GET)
 	public String resetPassword(HttpServletRequest request, HttpServletResponse response, Model model, Locale locale) {
 		String url="pages/resetpassword";
 		
@@ -76,7 +76,7 @@ public class Login2Controller {
 		return url; 
 	}
 	
-	@RequestMapping(value = "/resetpassword", method = RequestMethod.POST)
+	@RequestMapping(value = "/resetpassword2", method = RequestMethod.POST)
 	public String resetPasswordPost(HttpServletRequest request, 
 			@RequestParam(value = "email", required = true) String email,
 			HttpServletResponse response, Model model, Locale locale) throws Exception{
@@ -113,7 +113,7 @@ public class Login2Controller {
 		return url; 
 	}
 	
-	@RequestMapping(value = "/butonDeneme", method = RequestMethod.GET)
+	@RequestMapping(value = "/butonDeneme2", method = RequestMethod.GET)
 	public String butonDeneme(HttpServletRequest request, HttpServletResponse response, Model model, Locale locale) {
 		String url="pages/butonDeneme";
 

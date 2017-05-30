@@ -19,6 +19,17 @@
  		$(document).ready(function(){
 
 			<sec:authentication var="principal" property="principal" scope="request"/>
+			
+			<c:choose>
+				<c:when test="${!empty savedPerson && savedPerson != null && savedPerson == 1}">
+					$('.savedPersonInfoDiv').show();
+				</c:when>
+				<c:otherwise>
+					$('.savedPersonInfoDiv').hide();
+				</c:otherwise>
+			</c:choose>
+			
+			
  		});
  		
 
@@ -43,10 +54,9 @@
 					async:false,
 					success:function(data){
 						if(data){
-							$('.epostaKullaniciAdiKontrolKurulusDiv').hide();
-							$('.epostaKontrolKurulusDiv').hide();
+							$('.emailDiv').hide();
 						}else{
-							$('.epostaKullaniciAdiKontrolKurulusDiv').show();
+							$('.emailDiv').show();
 							$('#email').val('');
 						}
 					}
@@ -75,7 +85,10 @@
 <%-- 	<sec:authentication var="principal" property="principal"/>${principal.kisi.ad} ${principal.kisi.soyad} --%>
 
 	<%@include file="../includes/header.jsp"%>
-
+	<div class="alert alert-success alert-dismissable savedPersonInfoDiv">
+<!-- 		<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button> -->
+		<strong>You successfully save your changes</strong>
+	</div>
 	<div class="grey content-area" id="iconbuttons" style="background-color: #FBFBFB;">
 	    <div class="container">
 			<div class="section-top">
