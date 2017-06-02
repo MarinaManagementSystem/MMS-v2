@@ -65,13 +65,13 @@
 							<div id="loginContainer">
 								<form action="../j_spring_security_check" id="loginForm" name="loginForm" method="post">
 									<div class="login">
-										<font style="text-shadow: 0 0 10px #ffffff;">LOGIN</font>
+										<span style="color: white; text-shadow: 0 0 10px #ffffff;">LOGIN</span>
 									</div>
 									<div class="username-text">
-										<font style="text-shadow: 0 0 10px #ffffff;">Username:</font>
+										<span style="color: white; text-shadow: 0 0 10px #ffffff;">Username:</span>
 									</div>
 									<div class="password-text">
-										<font style="text-shadow: 0 0 10px #ffffff;">Password:</font>
+										<span style="color: white; text-shadow: 0 0 10px #ffffff;">Password:</span>
 									</div>
 									<div class="username-field">
 										<input type="text" id="username" name="j_username" required="true" />
@@ -81,13 +81,9 @@
 									</div>
 					
 									<div class="forgot-usr-pwd">
-										<font color=white style="text-shadow: 0 0 10px #ffffff;">
-											Don't you have an account yet? Click <a href="javascript:;"" onclick="openRegister()">>here</a> to register.
-										</font>
-										</br>
-										<font color=white style="text-shadow: 0 0 10px #ffffff;">
-											Don't you remember your password? Click <a href="javascript:;"" onclick="openForgottenPassword()">here</a> to reset your password.
-										</font>
+										<span style="color: white; text-shadow: 0 0 10px #ffffff;">
+											Click to <a href="javascript:;"" onclick="openRegister()">register</a> or <a href="javascript:;"" onclick="openForgottenPassword()">reset your password</a>.
+										</span>
 									</div>
 									<input type="submit" name="submit" value="GO" />
 								</form>

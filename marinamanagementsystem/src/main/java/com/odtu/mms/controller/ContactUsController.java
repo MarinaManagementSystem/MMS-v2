@@ -29,10 +29,4 @@ public class ContactUsController {
 		
 		return "contactUs"; 
 	}
-	
-	@RequestMapping(value = "/contactUs2", method = RequestMethod.GET)
-	public String contactUsGetTwo(HttpServletRequest request, HttpServletResponse response, Model model, Locale locale) {
-		
-		return "contactUs2"; 
-	}
 }

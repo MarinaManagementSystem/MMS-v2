@@ -66,12 +66,12 @@
 	
 			<div class="container">
 				<div class="row">
-				
-					<div class="alert alert-success alert-dismissable passwordSentMessageDiv">
-						<strong>Your new password send to typed email address. Please check your inbox</strong>
+					
+					<div class="alert alert-success alert-dismissable passwordSentMessageDiv" style="margin-top: 55px;">
+						<strong>Your new password is sent to your e-mail address. Please check your inbox.</strong>
 					</div>
-					<div class=" alert alert-danger alert-dismissable kisiNotFoundErrorDiv">
-						<strong>Your typed email address not found. Please be sure your email address and type it again.</strong>
+					<div class=" alert alert-danger alert-dismissable kisiNotFoundErrorDiv" style="margin-top: 55px;">
+						<strong>Your e-mail address could not be found. Please make sure that your e-mail address is typed correctly.</strong>
 					</div>
 			
 							<link rel="stylesheet" type="text/css" href="../resources/assets/css/style_for_login.css" media="all" />
@@ -81,18 +81,18 @@
 							<div id="loginContainer">
 								<form action="resetPassword" id="resetPasswordForm" name="resetPasswordForm" method="post">
 									<div class="login">
-										<font style="text-shadow: 0 0 10px #ffffff;">RESET PASSWORD</font>
+										<span style="color: white; text-shadow: 0 0 10px #ffffff;">RESET PASSWORD</span>
 									</div>
 									<div class="username-text">
-										<font style="text-shadow: 0 0 10px #ffffff;">E-mail:</font>
-									</div>
-									<div class="username-field">
-										<input type="text" id="email" name="email" required="true" />
+										<span style="color: white; text-shadow: 0 0 10px #ffffff;">E-mail:</span>
+										<span class="username-field" style="margin-left: -1px;">
+											<input type="text" id="email" name="email" required="true" />
+										</span>
 									</div>
 					
 									<div class="forgot-usr-pwd">
 										<font color=white style="text-shadow: 0 0 10px #ffffff;">
-											Don't you have an account yet? Click <a href="javascript:void(0)" onclick="openRegister()">>here</a> to register.
+											Don't you have an account yet? Click <a href="javascript:void(0)" onclick="openRegister()">here</a> to register.
 										</font>
 									</div>
 									<input type="submit" name="submit" value="GO" />

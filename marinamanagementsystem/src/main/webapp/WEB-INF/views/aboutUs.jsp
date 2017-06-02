@@ -189,7 +189,7 @@
 		                        <span>a.k.a harem</span>
 		                    </h4></a>
 		
-		                    <p>Back End Developer</p>
+		                    <p>Back End & Database Developer</p>
 		
 		                    <ul class="socialNormal list-inline">
 		                        <li><a data-original-title="Facebook" href="#" data-toggle="tooltip" title="" target="_blank"><i

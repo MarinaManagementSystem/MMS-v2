@@ -72,11 +72,11 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
             
-            <% if (currentPage.contains("login") || currentPage.contains("register") || currentPage.contains("aboutUs") || currentPage.contains("contactUs")) { %>
-	            <li <% if (currentPage.contains("login")) { out.print("class=\"active\""); } %>><a class="dropdown" href="login">Login</a></li>
+            <% if (currentPage.contains("login") || currentPage.contains("register") || currentPage.contains("aboutUs") || currentPage.contains("contactUs") || currentPage.contains("resetPassword")) { %>
+	            <li <% if (currentPage.contains("login") || currentPage.contains("resetPassword")) { out.print("class=\"active\""); } %>><a class="dropdown" href="login">Login</a></li>
 	            <li <% if (currentPage.contains("register")) { out.print("class=\"active\""); } %>><a href="register">Register</a></li>
 	            <li <% if (currentPage.contains("aboutUs")) { out.print("class=\"active\""); } %>><a class="dropdown" href="aboutUs">About</a></li>
-                <li><a class="btn btn-border <% if (currentPage.contains("contactUs")) { out.print("class=\" active\""); } %>" style="border-color: #FF9A00; background: #FF9A00; font-size: 14px; font-weight: normal;" href="contactUs">Contact us!</a></li>
+                <li <% if (currentPage.contains("contactUs")) { out.print("class=\" active\""); } %>><a class="btn btn-border <% if (currentPage.contains("contactUs")) { out.print("class=\" active\""); } %>" style="border-color: #FF9A00; background: #FF9A00; font-size: 14px; font-weight: normal;" href="contactUs">Contact us!</a></li>
             <% } else { %>
 	            <li <% if (currentPage.contains("home")) { out.print("class=\"active\""); } %>><a class="dropdown" href="home">Home</a></li>
 	            

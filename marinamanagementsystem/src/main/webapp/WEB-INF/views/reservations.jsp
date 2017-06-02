@@ -208,7 +208,14 @@
 				            	                	${reservation[0]}
 				            					</td>
 				            	                <td style="border: 2px solid #DDDDDD;">
-				            	                	${reservation[1]}
+					            	                <c:choose>
+					            	                	<c:when test="${reservation[1] == 1}">
+					            	                		Completed or Active
+					            	                	</c:when>
+					            	                	<c:otherwise>
+					            	                		Cancelled
+					            	                	</c:otherwise>
+					            	                </c:choose>
 				            					</td>
 				            	                <td style="border: 2px solid #DDDDDD;">
 				            	                	${reservation[2]}
