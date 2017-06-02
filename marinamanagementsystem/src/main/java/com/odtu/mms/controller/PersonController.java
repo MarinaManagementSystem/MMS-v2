@@ -66,15 +66,16 @@ public class PersonController {
 	@RequestMapping(value = "/editPersonInfo", method = RequestMethod.GET)
 	public String editPersonInfoGet(
 			@ModelAttribute("editPersonInformation") @Valid Person person,
+			@RequestParam (value="savedPerson", required=false) Integer savedPerson,
 			HttpServletRequest request, HttpServletResponse response, Model model, Locale locale) {
 
-		if(person != null && person.getId() != null){
+		if(person != null && person.getId() != null)
 			model.addAttribute("newPerson", false);
-		}else {
+		else 
 			model.addAttribute("newPerson", true);
-		}
 		
 		model.addAttribute("listRole", dao.listTumRoller());
+		model.addAttribute("savedPerson", savedPerson);
 		
 		return "editPersonInfo";
 	}
@@ -99,6 +100,22 @@ public class PersonController {
 			TemplateMailCreator.sendKullaniciKayit(kullanici, messageSource);
 		}
 		
-		return "redirect:editPersonInfo.htm?id="+person.getId();
+		return "redirect:editPersonInfo.htm?id="+person.getId()+"&savedPerson=1";
+	}
+	
+	@RequestMapping(value = "/updatePersonStatus", method = RequestMethod.GET)
+	public String deletePersonGet(
+			@ModelAttribute("editPersonInformation") @Valid Person person,
+			HttpServletRequest request, HttpServletResponse response, Model model, Locale locale) {
+
+		if(person != null && person.getId() != null){
+			if(person.getStatus() != null && person.getStatus().equals(Boolean.TRUE))
+				person.setStatus(Boolean.FALSE);
+			else if(person.getStatus() != null && person.getStatus().equals(Boolean.FALSE))
+				person.setStatus(Boolean.TRUE);
+			dao.saveOrUpdate(person);
+			return "redirect:systemUsers.htm?updatedStatus="+1;
+		}else 
+			return "redirect:systemUsers.htm?updatedStatus="+0;
 	}
 }

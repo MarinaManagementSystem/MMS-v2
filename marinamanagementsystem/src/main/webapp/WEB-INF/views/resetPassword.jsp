@@ -18,24 +18,36 @@
       
  		$(document).ready(function(){
 
- 			<c:if test="${1==1}">
- 				//alert("Hosgeldin!");
- 			</c:if>
  			<c:set var="kisi" scope="request" value="${kisiSessiondaBulunan.id}"/> 
+ 			
+ 			<c:choose>
+ 				<c:when test="${kisiNotFoundError != null && kisiNotFoundError == true}">
+ 					$('.kisiNotFoundErrorDiv').show();
+ 				</c:when>
+ 				<c:otherwise>
+					$('.kisiNotFoundErrorDiv').hide();
+ 				</c:otherwise>
+ 			</c:choose>
+ 			
+ 			<c:choose>
+ 				<c:when test="${passwordSentMessage != null && passwordSentMessage == true}">
+ 					$('.passwordSentMessageDiv').show();
+ 				</c:when>
+ 				<c:otherwise>
+					$('.passwordSentMessageDiv').hide();
+ 				</c:otherwise>
+ 			</c:choose>
+ 			
  			
  		});
  		
  		function setFocus() {
- 			var input = document.getElementById("username");
+ 			var input = document.getElementById("email");
  			input.focus();
  		}
  		
  		function openRegister(){
- 			location.href="register";
- 		}
- 		
- 		function openForgottenPassword(){
- 			location.href="resetPassword";
+ 			location.href="register.htm";
  		}
 
 	</script>
@@ -54,39 +66,33 @@
 	
 			<div class="container">
 				<div class="row">
-							<%-- ${kisiSessiondaBulunan.name} --%>
-							<jsp:useBean id="conversionToMD5" class="com.marinamanagementsystem.conf.MD5" scope="session" />
-							<jsp:setProperty name="conversionToMD5" property="*" />
+				
+					<div class="alert alert-success alert-dismissable passwordSentMessageDiv">
+						<strong>Your new password send to typed email address. Please check your inbox</strong>
+					</div>
+					<div class=" alert alert-danger alert-dismissable kisiNotFoundErrorDiv">
+						<strong>Your typed email address not found. Please be sure your email address and type it again.</strong>
+					</div>
 			
 							<link rel="stylesheet" type="text/css" href="../resources/assets/css/style_for_login.css" media="all" />
 							<br/>
 							<!-- <c:if test="${!empty kisi}"></c:if> -->
 							
 							<div id="loginContainer">
-								<form action="../j_spring_security_check" id="loginForm" name="loginForm" method="post">
+								<form action="resetPassword" id="resetPasswordForm" name="resetPasswordForm" method="post">
 									<div class="login">
-										<font style="text-shadow: 0 0 10px #ffffff;">LOGIN</font>
+										<font style="text-shadow: 0 0 10px #ffffff;">RESET PASSWORD</font>
 									</div>
 									<div class="username-text">
-										<font style="text-shadow: 0 0 10px #ffffff;">Username:</font>
-									</div>
-									<div class="password-text">
-										<font style="text-shadow: 0 0 10px #ffffff;">Password:</font>
+										<font style="text-shadow: 0 0 10px #ffffff;">E-mail:</font>
 									</div>
 									<div class="username-field">
-										<input type="text" id="username" name="j_username" required="true" />
-									</div>
-									<div class="password-field">
-										<input type="password" id="password" name="j_password" required="true" />
+										<input type="text" id="email" name="email" required="true" />
 									</div>
 					
 									<div class="forgot-usr-pwd">
 										<font color=white style="text-shadow: 0 0 10px #ffffff;">
-											Don't you have an account yet? Click <a href="javascript:;"" onclick="openRegister()">>here</a> to register.
-										</font>
-										</br>
-										<font color=white style="text-shadow: 0 0 10px #ffffff;">
-											Don't you remember your password? Click <a href="javascript:;"" onclick="openForgottenPassword()">here</a> to reset your password.
+											Don't you have an account yet? Click <a href="javascript:void(0)" onclick="openRegister()">>here</a> to register.
 										</font>
 									</div>
 									<input type="submit" name="submit" value="GO" />

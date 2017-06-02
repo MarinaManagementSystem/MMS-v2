@@ -14,20 +14,28 @@
 	<%@include file="../includes/commonScripts.jsp"%>
 	
 <script type="text/javascript">
+
+	$(document).ready(function(){
+		
+		<c:choose>
+			<c:when test="${updatedStatus != null && updatedStatus == 1}">
+				$('.updatedStatusDiv').show();
+			</c:when>
+			<c:otherwise>
+				$('.updatedStatusDiv').hide();
+			</c:otherwise>
+		</c:choose>
+		
+		
+	});
 	
-	function askIfSureToDeleteUser(userID, fullNameOfUser, userRole)
+	function askIfSureToDeleteUser(userID, fullNameOfUser)
 	{
-		if(userRole == 3)
-		{
-			alert("Sorry, you are only allowed to browse.");
-			return false;
-		}
-		else if (confirm("Are you sure you want to delete "+fullNameOfUser+"?") == true) {
+		if (confirm("Are you sure you want to delete "+fullNameOfUser+"?") == true) {
 	    	window.location.href = "deletePerson.htm?id="+userID;
 	    	return true;
-	    } else {
+	    } else 
 	        return false;
-	    }
 	}
 	
 	function askIfSureToDeleteUsers(userRole)
@@ -88,30 +96,28 @@
 	<div class="grey content-area" id="iconbuttons" style="background-color: white;">
 	    <div class="container">
 	    
-		    <%
-			// If the viewing device is not mobile, then put some line breaks
-			if(session.getAttribute("isMobile").toString().equalsIgnoreCase("false"))
-			{
-		  		%>
-		    		<br/><br/><br/>
-		    	<%
-			}
-		    %>
 	        
 	        <h2>System Users</h2>
 			<p style="font-size: 15px;">All users under your supervision are listed below.</p>
 			<br/>
-			
-			<div id="addAndRemoveButtons" align="right">
-				<a href="javascript:void(0)" class="btn btn btn-success" onclick="addPerson()">Add a new user</a>
-				<input class="btn btn btn-danger" name="deleteUsersButton" id="deleteUsersButton" value="Delete selected users" type="submit" tabindex="10" disabled="disable" />
+			<div class="alert alert-success alert-dismissable updatedStatusDiv">
+				<strong>Your change was successfuly saved.</strong>
 			</div>
+			
+			<sec:authorize access="hasAnyRole('ROLE_SYSTEM_ADMINISTRATOR')">
+				<div id="addAndRemoveButtons" align="right">
+					<a href="javascript:void(0)" class="btn btn btn-success" onclick="addPerson()">Add a new user</a>
+					<input class="btn btn btn-danger" name="deleteUsersButton" id="deleteUsersButton" value="Delete selected users" type="submit" tabindex="10" disabled="disable" />
+				</div>
+			</sec:authorize>
 			<br/>
 			
 	        <table class="table table-hover" style="overflow:scroll;height:80px;width:100%;overflow:auto">
 	            <thead>
 	            <tr style="background-color:#4A4744; table-layout:fixed">
-	                <th><span style="color:white;">Options</span></th>
+                	<sec:authorize access="hasAnyRole('ROLE_SYSTEM_ADMINISTRATOR')">
+	                	<th><span style="color:white;">Options</span></th>
+	                </sec:authorize>
 	                <th><span style="color:white;">Full Name</span></th>
 	                <th><span style="color:white;">E-mail</span></th>
 					<th><span style="color:white;">Phone Number</span></th>
@@ -124,23 +130,25 @@
 						<c:when test="${!empty listPerson}">
 							<c:forEach items="${listPerson}" var="person">
 	            	            <tr>
-	            	            	<td style="border: 2px solid #DDDDDD;">
-					                    <input type="checkbox" name="selectedUsers" value="${person.id}" onChange="enableOrDisableDeleteUsersButton();" tabindex="1"/>
-			                   			&nbsp;&nbsp;&nbsp;
-	            	                	<a href="javascript:void(0)" onclick="editPerson('${person.id}')">
-	            	                		<img src="../resources/images/edit.png" alt="Edit" height="16" width="16"/>
-	            	                	</a>&nbsp;&nbsp;&nbsp;
-	            	                	<c:choose>
-		            	                	<c:when test="${person.id == kisiSessiondaBulunan.id}">
-		        	                				<img src="../resources/images/deleteDisabled.png" alt="Delete" height="16" width="16"/>
-		            	                	</c:when>
-		            	                	<c:otherwise>
-		        	                			<a href="#" onclick="return askIfSureToDeleteUser(${person.id}, '${person.nameSurname}', ${person.roller});" >
-													<img src="../resources/images/delete.png" alt="Delete" height="16" width="16"/>
-		        	                			</a>
-		            	                	</c:otherwise>
-	            	                	</c:choose>
-	            					</td>
+                					<sec:authorize access="hasAnyRole('ROLE_SYSTEM_ADMINISTRATOR')">
+		            	            	<td style="border: 2px solid #DDDDDD;">
+						                    <input type="checkbox" name="selectedUsers" value="${person.id}" onChange="enableOrDisableDeleteUsersButton();" tabindex="1"/>
+				                   			&nbsp;&nbsp;&nbsp;
+		            	                	<a href="javascript:void(0)" onclick="editPerson('${person.id}')">
+		            	                		<img src="../resources/images/edit.png" alt="Edit" height="16" width="16"/>
+		            	                	</a>&nbsp;&nbsp;&nbsp;
+		            	                	<c:choose>
+			            	                	<c:when test="${person.id == kisiSessiondaBulunan.id}">
+			        	                				<img src="../resources/images/deleteDisabled.png" alt="Delete" height="16" width="16"/>
+			            	                	</c:when>
+			            	                	<c:otherwise>
+			        	                			<a href="#" onclick="return askIfSureToDeleteUser(${person.id}, '${person.nameSurname}');" >
+														<img src="../resources/images/delete.png" alt="Delete" height="16" width="16"/>
+			        	                			</a>
+			            	                	</c:otherwise>
+		            	                	</c:choose>
+		            					</td>
+		            				</sec:authorize>
 	            	                <td style="border: 2px solid #DDDDDD;">
 	            	                	${person.name} ${person.surname}
 	            					</td>
@@ -153,7 +161,7 @@
 	            	                <td style="border: 2px solid #DDDDDD;">
 										<c:forEach items="${person.roller}" var="role" varStatus="index">
 	            	                		${role.displayNmae}
-	            	                		<c:if test="${index.last}">
+	            	                		<c:if test="${index.last == false}">
 	            	                			</br>
 	            	                		</c:if>
 										</c:forEach>
