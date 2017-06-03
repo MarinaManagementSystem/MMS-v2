@@ -59,6 +59,9 @@ public class ProcurementHistoryController {
 			submitCount++;
 			model.addAttribute("submitCount", submitCount);
 		}
+
+		model.addAttribute("marinaGeneralPageActive", "active");
+		model.addAttribute("procurementHistoryPageActive", "active");
 		
 		return "procurementHistory";
 	}

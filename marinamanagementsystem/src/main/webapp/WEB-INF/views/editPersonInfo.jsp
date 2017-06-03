@@ -29,6 +29,8 @@
 				</c:otherwise>
 			</c:choose>
 			
+			$('.emailDiv').hide();
+			
 			
  		});
  		
@@ -37,10 +39,10 @@
  			var epostatest=(/^[a-z]{1}[\d\w\.-]+@[\d\w-]{3,}\.[\w]{2,3}(\.\w{2})?$/);
  		
  			if(!epostatest.test(eposta)){
- 				$('.epostaKontrolKurulusDiv').show();
+ 				$('.emailDiv').show();
  		    	return null;
  		    }else {
- 				$('.epostaKontrolKurulusDiv').hide();
+ 				$('.emailDiv').hide();
  		    	return eposta;
  		    }
  		}
@@ -85,13 +87,13 @@
 <%-- 	<sec:authentication var="principal" property="principal"/>${principal.kisi.ad} ${principal.kisi.soyad} --%>
 
 	<%@include file="../includes/header.jsp"%>
-	<div class="alert alert-success alert-dismissable savedPersonInfoDiv">
-<!-- 		<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button> -->
-		<strong>You successfully save your changes</strong>
-	</div>
 	<div class="grey content-area" id="iconbuttons" style="background-color: #FBFBFB;">
 	    <div class="container">
-			<div class="section-top">
+				<div class="alert alert-success alert-dismissable savedPersonInfoDiv">
+					<strong>You have saved your changes successfully</strong>
+				</div>
+<!-- 			<div class="section-top"> -->
+			<div class="">
 			    <h3 class="uppercase hr-mid text-center">Create/Update an Account @ Marina Management System (MMS)</h3>
 			
 			    <div class="row">

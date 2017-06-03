@@ -37,6 +37,8 @@ public class SystemUsersController {
 		model.addAttribute("listPerson", dao.listPerson());
 		model.addAttribute("updatedStatus", updatedStatus);
 		
+		model.addAttribute("systemUsersPageActive", "active");
+		
 		return "systemUsers"; 
 	}
 	

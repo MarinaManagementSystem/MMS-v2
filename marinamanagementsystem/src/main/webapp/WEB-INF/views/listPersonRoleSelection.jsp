@@ -25,7 +25,7 @@
  		});
  		
  		function kullaniciRolSec(rol){
- 			location.href = 'listKisiRollerGiris.htm?rol='+rol;	
+ 			location.href = 'listPersonRoleSelection.htm?role='+rol;	
  		}
  		
 	</script>
@@ -53,7 +53,7 @@
 							<c:forEach items="${listTumRoller}" var="tumRoller">
 								<c:if test="${tumRoller.name == roller}">
 									<div class="field" style="margin-bottom: -1.75em">
-										<button class="button btn btn-success btn-large" style="display:block; float:none; width: 100%;" onclick="kullaniciRolSec('${roller}')">${tumRoller.name}</button><br/>
+										<button class="button btn btn-success btn-large" style="display:block; float:none; width: 100%;" onclick="kullaniciRolSec('${roller}')">${tumRoller.displayName}</button><br/>
 			                    	</div> <!-- /field -->
 								</c:if>
 							</c:forEach>

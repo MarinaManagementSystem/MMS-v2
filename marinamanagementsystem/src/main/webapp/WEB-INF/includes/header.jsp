@@ -1,3 +1,7 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<%@ page session="true" %>
+<%@page contentType="text/html; charset=UTF-8"%>
+<%@include file="../includes/springTagLibraries.jsp"%>
 <%
 
 	// Detect the current URI so that the active menu headers can be set in the top-menu
@@ -19,43 +23,6 @@
         <span class="icon-bar"></span>
     </button>
 </div>
-<!-- <div class="snap-drawers"> -->
-<!--     <div class="snap-drawer snap-drawer-left"> -->
-<!--         <div> -->
-<!--             <div class="navbar-collapse collapse"> -->
-<!-- 	                <ul class="nav navbar-nav navbar-right"> -->
-<%-- 			            <% if (currentPage.contains("login") || currentPage.contains("register") || currentPage.contains("aboutUs") || currentPage.contains("contactUs")) { %> --%>
-<%-- 				            <li <% if (currentPage.contains("login")) { out.print("class=\"active\""); } %>><a class="dropdown" href="login">Login</a></li> --%>
-<%-- 				            <li <% if (currentPage.contains("register")) { out.print("class=\"active\""); } %>><a href="register">Register</a></li> --%>
-<%-- 				            <li <% if (currentPage.contains("aboutUs")) { out.print("class=\"active\""); } %>><a class="dropdown" href="aboutUs">About</a></li> --%>
-<%-- 			                <li><a class="btn btn-border <% if (currentPage.contains("contactUs")) { out.print("class=\" active\""); } %>" style="border-color: #FF9A00; background: #FF9A00; font-size: 14px; font-weight: normal;" href="contactUs">Contact us!</a></li> --%>
-<%-- 			            <% } else { %> --%>
-<%-- 				            <li <% if (currentPage.contains("home")) { out.print("class=\"active\""); } %>><a class="dropdown" href="home">Home</a></li> --%>
-				            
-<%-- 			                <li class="<% if (currentPage.contains("marinaStatus") || currentPage.contains("reservations") || currentPage.contains("procurementHistory")  || currentPage.contains("consumptions")) { out.print("active "); } %>dropdown"> --%>
-<!-- 			                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Browse</a> -->
-<!-- 			                    <ul class="list-unstyled" role="menu"> -->
-<%-- 			                        <li <% if (currentPage.contains("marinaStatus")) { out.print("class=\"active\""); } %>><a href="marinaStatus">Marina Status&emsp;<span>Browse the marina status</span></a></li> --%>
-<%-- 			                        <li <% if (currentPage.contains("reservations")) { out.print("class=\"active\""); } %>><a href="reservations">Reservations&emsp;<span>All individual reservations</span></a></li> --%>
-<%-- 			                        <li <% if (currentPage.contains("procurementHistory") || currentPage.contains("consumptions")) { out.print("class=\"active\""); } %>><a href="procurementHistory">Procurement History&emsp;<span>All invoices & consumptions</span></a></li> --%>
-<!-- 			                    </ul> -->
-<!-- 			                </li> -->
-				            
-<%-- 				            <li <% if (currentPage.contains("systemUsers")) { out.print("class=\"active\""); } %>><a class="dropdown" href="systemUsers">System Users</a></li> --%>
-<%-- 			                <li><a class="btn btn-border <% if (currentPage.equalsIgnoreCase("logout")) { out.print("class=\" active\""); } %>" style="border-color: #DF2D1C; background: #DF2D1C; font-size: 14px; font-weight: normal;" href="#" onclick="return askForLogout();">Logout</a></li> --%>
-<!-- 			                <br/> -->
-<%-- 			                <div align="right">Welcome, <a href="editPersonInfo?id=${kisiSessiondaBulunan.id}">${kisiSessiondaBulunan.name}.</a></div> --%>
-<!-- 			                <br/> -->
-<%-- 			            <% } %> --%>
-<!-- 	                </ul> -->
-<!--             </div> -->
-<!--         </div> -->
-<!--     </div> -->
-<!-- </div> -->
-<!-- / left navbar -->
-
-<!-- / FOR MOBILE DEVICES -->
-
 
 <nav class="navbar navbar-default navbar-transparent navbar-fixed-top" style="background-color: black;" role="navigation">
     <div class="container" style="position: relative; z-index: 100;">
@@ -71,32 +38,54 @@
 
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-            
-            <% if (currentPage.contains("login") || currentPage.contains("register") || currentPage.contains("aboutUs") || currentPage.contains("contactUs") || currentPage.contains("resetPassword")) { %>
-	            <li <% if (currentPage.contains("login") || currentPage.contains("resetPassword")) { out.print("class=\"active\""); } %>><a class="dropdown" href="login">Login</a></li>
-	            <li <% if (currentPage.contains("register")) { out.print("class=\"active\""); } %>><a href="register">Register</a></li>
-	            <li <% if (currentPage.contains("aboutUs")) { out.print("class=\"active\""); } %>><a class="dropdown" href="aboutUs">About</a></li>
-                <li <% if (currentPage.contains("contactUs")) { out.print("class=\" active\""); } %>><a class="btn btn-border <% if (currentPage.contains("contactUs")) { out.print("class=\" active\""); } %>" style="border-color: #FF9A00; background: #FF9A00; font-size: 14px; font-weight: normal;" href="contactUs">Contact us!</a></li>
-            <% } else { %>
-	            <li <% if (currentPage.contains("home")) { out.print("class=\"active\""); } %>><a class="dropdown" href="home">Home</a></li>
+                    
+				<sec:authentication var="principal" property="principal" />
+            	
+            	<c:choose>
+            		<c:when test="${empty kisiSessiondaBulunan}">
+			            <li class="${loginPageActive }"><a class="dropdown" href="login">Login</a></li>
+			            <li class="${registerPageActive }"><a href="register">Register</a></li>
+			            <li class="${aboutUsPageActive }"><a class="dropdown" href="aboutUs">About</a></li>
+		                <li class="${contactUsPageActive }"><a class="btn btn-border ${contactUsLinkPageActive }" style="border-color: #FF9A00; background: #FF9A00; font-size: 14px; font-weight: normal;" href="contactUs">Contact us!</a></li>
+            		</c:when>
+            		<c:when test="${!empty kisiSessiondaBulunan}">
+                		<sec:authorize access="hasAnyRole('ROLE_MARINA_OWNER') or hasAnyRole('ROLE_YACHT_OWNER')">
+            				<li class="${homePageActive }"><a class="dropdown" href="marinaStatus">Home</a></li>
+            			</sec:authorize>
+                		<sec:authorize access="hasAnyRole('ROLE_MARINA_OWNER') or hasAnyRole('ROLE_YACHT_OWNER')">
+			                <li class="${marinaGeneralPageActive } dropdown">
+			                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Browse</a>
+			                    <ul class="dropdown-menu" role="menu">
+			                        <li class="${marinaStatusPageActive }"><a href="marinaStatus">Marina Status<span>Browse the marina status</span></a></li>
+			                        <li class="${reservationsPageActive }"><a href="reservations">Reservations<span>All individual reservations</span></a></li>
+			                        <li class="${procurementHistoryPageActive }"><a href="procurementHistory">Procurement History<span>All invoices & consumptions</span></a></li>
+			                    </ul>
+			                </li>
+            			</sec:authorize>
+		                <sec:authorize access="hasAnyRole('ROLE_SYSTEM_ADMINISTRATOR')">
+			            	<li class="${systemUsersPageActive }"><a class="dropdown" href="systemUsers">System Users</a></li>
+			            </sec:authorize>
+		                
+						<li class="${personGeneralPageActive } dropdown">
+			            	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Roles</a>
+							<ul class="dropdown-menu" role="menu">
+								<c:forEach items="${principal.listDigerRoller}" var="role"> 
+									<li ><a href="listPersonRoleSelection.htm?role=${role.name}" >${role.displayName }</span></a></li>
+								</c:forEach>
+<%-- 								<c:set var="loopSize" scope="session" value="${fn:length(principal.listDigerRoller)}"/> --%>
+<%-- 								<c:if test="${loopSize > 0}"> --%>
+<!-- 								<hr/> -->
+<%-- 								</c:if> --%>
+							</ul>
+		                </li>
+			            
+		                <li><a class="btn btn-border" style="border-color: #DF2D1C; background: #DF2D1C; font-size: 14px; font-weight: normal;" href="#" onclick="return askForLogout();">Logout</a></li>
+		                <br/>
+		                <div align="right">Welcome, <a href="editPersonInfo?id=${kisiSessiondaBulunan.id}">${kisiSessiondaBulunan.name}.</a></div>
+		                <div align="right">${activeRoleName}</div>
+            		</c:when>
+            	</c:choose>
 	            
-                <li class="<% if (currentPage.contains("marinaStatus") || currentPage.contains("reservations") || currentPage.contains("procurementHistory")  || currentPage.contains("consumptions")) { out.print("active "); } %>dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Browse</a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li <% if (currentPage.contains("marinaStatus")) { out.print("class=\"active\""); } %>><a href="marinaStatus">Marina Status<span>Browse the marina status</span></a></li>
-                        <li <% if (currentPage.contains("reservations")) { out.print("class=\"active\""); } %>><a href="reservations">Reservations<span>All individual reservations</span></a></li>
-                        <li <% if (currentPage.contains("procurementHistory") || currentPage.contains("consumptions")) { out.print("class=\"active\""); } %>><a href="procurementHistory">Procurement History<span>All invoices & consumptions</span></a></li>
-                    </ul>
-                </li>
-	            
-                <sec:authorize access="hasAnyRole('ROLE_SYSTEM_ADMINISTRATOR')">
-	            	<li <% if (currentPage.contains("systemUsers")) { out.print("class=\"active\""); } %>><a class="dropdown" href="systemUsers">System Users</a></li>
-	            </sec:authorize>
-                <li><a class="btn btn-border <% if (currentPage.equalsIgnoreCase("logout")) { out.print("class=\" active\""); } %>" style="border-color: #DF2D1C; background: #DF2D1C; font-size: 14px; font-weight: normal;" href="#" onclick="return askForLogout();">Logout</a></li>
-                <br/>
-                <div align="right">Welcome, <a href="editPersonInfo?id=${kisiSessiondaBulunan.id}">${kisiSessiondaBulunan.name}.</a></div>
-                <br/>
-            <% } %>
             </ul>
         </div>
     </div>

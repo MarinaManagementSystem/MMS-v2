@@ -26,6 +26,9 @@ public class ContactUsController {
 
 	@RequestMapping(value = "/contactUs", method = RequestMethod.GET)
 	public String contactUsGet(HttpServletRequest request, HttpServletResponse response, Model model, Locale locale) {
+
+		model.addAttribute("contactUsPageActive", "active");
+		model.addAttribute("contactUsLinkPageActive", "active");
 		
 		return "contactUs"; 
 	}

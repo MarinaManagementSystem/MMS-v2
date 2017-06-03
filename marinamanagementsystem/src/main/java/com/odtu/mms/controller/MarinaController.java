@@ -79,6 +79,9 @@ public class MarinaController {
 		}
 		
 		model.addAttribute("listBerth", dao.listBerthByFilteringCriterias(filterMap) );
+
+		model.addAttribute("marinaGeneralPageActive", "active");
+		model.addAttribute("marinaStatusPageActive", "active");
 		
 		return "marinaStatus"; 
 	}

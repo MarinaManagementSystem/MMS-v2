@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.odtu.mms.model.Person;
+import com.odtu.mms.model.Role;
 import com.odtu.mms.service.BaseService;
 import com.odtu.mms.util.MyUser;
 
@@ -43,23 +44,29 @@ public class CustomRequestInterceptor extends HandlerInterceptorAdapter {
 				
 		try {
 			MyUser kullanici = null;
+			Role activeRole = null;
+			String activeRoleName = null;
 
 			if (SecurityContextHolder.getContext().getAuthentication() != null) {
-//				if(!handler.toString().contains("AjaxController") ){
-//					
-//					kullanici = (MyUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//					//List<KisiSayfaButonIzin> list = dao.listKisiSayfaButonIzinBySayfaAdVeKisiId(request.getPathInfo(),kullanici.getKisi().getId());
-//					
-//					//request.setAttribute("listSayfaIzin", list);
-//				}
-//				
+
 				kullanici = (MyUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//				
+
 				Person person = (Person) dao.get(Person.class, kullanici.getPerson().getId());
 				request.setAttribute("kisiSessiondaBulunan", person);
-//				request.setAttribute("adsoyad", person.getNameSurname());
-//				
-//				
+				request.setAttribute("adsoyad", person.getNameSurname());
+
+				if(request.isUserInRole(Role.ROLE_SYSTEM_ADMINISTRATOR)){
+					activeRole = (Role) dao.get(Role.class, Role.ROLE_SYSTEM_ADMINISTRATOR_ID);
+					activeRoleName = activeRole.getDisplayName();
+				}else if(request.isUserInRole(Role.ROLE_MARINA_OWNER)){
+					activeRole = (Role) dao.get(Role.class, Role.ROLE_MARINA_OWNER_ID);
+					activeRoleName = activeRole.getDisplayName();
+				}else if(request.isUserInRole(Role.ROLE_YACHT_OWNER)){
+					activeRole = (Role) dao.get(Role.class, Role.ROLE_YACHT_OWNER_ID);
+					activeRoleName = activeRole.getDisplayName();
+				}
+				request.setAttribute("activeRoleName", activeRoleName);
+
 			} 
 			return true;
 

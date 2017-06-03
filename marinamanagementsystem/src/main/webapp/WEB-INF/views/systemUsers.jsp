@@ -142,7 +142,7 @@
 			        	                				<img src="../resources/images/deleteDisabled.png" alt="Delete" height="16" width="16"/>
 			            	                	</c:when>
 			            	                	<c:otherwise>
-			        	                			<a href="#" onclick="return askIfSureToDeleteUser(${person.id}, '${person.nameSurname}');" >
+			        	                			<a href="javascript:void(0)" onclick="return askIfSureToDeleteUser(${person.id}, '${person.nameSurname}');" >
 														<img src="../resources/images/delete.png" alt="Delete" height="16" width="16"/>
 			        	                			</a>
 			            	                	</c:otherwise>
@@ -160,7 +160,7 @@
 	            					</td>
 	            	                <td style="border: 2px solid #DDDDDD;">
 										<c:forEach items="${person.roller}" var="role" varStatus="index">
-	            	                		${role.displayNmae}
+	            	                		${role.displayName}
 	            	                		<c:if test="${index.last == false}">
 	            	                			</br>
 	            	                		</c:if>

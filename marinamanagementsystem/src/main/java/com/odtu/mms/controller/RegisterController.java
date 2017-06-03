@@ -65,6 +65,7 @@ public class RegisterController {
 			HttpServletRequest request, HttpServletResponse response, Model model, Locale locale) {
 		
 //		model.addAttribute("listRole", dao.listTumRoller());
+		model.addAttribute("registerPageActive","active");
 		
 		return "register";
 	}

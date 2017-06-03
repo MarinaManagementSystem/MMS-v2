@@ -51,6 +51,8 @@ public class LoginController {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loginGet(HttpServletRequest request, HttpServletResponse response, Model model, Locale locale) {
 		
+		model.addAttribute("loginPageActive", "active");
+		
 		return "login";
 	}
 	
@@ -68,7 +70,7 @@ public class LoginController {
 			return "redirect:../views/listPersonRoleSelection.htm";
 		
 		if(request.isUserInRole(Role.ROLE_SYSTEM_ADMINISTRATOR))
-			return "redirect:../views/marinaStatus.htm";
+			return "redirect:../views/systemUsers.htm";
 		else 
 			return "redirect:../views/marinaStatus.htm";
 		

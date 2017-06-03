@@ -37,20 +37,22 @@
 							                    <div class="col-sm-10">
 							                        <form:input class="form-control" placeholder="Please enter a valid e-mail address" path="email" id="email" maxlength="150" onchange="this.value=ePostaKontrolKisi(this.value); kullaniciAdiniKontrolEt(this.value);" required="required" />
 							                    </div>
+							                </div>
 							                    <div class=" alert alert-danger alert-dismissable emailDiv">
 										            <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
 										            <strong>Please enter your e-mail address again</strong>!!
 										        </div>
-							                </div>
-							                
-							                <div class="form-group">
-							                    <label class="col-sm-2 control-label" for="role">Role</label>
-							                    <div class="col-sm-10">
-													<form:select path="roller" id="roller" required="required">
-														<form:options items="${listRole}" itemLabel="displayNmae" itemValue="id"/>
-													</form:select>
-							                    </div>
-							                </div>
+		                					
+		                					<sec:authorize access="hasAnyRole('ROLE_SYSTEM_ADMINISTRATOR')">
+								                <div class="form-group">
+								                    <label class="col-sm-2 control-label" for="role">Role</label>
+								                    <div class="col-sm-10">
+														<form:select path="roller" id="roller" required="required">
+															<form:options items="${listRole}" itemLabel="displayName" itemValue="id"/>
+														</form:select>
+								                    </div>
+								                </div>
+							                </sec:authorize>
 							                
 							                <div class="form-group">
 							                    <div class="col-sm-offset-2 col-sm-10">

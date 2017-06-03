@@ -48,7 +48,7 @@ public class Role extends BaseModel implements Serializable{
 
 	@Column(name = "display_name", columnDefinition="text")
 	@Type(type = "org.hibernate.type.TextType")
-	private String displayNmae="";
+	private String displayName="";
 	
 	@Column(name = "status",columnDefinition="integer")
 	@Type(type = "org.hibernate.type.NumericBooleanType")
@@ -62,12 +62,12 @@ public class Role extends BaseModel implements Serializable{
 		this.name = name;
 	}
 
-	public String getDisplayNmae() {
-		return displayNmae;
+	public String getDisplayName() {
+		return displayName;
 	}
 
-	public void setDisplayNmae(String displayNmae) {
-		this.displayNmae = displayNmae;
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
 	}	
 
 	public Boolean getStatus() {

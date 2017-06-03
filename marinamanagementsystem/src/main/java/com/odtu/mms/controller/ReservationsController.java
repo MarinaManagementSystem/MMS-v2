@@ -81,7 +81,21 @@ public class ReservationsController {
 			submitCount++;
 			model.addAttribute("submitCount", submitCount);
 		}
+
+		model.addAttribute("marinaGeneralPageActive", "active");
+		model.addAttribute("reservationsPageActive", "active");
+		
 		
 		return "reservations";
+	}
+
+	@RequestMapping(value = "/makeReservation", method = RequestMethod.GET)
+	public String makeReservationGet(
+			@RequestParam(value = "berthId" , required = false) Long berthId,
+			@RequestParam(value = "fromDate" , required = false) String fromDate,
+			@RequestParam(value = "toDate" , required = false) String toDate,
+			HttpServletRequest request, HttpServletResponse response, Model model, Locale locale) {
+		
+		return "makeReservation";
 	}
 }

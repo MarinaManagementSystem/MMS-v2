@@ -55,8 +55,9 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/aboutUs", method = RequestMethod.GET)
-//	@RequestMapping(value = {"/","/sifremiDegistir" }, method = RequestMethod.GET)
 	public String aboutUsGet(HttpServletRequest request, HttpServletResponse response, Model model, Locale locale) {
+		
+		model.addAttribute("aboutUsPageActive", "active");
 		
 		return "aboutUs"; 
 	}
