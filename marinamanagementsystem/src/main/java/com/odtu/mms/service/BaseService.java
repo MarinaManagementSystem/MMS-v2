@@ -303,30 +303,45 @@ public class BaseService {
 			return list;
 		return null;
 	}
+
 	
 	
 	public List<Berth> listBerthByFilteringCriterias(HashMap<String, String> filterMap)
 	{
 		String criterias = "";
 		String queryStr = "";
+		String criteriasDate = "";
+		Integer counterCriteria = 2;
 		
 		if(filterMap.isEmpty() == false)
-		{
+		{ 
 			if(filterMap.containsKey("status") == true)
 			{
 				criterias += " b.status='" + filterMap.get("status") + "'";
+				counterCriteria++;
+				if(counterCriteria < filterMap.size())
+					criterias += " AND ";
 			}
 			if(filterMap.containsKey("electricity_capacity") == true)
 			{
 				criterias += " b.electricity_capacity=" + filterMap.get("electricity_capacity");
+				counterCriteria++;
+				if(counterCriteria < filterMap.size())
+					criterias += " AND ";
 			}
 			if(filterMap.containsKey("water_capacity") == true)
 			{
 				criterias += " b.water_capacity=" +filterMap.get("water_capacity");
+				counterCriteria++;
+				if(counterCriteria < filterMap.size())
+					criterias += " AND ";
 			}
 			if(filterMap.containsKey("fuel_capacity") == true)
 			{
 				criterias += " b.fuel_capacity=" + filterMap.get("fuel_capacity");
+				counterCriteria++;
+				if(counterCriteria < filterMap.size())
+					criterias += " AND ";
 			}
 			/*
 			 * MAX & MIN WIDTH  
@@ -335,14 +350,23 @@ public class BaseService {
 			if(filterMap.containsKey("min_width") == true && filterMap.containsKey("max_width") == false)
 			{
 				criterias += " b.min_width>=" + filterMap.get("min_width");
+				counterCriteria++;
+				if(counterCriteria < filterMap.size())
+					criterias += " AND ";
 			}
 			if(filterMap.containsKey("max_width") == true && filterMap.containsKey("min_width") == false)
 			{
-				criterias += " b.max_width<=" + filterMap.get("max_width");
+				criterias += " b.max_width>=" + filterMap.get("max_width");
+				counterCriteria++;
+				if(counterCriteria < filterMap.size())
+					criterias += " AND ";
 			}
 			if(filterMap.containsKey("max_width") == true && filterMap.containsKey("min_width") == true)
 			{
 				criterias += " b.max_width BETWEEN " + filterMap.get("min_width")+  " AND " + filterMap.get("max_width");
+				counterCriteria++;
+				if(counterCriteria < filterMap.size())
+					criterias += " AND ";
 			}
 			
 			/*
@@ -353,20 +377,44 @@ public class BaseService {
 			if(filterMap.containsKey("min_length") == true && filterMap.containsKey("max_length") == false)
 			{
 				criterias += " b.min_length>=" + filterMap.get("min_length");
+				counterCriteria++;
+				if(counterCriteria < filterMap.size())
+					criterias += " AND ";
 			}
 			if(filterMap.containsKey("max_length") == true && filterMap.containsKey("min_length") == false)
 			{
-				criterias += " b.max_length<=" + filterMap.get("max_length");
+				
+				criterias += " b.max_length>=" + filterMap.get("max_length");
+				counterCriteria++;
+				if(counterCriteria < filterMap.size())
+					criterias += " AND ";
 			}
 			if(filterMap.containsKey("max_length") == true && filterMap.containsKey("min_length") == true)
 			{
 				criterias += " b.max_length BETWEEN " + filterMap.get("min_length")+  " AND " + filterMap.get("max_width");
+				counterCriteria++;
+				if(counterCriteria < filterMap.size())
+					criterias += " AND ";
+			}
+			
+
+			if(filterMap.containsKey("reservation_start_date") == true)
+			{
+				criteriasDate += " r.reservation_start_date < CONVERT(Datetime, '"+filterMap.get("reservation_start_date")+"', 120)  AND  r.reservation_end_date > CONVERT(Datetime, '"+filterMap.get("reservation_start_date")+"', 120)";
+			}
+			if(filterMap.containsKey("reservation_end_date") == true)
+			{
+				criteriasDate += " AND r.reservation_start_date < CONVERT(Datetime, '"+filterMap.get("reservation_end_date")+"', 120)  AND  r.reservation_end_date > CONVERT(Datetime, '"+filterMap.get("reservation_end_date")+"', 120)";
 			}
 		}
 		
 		if(criterias != "")
 		{
-			queryStr = " select * from " + Constant.SCHEMA_ADI + ".berth b where " + criterias;
+			queryStr = " select * from dbo.berth b2 where b2.id NOT IN ( " +					
+						" select DISTINCT (b.id) as berthid  from " + Constant.SCHEMA_ADI + ".berth b " + 
+						" inner join " + Constant.SCHEMA_ADI + ".reservation r on r.status=1 and " + criteriasDate+
+						" where " + criterias + 
+						" and r.berth_id=b.id )";
 		}
 		else
 		{
@@ -383,7 +431,7 @@ public class BaseService {
 		
 		if(list != null && !list.isEmpty())
 			return list;
-		return null;
+		return null;		
 	}
 	
 	public List<Invoice> findInvoices(String fromDate, String toDate) {

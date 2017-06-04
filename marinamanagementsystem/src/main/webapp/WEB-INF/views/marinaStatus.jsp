@@ -1,26 +1,25 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<%@ page session="true" %>
-<%@page contentType="text/html; charset=UTF-8"%>
+<%@ page session="true"%>
+<%@ page contentType="text/html; charset=UTF-8"
+	import="java.io.*, java.util.*, java.util.Date, java.text.*"
+	pageEncoding="UTF-8"%>
 <%@include file="../includes/springTagLibraries.jsp"%>
 
 <html>
 
 <head>
 
-    <title><fmt:message key="label.application.title"/></title>
-    <link rel="stylesheet" href="../resources/assets/css/AdvanceSearchDropDownMenu.css"></link>
-	<%@include file="../includes/commonMeta.jsp"%>
-	<%@include file="../includes/commonStyles.jsp"%>
-	<%@include file="../includes/commonScripts.jsp"%>
-	<script src="../resources/js/markerclusterer.js"></script>
-	
-	<script>    
- 		$(document).ready(function(){
- 			
- 		});
-	</script>
+<title><fmt:message key="label.application.title" /></title>
+<link rel="stylesheet"
+	href="../resources/assets/css/AdvanceSearchDropDownMenu.css"></link>
+<%@include file="../includes/commonMeta.jsp"%>
+<%@include file="../includes/commonStyles.jsp"%>
+<%@include file="../includes/commonScripts.jsp"%>
+<script src="../resources/js/markerclusterer.js"></script>
 
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkK3LRevjeZz0nrdm5k6tKX0EBihlS5jo&sensor=false"></script>
+
+<script type="text/javascript"
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkK3LRevjeZz0nrdm5k6tKX0EBihlS5jo&sensor=false"></script>
 <script type="text/javascript">
     window.onload = function () {
         var mapOptions = {
@@ -41,9 +40,11 @@
         
         
         var markers = locations.map(function(location, i) {
+        	
             return new google.maps.Marker({
               position: location,
-              label: "" + i
+              //label: "" + i,
+              icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png' 
             });
           });
         
@@ -53,82 +54,65 @@
 //         "marker <strong>content</strong> <span style=\"font-size: 30px;\">here</span>";
         for (i = 0; i < markers.length; i++)
        	{
-       		google.maps.event.addListener(markers[i], 'click', function () {
-                var markerContent = 'Name : ${listBerth.get(i).name} </br>' + 
-                'Status: ${listBerth.get(i).getStatus() } </br>' +
-				'Electricity Capacity: ${listBerth.get(i).getElectricityCapacity() } </br>'+
-				'Water Capacity ${listBerth.get(i).getWaterCapacity() } </br>'+
-				'Fuel Capacity: ${listBerth.get(i).getFuelCapacity() } </br>'+
-				'Length: ${listBerth.get(i).getMinLength()} - ${listBerth.get(i).getMaxLength()} </br> '+
-				'Width: ${listBerth.get(i).minWidth} - ${listBerth.get(i).maxWidth} </br>';
-                infoWindow.setContent(markerContent);
-                infoWindow.open(map, this);
-            });
+        	<c:forEach items="${listBerth}" var="berth">
+    		   if(${berth.status} == false && ${berth.id} == (i+1))
+    			   {
+    			   		markers[i].setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png');
+    			   }
+   			 </c:forEach>
+
+   			 <c:choose>
+   			 	<c:when test="${!empty hFromDate && !empty hToDate}">
+	   	       		google.maps.event.addListener(markers[i], 'click', function () {
+	   	                var markerContent = '<b>Name</b>: ${listBerth.get(i).name} </br>' + 
+	   	                '<b>Status:</b> ${listBerth.get(i).getStatus() } </br>' +
+	   					'<b>Electricity Capacity</b>: ${listBerth.get(i).getElectricityCapacity() } </br>'+
+	   					'<b>Water Capacity:</b> ${listBerth.get(i).getWaterCapacity() } </br>'+
+	   					'<b>Fuel Capacity:</b> ${listBerth.get(i).getFuelCapacity() } </br>'+
+	   					'<b>Length:</b> ${listBerth.get(i).getMinLength()} - ${listBerth.get(i).getMaxLength()} </br> '+
+	   					'<b>Width:</b> ${listBerth.get(i).minWidth} - ${listBerth.get(i).maxWidth} </br>' +
+	   					'<input type="button" class="btn btn-success" id="btnAdd" value="Reserve" onClick="openReservationPage(\"${listBerth.get(i).id}\", \"${hFromDate}\", \"${hToDate}\")">';
+	   	                infoWindow.setContent(markerContent);
+	   	                infoWindow.open(map, this);
+	   	            });
+   			 	</c:when>
+   			 	<c:otherwise>
+	   	       		google.maps.event.addListener(markers[i], 'click', function () {
+	   	                var markerContent = '<b>Name</b>: ${listBerth.get(i).name} </br>' + 
+	   	                '<b>Status:</b> ${listBerth.get(i).getStatus() } </br>' +
+	   					'<b>Electricity Capacity</b>: ${listBerth.get(i).getElectricityCapacity() } </br>'+
+	   					'<b>Water Capacity:</b> ${listBerth.get(i).getWaterCapacity() } </br>'+
+	   					'<b>Fuel Capacity:</b> ${listBerth.get(i).getFuelCapacity() } </br>'+
+	   					'<b>Length:</b> ${listBerth.get(i).getMinLength()} - ${listBerth.get(i).getMaxLength()} </br> '+
+	   					'<b>Width:</b> ${listBerth.get(i).minWidth} - ${listBerth.get(i).maxWidth} </br>' +
+	   					' ';
+	   	                infoWindow.setContent(markerContent);
+	   	                infoWindow.open(map, this);
+	   	            });
+   			 	</c:otherwise>
+   			 </c:choose>
        	}
-
         
-
-        $(function() {
-            $(".clickableRow3").on("click", function() {
-            	
-            	google.maps.event.trigger(markers[3], "click", {});
-            	map.setCenter(markers[3].getPosition());
+        $(function(){
+        	$("table tr").click(function(){
+        	    //alert (this.rowIndex);
+        	    var index = this.rowIndex;
+        	    
+        	    google.maps.event.trigger(markers[index], "click", {});
+            	map.setCenter(markers[index].getPosition());
             	map.setZoom(18);
-
-            });
-
-        });
-
-        $(function() {
-            $(".clickableRow1").on("click", function() {
-            	
-            	google.maps.event.trigger(markers[1], "click", {});
-            	map.setCenter(markers[1].getPosition());
-            	map.setZoom(18);
-
-            });
-
-        });
-        
-
-        $(function() {
-            $(".clickableRow2").on("click", function() {
-            	
-            	google.maps.event.trigger(markers[2], "click", {});
-            	map.setCenter(markers[2].getPosition());
-            	map.setZoom(18);
-            });
-
-        });
-        
-
-        $(function() {
-            $(".clickableRow4").on("click", function() {
-            	
-            	google.maps.event.trigger(markers[4], "click", {});
-            	map.setCenter(markers[4].getPosition());
-            	map.setZoom(18);
-            });
-
-        });
-        
-
-        $(function() {
-            $(".clickableRow5").on("click", function() {
-            	
-            	google.maps.event.trigger(markers[0], "click", {});
-            	map.setCenter(markers[0].getPosition());
-            	map.setZoom(18);
-            });
-
-        });
-        
-        function cagir(id){
-
-        	google.maps.event.trigger(markers[id], "click", {});
-        }
+        	});
+        	});
     }
 </script>
+
+<script>
+function openReservationPage(berthId, fromDate, toDate) {
+	location.href = "makeReservation?berthId=" + berthId+"&fromDate="+fromDate+"&toDate="+toDate;
+	}
+
+</script>
+
 
 <script type="text/javascript">
 // When the user clicks on the button, 
@@ -151,171 +135,234 @@ window.onclick = function(event) {
     }
   }
 }
-
-
 </script>
+
+<script type="text/javascript">
+	
+	function checkDateAndTimeValues()
+	{
+		/*
+		if(document.getElementById("hiddenDateIntervalForPlot").value == "checked")
+		{
+			alert(document.getElementById('startOfDateForPlot').value);
+			alert(document.getElementById('endOfDateForPlot').value);
+			var startOfDateForPlot = document.getElementById('hiddenStartOfDateForPlot').value;
+			var endOfDateForPlot = document.getElementById('hiddenEndOfDateForPlot').value;
+			
+			alert(startOfDateForPlot);
+			alert(endOfDateForPlot);
+			
+			if(startOfDateForPlot > endOfDateForPlot)
+			{
+				alert("Start Date should be less than or equal to End Date!");
+				return false;
+			}
+		}
+		if(document.getElementById("hiddenDateAndTimeTogetherForPlot").value == "checked")
+		{
+			
+			var fromDateForPlot = new Date(document.getElementById('hiddenFromDateForPlot').value);
+			var toDateForPlot = new Date(document.getElementById('hiddenToDateForPlot').value);
+			
+			if(fromDateForPlot > toDateForPlot)
+			{
+				alert("From Date should be less than or equal to To Date!");
+				return false;
+			}
+		}
+		return true;
+		*/
+		return true;
+	}
+	
+	function formatDate(d)
+	{
+	    var month = d.getMonth();
+	    var day = d.getDate();
+	    month = month + 1;
+
+	    month = month + "";
+
+	    if (month.length == 1)
+	    {
+	        month = "0" + month;
+	    }
+
+	    day = day + "";
+
+	    if (day.length == 1)
+	    {
+	        day = "0" + day;
+	    }
+
+	    return day + '.' + month + '.' + d.getFullYear();
+	}
+	
+</script>
+
 </head>
+
+<%@include file="../includes/openingDivTagsForMobileViews.jsp"%>
 
 <body class="withAnimation">
 
 	<%@include file="../includes/header.jsp"%>
 
+	<%
+		String browser = request.getHeader("User-Agent");
+		boolean isChrome = (browser != null && browser.indexOf("Chrome/") != -1);
+		int year = Calendar.getInstance().get(Calendar.YEAR);
+		int month = Calendar.getInstance().get(Calendar.MONTH);
+		int day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
 
-	<br/><br/>
-	<div id="boxedWrapper" class="snap-content">	
-		<div class="grey content-area" id="iconbuttons" style="background-color: #FBFBFB;">	
+		month++;
+
+		int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+		int minutes = Calendar.getInstance().get(Calendar.MINUTE);
+
+		DecimalFormat decimalFormatter = new DecimalFormat("00");
+
+		if (request.getParameter("fromDate") != null && request.getParameter("toDate") != null) {
+
+		}
+	%>
+
+	<br />
+	<br />
+	<div id="boxedWrapper" class="snap-content">
+		<div class="grey content-area" id="iconbuttons"
+			style="background-color: #FBFBFB;">
 			<div class="container">
-				<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-			  		Advanced Search
+				<button type="button" class="btn btn-primary btn-lg"
+					data-toggle="modal" data-target="#myModal">Advanced Search
 				</button>
 				<!-- Modal -->
-				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-				  <div class="modal-dialog" role="document">
-				    <div class="modal-content">
-				      <div class="modal-header">
-				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-				      </div>
-				      <div class="modal-body">
-							<form action="marinaStatus" id="marinaStatusFilterForm" name="marinaStatusFilterForm" method="get">
-								<table align="center" width="100%" style="table-layout: fixed;">
-									<tr>
-										<td align="right" style="vertical-align:top" width="300px;">
-											<h4 class="hr-left uppercase">Date Range:</h4>
-											<p><i>Please select the date range you want to filter. Invoices generated between these dates will be fetched from the database.</i></p>
-										</td>
-										<td width="25px;">
-											<!-- Empty column -->
-										</td>
-										<td>
-											<table>
-												<tr>
-													<td>
-														<table>
-															<tr>
-																<td>
-																	Min Length:
-																</td>
-																<td width="10px;">
-																	<!-- Empty column -->
-																</td>
-																<td>
-																	<input type="text" value="" name="minLength" id="minLength" class="form-control input-sm" tabindex="1" />
-																</td>
-															</tr>
-														</table>
-													</td>
-												</tr>
-											</table>
-										</td>
-									</tr>
-									<tr>
-										<td align="right">
-											<!-- Empty column -->
-										</td>
-										<td width="25px;">
-											<!-- Empty column -->
-										</td>
-										<td align="left">
-											<input class="btn btn-default" name="submit" id="submit" tabindex="522" value="Submit" type="submit" tabindex="2">
-										</td>
-									</tr>
-								</table>
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+					aria-labelledby="myModalLabel">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<form action="marinaStatus" id="marinaStatusFilterForm"
+								name="marinaStatusFilterForm" method="get">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+									<h4 class="modal-title" id="myModalLabel">
+										<b></b>Filtering Options</b>
+									</h4>
+								</div>
+								<div class="modal-body">
+									<table align="center" width="100%" style="table-layout: fixed;">
+										<tr>
+											<td>From Date:</td>
+											<td><input type="text"
+												value="<%if (request.getParameter("fromDate") != null) {
+				out.print(request.getParameter("fromDate"));
+			} else {
+				out.print("01.01." + year);
+			}%>"
+												name="fromDate" id="fromDate" class="form-control input-sm"
+												tabindex="1" required="required"/></td>
+										</tr>
+										<tr>
+											<td>To Date:</td>
+											<td><input type="text"
+												value="<%if (request.getParameter("toDate") != null) {
+				out.print(request.getParameter("toDate"));
+			} else {
+				out.print(decimalFormatter.format(day) + "." + decimalFormatter.format(month) + "." + year);
+			}%>"
+												name="toDate" id="toDate" class="form-control input-sm"
+												tabindex="2" required="required"/></td>
+										</tr>
+										<tr>
+											<td>Min Length:</td>
+											<td><input type="text" value="" name="minLength"
+												id="minLength" class="form-control input-sm" tabindex="3" /></td>
+										</tr>
+										<tr>
+											<td><b>Length:</b></td>
+											<td><input type="text" value="" name="maxLength"
+												id="maxLength" class="form-control input-sm" tabindex="4" /></td>
+										</tr>
+										<tr>
+											<td>Min Width:</td>
+											<td><input type="text" value="" name="minWidth"
+												id="minWidth" class="form-control input-sm" tabindex="5" /></td>
+										</tr>
+										<tr>
+											<td><b>Width:</b></td>
+											<td><input type="text" value="" name="maxWidth"
+												id="maxWidth" class="form-control input-sm" tabindex="6" /></td>
+										</tr>
+										<tr>
+											<td><b>Fuel Capacity:</b></td>
+											<td><input type="text" value="" name="fuelCapacity"
+												id="fuelCapacity" class="form-control input-sm" tabindex="7" /></td>
+										</tr>
+										<tr>
+											<td><b>Water Capacity:</b></td>
+											<td><input type="text" value="" name="waterCapacity"
+												id="waterCapacity" class="form-control input-sm"
+												tabindex="8" /></td>
+										</tr>
+										<tr>
+											<td><b>Electricity Capacity:</b></td>
+											<td><input type="text" value=""
+												name="electricityCapacity" id="electricityCapacity"
+												class="form-control input-sm" tabindex="9" /></td>
+										</tr>
+										<tr>
+											<input type="hidden" name="hiddenFromDate"
+												id="hiddenFromDate" value="" />
+											<input type="hidden" name="hiddenToDate" id="hiddenToDate"
+												value="" />
+										</tr>
+									</table>
+								</div>
+								<div class="modal-footer">
+									<input class="btn btn-primary" name="submit" id="submit"
+										value="Submit" type="submit" tabindex="10">
+								</div>
 							</form>
-				      </div>
-				      <div class="modal-footer">
-				        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				        <button type="button" class="btn btn-primary">Save changes</button>
-				      </div>
-				    </div>
-				  </div>
+						</div>
+					</div>
 				</div>
-				
-				
-				
-				
-				
-				
-							<form action="marinaStatus" id="marinaStatusFilterForm" name="marinaStatusFilterForm" method="get">
-								<table align="center" width="100%" style="table-layout: fixed;">
-									<tr>
-										<td align="right" style="vertical-align:top" width="300px;">
-											<h4 class="hr-left uppercase">Date Range:</h4>
-											<p><i>Please select the date range you want to filter. Invoices generated between these dates will be fetched from the database.</i></p>
-										</td>
-										<td width="25px;">
-											<!-- Empty column -->
-										</td>
-										<td>
-											<table>
-												<tr>
-													<td>
-														<table>
-															<tr>
-																<td>
-																	Min Length:
-																</td>
-																<td width="10px;">
-																	<!-- Empty column -->
-																</td>
-																<td>
-																	<input type="text" value="" name="minLength" id="minLength" class="form-control input-sm" tabindex="1" />
-																</td>
-															</tr>
-														</table>
-													</td>
-												</tr>
-											</table>
-										</td>
-									</tr>
-									<tr>
-										<td align="right">
-											<!-- Empty column -->
-										</td>
-										<td width="25px;">
-											<!-- Empty column -->
-										</td>
-										<td align="left">
-											<input class="btn btn-default" name="submit" id="submit" tabindex="522" value="Submit" type="submit" tabindex="2">
-										</td>
-									</tr>
-								</table>
-							</form>
-				
-				
-				
 				<div class="row">
 					<div class="col-sm-9">
 						<div id="dvMap" style="height: 500px;"></div>
 					</div>
 					<div class="col-sm-3">
 						<div>
-							<table style="max-height: 550px !important;  overflow-y: scroll; display: -webkit-box;">
+							<table id="dynamicTable"
+								style="max-height: 550px !important; overflow-y: scroll; display: -webkit-box;">
 								<tbody>
-        						<c:forEach items="${listBerth}" var="berth">
-									<tr class='clickableRow${berth.id}' >
-										<td> Name: ${berth.getName() }
-<%-- 											Type: ${ berth.getBerthType()} --%>
-											</br>Status: ${berth.getStatus() }
-											</br>Electricity Capacity: ${berth.getElectricityCapacity() }
-											</br>Water Capacity ${berth.getWaterCapacity() }
-											</br>Fuel Capacity: ${berth.getFuelCapacity() }
-											</br>Length: ${berth.getMinLength()} - ${berth.getMaxLength()} 
-											</br>Width: ${berth.minWidth} - ${berth.maxWidth}
-											<br></br>
-										</td>
-									</tr>
-								</c:forEach>
+									<c:forEach items="${listBerth}" var="berth">
+										<%-- 										<tr class='clickableRow${berth.id}'> --%>
+										<tr>
+											<td>Name: ${berth.getName() } </br>Status:
+												${berth.getStatus() } </br>Electricity Capacity:
+												${berth.getElectricityCapacity() } </br>Water Capacity
+												${berth.getWaterCapacity() } </br>Fuel Capacity:
+												${berth.getFuelCapacity() } </br>Length: ${berth.getMinLength()}
+												- ${berth.getMaxLength()} </br>Width: ${berth.minWidth} -
+												${berth.maxWidth} <br></br>
+											</td>
+										</tr>
+									</c:forEach>
 								</tbody>
 							</table>
 						</div>
 					</div>
 				</div>
-			</div>			
+			</div>
 		</div>
 	</div>
 	<div>
 	<%@include file="../includes/footer.jsp"%>
-
+	
 </body>
+
+<%@include file="../includes/closingDivTagsForMobileViews.jsp"%>
 </html>
