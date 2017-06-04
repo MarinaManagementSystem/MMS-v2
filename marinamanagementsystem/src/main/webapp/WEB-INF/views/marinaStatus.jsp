@@ -111,8 +111,10 @@
 		<c:choose>
 			<c:when test="${reservationInfoAlert != null && reservationInfoAlert == 1}">
 				$('.reservationInfoAlertWaitingDiv').show();
+				$('.reservationInfoAlertDiv').hide();
 			</c:when>
 			<c:when test="${reservationInfoAlert != null && reservationInfoAlert == 0}">
+			$('.reservationInfoAlertWaitingDiv').hide();
 				$('.reservationInfoAlertDiv').show();
 			</c:when>
 			<c:otherwise>

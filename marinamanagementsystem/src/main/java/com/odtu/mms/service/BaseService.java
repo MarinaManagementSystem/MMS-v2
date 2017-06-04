@@ -400,11 +400,13 @@ public class BaseService {
 
 			if(filterMap.containsKey("reservation_start_date") == true)
 			{
-				criteriasDate += " r.reservation_start_date < CONVERT(Datetime, '"+filterMap.get("reservation_start_date")+"', 120)  AND  r.reservation_end_date > CONVERT(Datetime, '"+filterMap.get("reservation_start_date")+"', 120)";
+//				criteriasDate += " r.reservation_start_date < CONVERT(Datetime, '"+filterMap.get("reservation_start_date")+"', 120)  AND  r.reservation_end_date > CONVERT(Datetime, '"+filterMap.get("reservation_start_date")+"', 120)"; 
+				criteriasDate += " r.reservation_start_date BETWEEN CONVERT(Datetime, '"+filterMap.get("reservation_start_date")+"', 120) AND CONVERT(Datetime, '"+filterMap.get("reservation_end_date")+"', 120)";
 			}
 			if(filterMap.containsKey("reservation_end_date") == true)
 			{
-				criteriasDate += " AND r.reservation_start_date < CONVERT(Datetime, '"+filterMap.get("reservation_end_date")+"', 120)  AND  r.reservation_end_date > CONVERT(Datetime, '"+filterMap.get("reservation_end_date")+"', 120)";
+//				criteriasDate += " AND r.reservation_start_date < CONVERT(Datetime, '"+filterMap.get("reservation_end_date")+"', 120)  AND  r.reservation_end_date > CONVERT(Datetime, '"+filterMap.get("reservation_end_date")+"', 120)";
+				criteriasDate += " AND r.reservation_end_date BETWEEN CONVERT(Datetime, '"+filterMap.get("reservation_start_date")+"', 120) AND CONVERT(Datetime, '"+filterMap.get("reservation_end_date")+"', 120)";
 			}
 		}
 		
@@ -415,6 +417,13 @@ public class BaseService {
 						" inner join " + Constant.SCHEMA_ADI + ".reservation r on r.status=1 and " + criteriasDate+
 						" where " + criterias + 
 						" and r.berth_id=b.id )";
+		}
+		else if(criteriasDate != "")
+		{
+			queryStr = " select * from dbo.berth b2 where b2.id NOT IN ( " +					
+						" select DISTINCT (b.id) as berthid  from " + Constant.SCHEMA_ADI + ".berth b " + 
+						" inner join " + Constant.SCHEMA_ADI + ".reservation r on r.status=1 and " + criteriasDate+
+						" where r.berth_id=b.id )";
 		}
 		else
 		{
