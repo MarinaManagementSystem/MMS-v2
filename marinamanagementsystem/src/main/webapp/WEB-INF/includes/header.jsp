@@ -66,18 +66,20 @@
 			            	<li class="${systemUsersPageActive }"><a class="dropdown" href="systemUsers">System Users</a></li>
 			            </sec:authorize>
 		                
-						<li class="${personGeneralPageActive } dropdown">
-			            	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Roles</a>
-							<ul class="dropdown-menu" role="menu">
-								<c:forEach items="${principal.listDigerRoller}" var="role"> 
-									<li ><a href="listPersonRoleSelection.htm?role=${role.name}" >${role.displayName }</span></a></li>
-								</c:forEach>
-<%-- 								<c:set var="loopSize" scope="session" value="${fn:length(principal.listDigerRoller)}"/> --%>
-<%-- 								<c:if test="${loopSize > 0}"> --%>
-<!-- 								<hr/> -->
-<%-- 								</c:if> --%>
-							</ul>
-		                </li>
+						<c:set var="loopSize" scope="session" value="${fn:length(principal.listDigerRoller)}"/>
+						<c:if test="${loopSize > 0}">
+							<li class="${personGeneralPageActive } dropdown">
+				            	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Roles</a>
+								<ul class="dropdown-menu" role="menu">
+									<c:forEach items="${principal.listDigerRoller}" var="role"> 
+										<li ><a href="listPersonRoleSelection.htm?role=${role.name}" >${role.displayName }<span>${role.displayName }</span></a></li>
+									</c:forEach>
+<%-- 									<c:if test="${loopSize > 0}"> --%>
+<!-- 									<hr/> -->
+<%-- 									</c:if> --%>
+								</ul>
+			                </li>
+						</c:if>
 			            
 		                <li><a class="btn btn-border" style="border-color: #DF2D1C; background: #DF2D1C; font-size: 14px; font-weight: normal;" href="#" onclick="return askForLogout();">Logout</a></li>
 		                <br/>

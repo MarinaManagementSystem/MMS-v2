@@ -31,8 +31,8 @@
 	
 	function askIfSureToDeleteUser(userID, fullNameOfUser)
 	{
-		if (confirm("Are you sure you want to delete "+fullNameOfUser+"?") == true) {
-	    	window.location.href = "deletePerson.htm?id="+userID;
+		if (confirm("Are you sure you want to change status of "+fullNameOfUser+"?") == true) {
+	    	window.location.href = "updatePersonStatus.htm?id="+userID;
 	    	return true;
 	    } else 
 	        return false;
@@ -101,13 +101,14 @@
 			<p style="font-size: 15px;">All users under your supervision are listed below.</p>
 			<br/>
 			<div class="alert alert-success alert-dismissable updatedStatusDiv">
+            	<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
 				<strong>Your change was successfuly saved.</strong>
 			</div>
 			
 			<sec:authorize access="hasAnyRole('ROLE_SYSTEM_ADMINISTRATOR')">
 				<div id="addAndRemoveButtons" align="right">
 					<a href="javascript:void(0)" class="btn btn btn-success" onclick="addPerson()">Add a new user</a>
-					<input class="btn btn btn-danger" name="deleteUsersButton" id="deleteUsersButton" value="Delete selected users" type="submit" tabindex="10" disabled="disable" />
+<!-- 					<input class="btn btn btn-danger" name="deleteUsersButton" id="deleteUsersButton" value="Delete selected users" type="submit" tabindex="10" disabled="disable" /> -->
 				</div>
 			</sec:authorize>
 			<br/>
@@ -132,20 +133,27 @@
 	            	            <tr>
                 					<sec:authorize access="hasAnyRole('ROLE_SYSTEM_ADMINISTRATOR')">
 		            	            	<td style="border: 2px solid #DDDDDD;">
-						                    <input type="checkbox" name="selectedUsers" value="${person.id}" onChange="enableOrDisableDeleteUsersButton();" tabindex="1"/>
-				                   			&nbsp;&nbsp;&nbsp;
+<%-- 						                    <input type="checkbox" name="selectedUsers" value="${person.id}" onChange="enableOrDisableDeleteUsersButton();" tabindex="1"/> --%>
+<!-- 				                   			&nbsp;&nbsp;&nbsp; -->
 		            	                	<a href="javascript:void(0)" onclick="editPerson('${person.id}')">
 		            	                		<img src="../resources/images/edit.png" alt="Edit" height="16" width="16"/>
 		            	                	</a>&nbsp;&nbsp;&nbsp;
 		            	                	<c:choose>
 			            	                	<c:when test="${person.id == kisiSessiondaBulunan.id}">
-			        	                				<img src="../resources/images/deleteDisabled.png" alt="Delete" height="16" width="16"/>
-			            	                	</c:when>
-			            	                	<c:otherwise>
-			        	                			<a href="javascript:void(0)" onclick="return askIfSureToDeleteUser(${person.id}, '${person.nameSurname}');" >
-														<img src="../resources/images/delete.png" alt="Delete" height="16" width="16"/>
+			        	                			<a href="javascript:void(0)">
+			        	                			<i title="Not Allowed" class="fa fa-fw fa-smile-o"></i>
 			        	                			</a>
-			            	                	</c:otherwise>
+			            	                	</c:when>
+			            	                	<c:when test="${person.status == true}">
+			        	                			<a href="javascript:void(0)" onclick="return askIfSureToDeleteUser(${person.id}, '${person.nameSurname}');" >
+			        	                				<i title="Make Passive" class="fa fa-fw fa-pause"></i>
+			        	                			</a>
+			        	                		</c:when>
+			            	                	<c:when test="${person.status == false}">
+			        	                			<a href="javascript:void(0)" onclick="return askIfSureToDeleteUser(${person.id}, '${person.nameSurname}');" >
+			        	                				<i title="Make Active" class="fa fa-fw fa-refresh"></i>
+			        	                			</a>
+			        	                		</c:when>
 		            	                	</c:choose>
 		            					</td>
 		            				</sec:authorize>

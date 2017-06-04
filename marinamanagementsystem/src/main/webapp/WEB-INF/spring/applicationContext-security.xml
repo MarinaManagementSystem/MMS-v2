@@ -32,7 +32,8 @@
 		
 		<form-login login-page="/views/login.htm"
 			authentication-failure-url="/views/login.htm?login_error=1"
-			default-target-url="/views/yonlendir.htm" />
+			default-target-url="/views/yonlendir.htm"
+			always-use-default-target = "true" />
 		<logout logout-url="/views/logout2.htm" invalidate-session="true" logout-success-url="/views/login.htm" />
 	</http>
 

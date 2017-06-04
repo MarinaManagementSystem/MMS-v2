@@ -13,6 +13,8 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 
 import com.odtu.mms.model.Kullanici;
+import com.odtu.mms.model.Person;
+import com.odtu.mms.model.Reservation;
 import com.odtu.mms.util.Constant;
 
 
@@ -28,13 +30,12 @@ public class TemplateMailCreator {
 		model.put("adSoyad", kullanici.getPerson().getNameSurname());
 		model.put("kullaniciAdi", kullanici.getUsername());
 		model.put("parola", kullanici.getPassword());
-		model.put("tiklayiniz", "tıklayınız");
-		model.put("sayinLabel", "Sayın");
-		model.put("kullaniciKayitBilgiLabel", "Kullanıcı kayıt bilgileri");
-		model.put("kullaniciGirisTitle", "Kayıt Bilgileri");
-		model.put("kullaniciAdiLabel", "kullanıcı Adı");
-		model.put("parolaLabel", "parola");
-		model.put("appLabel", "marinamanagementsystem");
+		model.put("tiklayiniz", "click here");
+		model.put("sayinLabel", "Dear");
+		model.put("kullaniciGirisTitle", "User Information");
+		model.put("kullaniciAdiLabel", "username");
+		model.put("parolaLabel", "password");
+		model.put("appLabel", "If you like to login now,");
 		         
         try{
         	VelocityEngine velocityEngine = new VelocityEngine();
@@ -47,11 +48,12 @@ public class TemplateMailCreator {
         	e.printStackTrace();
         }
 	}
+    
     public static void sendYeniSifreToKullanici(String personNameSurname,String email,String newPassword,MessageSource messageSource){
     	Map model  = new HashMap();
 		Locale locale = LocaleContextHolder.getLocale();
 		
-		model.put("dear", "Sayın");
+		model.put("dear", "Dear");
     	model.put("personNameSurname", personNameSurname);
     	
     	model.put("body","Your password has been renewed. Change your password when you log in. New password");
@@ -64,6 +66,34 @@ public class TemplateMailCreator {
 			velocityEngine.init();
 			String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "com/odtu/mms/velocity/sendNewPassword.vm", "UTF-8", model);
 			MailSender.gonder(email,"Password Reset Info", text);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+    }
+
+    public static void sendReservationStatusInfoByUserandReservationStatus(Person person, Integer reservationStatus,MessageSource messageSource){
+    	Map model  = new HashMap();
+		Locale locale = LocaleContextHolder.getLocale();
+		
+		model.put("dear", "Dear");
+    	model.put("personNameSurname", person.getNameSurname());
+    	
+    	if(reservationStatus.equals(Reservation.RESERVATION_STATUS_APPLIED))
+    		model.put("body","Your reservation application is recieved. You will be informed when your application is evaluated.");
+    	else if(reservationStatus.equals(Reservation.RESERVATION_STATUS_APPROVED))
+    		model.put("body","Your reservation application is approved.");
+    	else if(reservationStatus.equals(Reservation.RESERVATION_STATUS_REJECTED))
+    		model.put("body","Your reservation application is rejected.");
+    	else if(reservationStatus.equals(Reservation.RESERVATION_STATUS_CANCELED))
+    		model.put("body","Your reservation application is canceled.");
+    	
+    	try{
+			VelocityEngine velocityEngine = new VelocityEngine();
+			velocityEngine.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
+			velocityEngine.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
+			velocityEngine.init();
+			String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "com/odtu/mms/velocity/sendReservationStatusInfo.vm", "UTF-8", model);
+			MailSender.gonder(person.getEmail(),"Reservation Info", text);
 		}catch(Exception e){
 			e.printStackTrace();
 		}

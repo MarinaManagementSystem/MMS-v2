@@ -21,6 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +36,7 @@ import com.odtu.mms.model.Marina;
 import com.odtu.mms.model.Person;
 import com.odtu.mms.model.Reservation;
 import com.odtu.mms.model.Role;
+import com.odtu.mms.model.Yacht;
 import com.odtu.mms.util.Constant;
 
 @Service("baseService")
@@ -462,7 +464,7 @@ public class BaseService {
 			*/
 			
 			
-			sql =	" SELECT r.id as reservation_id, r.status, CONVERT(VARCHAR(10), r.reservation_start_date, 104) as r_start_date, CONVERT(VARCHAR(10), r.reservation_end_date, 104) as r_end_date, y.name as yacht_name, b.name as berth_name, m.name as marina_name " +
+			sql =	" SELECT r.id as reservation_id, r.status, CONVERT(VARCHAR(10), r.reservation_start_date, 104) as r_start_date, CONVERT(VARCHAR(10), r.reservation_end_date, 104) as r_end_date, y.name as yacht_name, b.name as berth_name, m.name as marina_name, r.reservation_status, r.time_status " +
 					" FROM "+Constant.SCHEMA_ADI+".reservation r, " +
 					" "+Constant.SCHEMA_ADI+".person p, "+
 					" "+Constant.SCHEMA_ADI+".kullanici k, "+
@@ -480,7 +482,7 @@ public class BaseService {
 			
 		} else if (userRoleId.equals(Role.ROLE_MARINA_OWNER_ID)) {
 			
-			sql =	" SELECT r.id as reservation_id, r.status, CONVERT(VARCHAR(10), r.reservation_start_date, 104) as r_start_date, CONVERT(VARCHAR(10), r.reservation_end_date, 104) as r_end_date, y.name as yacht_name, b.name as berth_name, m.name as marina_name " +
+			sql =	" SELECT r.id as reservation_id, r.status, CONVERT(VARCHAR(10), r.reservation_start_date, 104) as r_start_date, CONVERT(VARCHAR(10), r.reservation_end_date, 104) as r_end_date, y.name as yacht_name, b.name as berth_name, m.name as marina_name, r.reservation_status, r.time_status " +
 					" FROM "+Constant.SCHEMA_ADI+".reservation r, " +
 					" "+Constant.SCHEMA_ADI+".person p, "+
 					" "+Constant.SCHEMA_ADI+".person_role pr, "+ //Additional part for role check
@@ -503,7 +505,7 @@ public class BaseService {
 			
 		} else {
 			
-			sql =	" SELECT r.id as reservation_id, r.status, CONVERT(VARCHAR(10), r.reservation_start_date, 104) as r_start_date, CONVERT(VARCHAR(10), r.reservation_end_date, 104) as r_end_date, y.name as yacht_name, b.name as berth_name, m.name as marina_name " +
+			sql =	" SELECT r.id as reservation_id, r.status, CONVERT(VARCHAR(10), r.reservation_start_date, 104) as r_start_date, CONVERT(VARCHAR(10), r.reservation_end_date, 104) as r_end_date, y.name as yacht_name, b.name as berth_name, m.name as marina_name, r.reservation_status, r.time_status " +
 					" FROM "+Constant.SCHEMA_ADI+".reservation r, " +
 					" "+Constant.SCHEMA_ADI+".person p, "+
 					" "+Constant.SCHEMA_ADI+".kullanici k, "+
@@ -556,12 +558,12 @@ public class BaseService {
 		
 		String sql =	" SELECT * " +
 						" FROM "+Constant.SCHEMA_ADI+".kullanici k " +
-						" WHERE k.person_id =:personid AND status = 1" + 
+						" WHERE k.person_id =:personid AND k.status = 1" + 
 						" ";
 		
 		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sql);
 		query.setLong("personid", personid);	
-		query.addEntity("p" , Kullanici.class);
+		query.addEntity("k" , Kullanici.class);
 
 		List<Kullanici> list = query.list();
 
@@ -573,6 +575,67 @@ public class BaseService {
 	
 	public void deletePersonByPersonId(Long personId) {
 		String hql = "update Person set status=0 where id="+personId;
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		query.executeUpdate();
+	}
+	
+	public Boolean getWaitingReservationByPerson(Person person){
+		
+		String sql =	" SELECT * " +
+						" FROM "+Constant.SCHEMA_ADI+".reservation r " + 
+						" INNER JOIN "+Constant.SCHEMA_ADI+".person p on p.id =:personid" +
+						" INNER JOIN "+Constant.SCHEMA_ADI+".yacht y on y.owner_id = p.id" +
+						" WHERE r.yacht_id = y.id AND r.status = 0 AND r.reservation_status ="+Reservation.RESERVATION_STATUS_APPLIED + 
+						" ";
+		
+		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sql);
+		query.setLong("personid", person.getId());	
+		query.addEntity("r" , Reservation.class);
+
+		List<Reservation> list = query.list();
+
+		if (list != null && !list.isEmpty()) {
+			return true;
+		}
+		return false;
+	}
+	
+	public Yacht getYachtByPerson(Person person){
+		
+		String sql =	" SELECT * " +
+						" FROM "+Constant.SCHEMA_ADI+".yacht y " +
+						" WHERE y.owner_id =:personid" + 
+						" ";
+		
+		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sql);
+		query.setLong("personid", person.getId());	
+		query.addEntity("y" , Yacht.class);
+
+		List<Yacht> list = query.list();
+
+		if (list != null && !list.isEmpty()) {
+			return list.get(0);
+		}
+		return null;
+	}
+	
+	@Scheduled(cron = "0 02 08 * * *")
+	public void updateReservationtoActive(){
+		String hql = "update Reservation set status=1 where reservation_start_date=CONVERT (date, SYSDATETIME()) and reservation_status="+Reservation.RESERVATION_STATUS_APPROVED;
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		query.executeUpdate();
+	}
+	
+	@Scheduled(cron = "0 58 23 * * *")
+	public void updateReservationtoPassive(){
+		String hql = "update Reservation set status=0 where reservation_end_date=CONVERT (date, SYSDATETIME()) ";
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		query.executeUpdate();
+	}
+	
+	@Scheduled(cron = "0 55 23 * * *")
+	public void updateTimeStatustoPassed(){
+		String hql = "update Reservation set time_status=0 where reservation_end_date=CONVERT (date, SYSDATETIME()) ";
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
 		query.executeUpdate();
 	}

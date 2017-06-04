@@ -18,10 +18,29 @@
       
  		$(document).ready(function(){
 
- 			<c:if test="${1==1}">
- 				//alert("Hosgeldin!");
- 			</c:if>
  			<c:set var="kisi" scope="request" value="${kisiSessiondaBulunan.id}"/> 
+
+ 			var x = 1;
+ 			
+ 			<c:choose>
+ 				<c:when test="${passivePerson != null && passivePerson == 1}">
+ 					$('.passivePersonDiv').show();
+ 				</c:when>
+ 				<c:otherwise>
+ 					$('.passivePersonDiv').hide();
+ 				</c:otherwise>
+ 			</c:choose>
+
+ 			var x = 1;
+ 			
+ 			<c:choose>
+ 				<c:when test="${incorrectInfo != null && incorrectInfo == 1}">
+ 					$('.incorrectInfoDiv').show();
+ 				</c:when>
+ 				<c:otherwise>
+ 					$('.incorrectInfoDiv').hide();
+ 				</c:otherwise>
+ 			</c:choose>
  			
  		});
  		
@@ -53,6 +72,14 @@
 		<div class="grey content-area" id="iconbuttons" style="background-color: #FBFBFB;">
 	
 			<div class="container">
+			
+			<div class=" alert alert-warning alert-dismissable passivePersonDiv">
+				<strong>User is passive. Please contact with your administrator.</strong>
+			</div>
+			<div class=" alert alert-danger alert-dismissable incorrectInfoDiv">
+				<strong>Your username or password is incorrect; but I cannot tell which one !!!</strong>
+			</div>
+			
 				<div class="row">
 							<%-- ${kisiSessiondaBulunan.name} --%>
 							<jsp:useBean id="conversionToMD5" class="com.marinamanagementsystem.conf.MD5" scope="session" />

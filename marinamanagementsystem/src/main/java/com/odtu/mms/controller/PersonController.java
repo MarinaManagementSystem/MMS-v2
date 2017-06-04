@@ -11,6 +11,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Validator;
@@ -29,6 +30,7 @@ import com.odtu.mms.model.Person;
 import com.odtu.mms.model.Role;
 import com.odtu.mms.service.BaseService;
 import com.odtu.mms.util.CustomStringEditor;
+import com.odtu.mms.util.MyUser;
 
 import mva.util.MVAUtil;
 
@@ -68,11 +70,22 @@ public class PersonController {
 			@ModelAttribute("editPersonInformation") @Valid Person person,
 			@RequestParam (value="savedPerson", required=false) Integer savedPerson,
 			HttpServletRequest request, HttpServletResponse response, Model model, Locale locale) {
+		
+		MyUser user = (MyUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Person personSession = user.getPerson();
 
-		if(person != null && person.getId() != null)
+		if(request.isUserInRole("ROLE_SYSTEM_ADMINISTRATOR")  ){
+			
+			if(person != null && person.getId() != null)
+				model.addAttribute("newPerson", false);
+			else 
+				model.addAttribute("newPerson", true);
+			
+		}else {
+			
+			model.addAttribute("editPersonInformation", personSession);
 			model.addAttribute("newPerson", false);
-		else 
-			model.addAttribute("newPerson", true);
+		}
 		
 		model.addAttribute("listRole", dao.listTumRoller());
 		model.addAttribute("savedPerson", savedPerson);
@@ -88,7 +101,7 @@ public class PersonController {
 		
 		dao.saveOrUpdate(person);
 		
-		if(newPerson != null && newPerson.equals(Boolean.TRUE)){
+		if(newPerson != null && newPerson != null && newPerson.equals(Boolean.TRUE)){
 			
 			Kullanici kullanici = new Kullanici();
 			kullanici.setPerson(person);

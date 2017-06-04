@@ -50,14 +50,30 @@ public class LoginController {
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loginGet(HttpServletRequest request, HttpServletResponse response, Model model, Locale locale) {
+
+		if(request.getSession().getAttribute("errorLogin") != null && request.getSession().getAttribute("errorLogin").equals(1)){
 		
+			if(request.getSession().getAttribute("passivePerson") != null && request.getSession().getAttribute("passivePerson").equals(1))
+				model.addAttribute("passivePerson", 1);
+			
+			if(request.getSession().getAttribute("error") != null && request.getSession().getAttribute("error").equals(1))
+				model.addAttribute("incorrectInfo", 1);
+		}else{
+			model.addAttribute("passivePerson", 0);
+			model.addAttribute("incorrectInfo", 0);
+			
+		}
+		
+		request.getSession().removeAttribute("errorLogin");
+
 		model.addAttribute("loginPageActive", "active");
 		
 		return "login";
 	}
 	
 	@RequestMapping(value = "/loginDiger", method = RequestMethod.GET)
-	public String loginDigerGet(HttpServletRequest request, HttpServletResponse response, Model model, Locale locale) {
+	public String loginDigerGet(
+			HttpServletRequest request, HttpServletResponse response, Model model, Locale locale) {
 		
 		return "loginDiger";
 	}
@@ -65,6 +81,9 @@ public class LoginController {
 	@RequestMapping(value = "/yonlendir", method = RequestMethod.GET)
 	public String yonlendirGet(Kullanici kullaniciYuklenen,HttpServletRequest request, HttpServletResponse response, Model model) throws Exception{
 		MyUser kullanici = (MyUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		if(kullanici.getPerson() != null && kullanici.getPerson().getStatus() != null && kullanici.getPerson().getStatus().equals(Boolean.FALSE))
+			return "redirect:../views/login.htm?passivePerson=1";
 		
 		if(kullanici.getAuthorities().size() > 1)
 			return "redirect:../views/listPersonRoleSelection.htm";

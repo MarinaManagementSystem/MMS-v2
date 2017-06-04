@@ -30,16 +30,6 @@ public class BaseModel implements Serializable {
 	@GenericGenerator(name = "IdGenerator", strategy = "com.odtu.mms.generator.IdGenerator")
 	@Column(updatable = false, unique = true, nullable = false, name = "id")
 	private Long id;
-//	@Column(updatable = false, unique = true, nullable = false, name = "OID")
-//	private String id;
-
-//	public String getId() {
-//		return id;
-//	}
-//
-//	public void setId(String id) {
-//		this.id = id;
-//	}
 
 	public Long getId() {
 		return id;

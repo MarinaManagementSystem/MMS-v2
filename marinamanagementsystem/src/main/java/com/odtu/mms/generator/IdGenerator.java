@@ -52,7 +52,7 @@ public class IdGenerator implements IdentifierGenerator, Configurable {
 						String InsertSql = "insert into "+Constant.SCHEMA_ADI+".table_id (id,table_name) values(?,?)";
 						try {
 							PreparedStatement stInsert = session.getBatcher().prepareStatement(InsertSql);
-							stInsert.setLong(1, 2L);
+							stInsert.setLong(1, 3L);
 							stInsert.setString(2, tableName);
 							try {
 								stInsert.executeUpdate();

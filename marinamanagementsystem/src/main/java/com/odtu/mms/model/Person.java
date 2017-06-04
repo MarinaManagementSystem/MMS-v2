@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.FetchType;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
@@ -48,6 +49,9 @@ public class Person extends BaseModel implements Serializable{
 	@ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER,cascade=CascadeType.ALL)
 	@JoinTable(name = "person_role", joinColumns = @JoinColumn(name = "person_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private List<Role> roller = new ArrayList<Role>();
+	
+	@OneToMany(mappedBy = "owner")
+	private List<Yacht> listYacht = new ArrayList<Yacht>();
 
 	public String getName() {
 		return name;
@@ -99,6 +103,14 @@ public class Person extends BaseModel implements Serializable{
 
 	public void setStatus(Boolean status) {
 		this.status = status;
+	}
+
+	public List<Yacht> getListYacht() {
+		return listYacht;
+	}
+
+	public void setListYacht(List<Yacht> listYacht) {
+		this.listYacht = listYacht;
 	}
 	
 //	@Column(name = "phone_number", columnDefinition="text")

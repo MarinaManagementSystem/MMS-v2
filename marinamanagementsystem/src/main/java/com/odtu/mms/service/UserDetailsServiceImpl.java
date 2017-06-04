@@ -46,28 +46,30 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
 			HttpServletRequest request= attr.getRequest();
 			Locale locale = LocaleContextHolder.getLocale();
-			
-//			if(kullanici != null && kullanici.getHesapKilitli()){
-//				String error= messageSource.getMessage("error.hesap.kilitli", null, locale);
-//				request.getSession().setAttribute("error", error);
-//				throw new LockedException("1");
-//			}
 			if(kullanici != null && !kullanici.getPassword().equals(request.getParameter("j_password"))){
-				String error= messageSource.getMessage("error.hatali.kullaniciadi.sifre", null, locale);
-				request.getSession().setAttribute("error", error);
+				String error = "Incorrect login information";
+				request.getSession().setAttribute("error", 1);
+				request.getSession().setAttribute("errorLogin", 1);
+				request.getSession().removeAttribute("passivePerson");
 				throw new BadCredentialsException("2");
 			}
 			if (kullanici == null){
-				String error= messageSource.getMessage("error.hatali.kullaniciadi.sifre", null, locale);
-				request.getSession().setAttribute("error", error);
+				String error = "Incorrect login information";
+				request.getSession().setAttribute("error", 1);
+				request.getSession().setAttribute("errorLogin", 1);
+				request.getSession().removeAttribute("passivePerson");
 				throw new UsernameNotFoundException("3");
+			}
+			if(kullanici != null && kullanici.getPerson() != null && kullanici.getPerson().getStatus().equals(Boolean.FALSE)){
+				request.getSession().setAttribute("passivePerson", 1);
+				request.getSession().setAttribute("errorLogin", 1);
+				request.getSession().removeAttribute("error");
+				throw new BadCredentialsException("4");
 			}
 			
 			request.getSession().removeAttribute("error");
-//			if(kullanici != null && kullanici.getHataliGirisSayi()!=null && kullanici.getHataliGirisSayi()>0){
-//				kullanici.setHataliGirisSayi(0);
-//				dao.saveOrUpdate(kullanici);
-//			}
+			request.getSession().removeAttribute("passivePerson");
+			request.getSession().removeAttribute("errorLogin");
 			
 			return assembler.buildUserFromUserEntity(kullanici);
 		

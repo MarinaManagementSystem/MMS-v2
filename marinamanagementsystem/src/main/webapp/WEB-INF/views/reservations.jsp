@@ -14,6 +14,20 @@
 	<%@include file="../includes/commonScripts.jsp"%>
 	
 <script type="text/javascript">
+
+	$(document).ready(function(){
+	
+	<c:choose>
+		<c:when test="${!empty reservationStatusChangeAlert && reservationStatusChangeAlert != null && reservationStatusChangeAlert == 1}">
+			$('.savedChangesAlertDiv').show();
+		</c:when>
+		<c:otherwise>
+			$('.savedChangesAlertDiv').hide();
+		</c:otherwise>
+	</c:choose>
+	
+	
+	});
 	
 	function checkDateAndTimeValues()
 	{
@@ -74,6 +88,16 @@
 	    return day + '.' + month + '.' + d.getFullYear();
 	}
 	
+	function editReservationStatus(reservationId, reservationStatus){
+		
+		if (confirm("Are you sure you want to change reservation status?") == true) {
+			location.href="editReservationStatus?reservationId="+reservationId+"&reservationStatus="+reservationStatus;
+	    	return true;
+	    } else 
+	        return false;
+		
+	} 
+	
 </script>
 
 </head>
@@ -117,6 +141,10 @@
 			    }
 			
 			%>
+			
+			<div class="alert alert-success alert-dismissable savedChangesAlertDiv">
+				<strong>You have saved your changes successfully</strong>
+			</div>
 			
 			<h2>Reservations</h2>
 			<p style="font-size: 15px;">In order to view the reservations, please specify a date range accordingly and submit. If you directly hit the sumit button, all data stored in the database from the beginning of this year will be retrieved.</p>
@@ -189,8 +217,11 @@
 				        <table class="table table-hover" style="overflow:scroll;height:80px;width:100%;overflow:auto">
 				            <thead>
 				            <tr style="background-color:#4A4744; table-layout:fixed">
-				                <th><span style="color:white;">Reservation ID</span></th>
+			                	<sec:authorize access="hasAnyRole('ROLE_MARINA_OWNER') or hasAnyRole('ROLE_YACHT_OWNER')">
+				                	<th><span style="color:white;">Options</span></th>
+				                </sec:authorize>
 				                <th><span style="color:white;">Reservation Status</span></th>
+				                <th><span style="color:white;">Reservation ID</span></th>
 				                <th><span style="color:white;">Reservation Start Date</span></th>
 				                <th><span style="color:white;">Reservation End Date</span></th>
 				                <th><span style="color:white;">Related Yacht Name</span></th>
@@ -204,18 +235,68 @@
 									<c:when test="${!empty foundReservations}">
 										<c:forEach items="${foundReservations}" var="reservation">
 				            	            <tr>
-				            	                <td style="border: 2px solid #DDDDDD;">
-				            	                	${reservation[0]}
-				            					</td>
+					            	            <td style="border: 2px solid #DDDDDD;">
+				            	            	<c:if test="${reservation[8] == 1}">
+				                					<sec:authorize access="hasAnyRole('ROLE_MARINA_OWNER') or hasAnyRole('ROLE_YACHT_OWNER')">
+				                						<sec:authorize access="hasAnyRole('ROLE_YACHT_OWNER')">
+						            	                	<c:if test="${reservation[7] == reservationStatsuAppliedInt}">
+					                							<a title="Cancel" class="btn btn-sm btn-danger" href="javascript:void(0)" onclick="editReservationStatus('${reservation[0]}', '${reservationStatsuCanceledInt}')">
+					                								<i title="Cancel" class="fa fa-fw fa-scissors"></i>
+					                							</a>
+						            	                	</c:if>
+				                						</sec:authorize>
+				                						<sec:authorize access="hasAnyRole('ROLE_MARINA_OWNER')">
+				                							<c:choose>
+							            	                	<c:when test="${reservation[7] == reservationStatsuAppliedInt}">
+						                							<a title="Approve" class="btn btn-sm btn-success" href="javascript:void(0)" onclick="editReservationStatus('${reservation[0]}', '${reservationStatsuApprovedInt}')">
+						                								<i title="Approve" class="fa fa-fw fa-chevron-right"></i>
+						                							</a>
+						                							<a title="Reject" class="btn btn-sm btn-danger" href="javascript:void(0)" onclick="editReservationStatus('${reservation[0]}', '${reservationStatsuRejectedInt}')">
+						                								<i title="Reject" class="fa fa-fw fa-scissors"></i>
+						                							</a>
+							            	                	</c:when>
+							            	                	<c:when test="${reservation[7] == reservationStatsuApprovedInt}">
+						                							<a title="Reject" class="btn btn-sm btn-danger" href="javascript:void(0)" onclick="editReservationStatus('${reservation[0]}', '${reservationStatsuRejectedInt}')">
+						                								<i title="Reject" class="fa fa-fw fa-scissors"></i>
+						                							</a>
+							            	                	</c:when>
+							            	                	<c:when test="${reservation[7] == reservationStatsuRejectedInt}">
+						                							<a title="Approve" class="btn btn-sm btn-success" href="javascript:void(0)" onclick="editReservationStatus('${reservation[0]}', '${reservationStatsuApprovedInt}')">
+						                								<i title="Approve" class="fa fa-fw fa-chevron-right"></i>
+						                							</a>
+							            	                	</c:when>
+				                							</c:choose>
+				                						</sec:authorize>
+						            				</sec:authorize>
+					            				</c:if>
+					            				</td>
 				            	                <td style="border: 2px solid #DDDDDD;">
 					            	                <c:choose>
 					            	                	<c:when test="${reservation[1] == 1}">
-					            	                		Completed or Active
+															<c:set var="statusStr" value="Active" scope="request"/>
 					            	                	</c:when>
 					            	                	<c:otherwise>
-					            	                		Cancelled
+															<c:set var="statusStr" value="Passive" scope="request"/>
 					            	                	</c:otherwise>
 					            	                </c:choose>
+					            	                <c:choose>
+					            	                	<c:when test="${reservation[7] == reservationStatsuAppliedInt}">
+															<c:set var="reservationStatusStr" value="Applied" scope="request"/>
+					            	                	</c:when>
+					            	                	<c:when test="${reservation[7] == reservationStatsuApprovedInt}">
+															<c:set var="reservationStatusStr" value="Approved" scope="request"/>
+					            	                	</c:when>
+					            	                	<c:when test="${reservation[7] == reservationStatsuCanceledInt}">
+															<c:set var="reservationStatusStr" value="Canceled" scope="request"/>
+					            	                	</c:when>
+					            	                	<c:when test="${reservation[7] == reservationStatsuRejectedInt}">
+															<c:set var="reservationStatusStr" value="Rejected" scope="request"/>
+					            	                	</c:when>
+					            	                </c:choose>
+					            	                ${reservationStatusStr} - ${statusStr}
+				            					</td>
+				            	                <td style="border: 2px solid #DDDDDD;">
+				            	                	${reservation[0]}
 				            					</td>
 				            	                <td style="border: 2px solid #DDDDDD;">
 				            	                	${reservation[2]}
