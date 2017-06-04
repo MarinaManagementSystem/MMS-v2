@@ -49,6 +49,7 @@ public class MarinaController {
 	        						@RequestParam(required = false, value = "maxWidth") String maxWidth,
 	        						@RequestParam(value = "fromDate" , required = false) String fromDate,
 	        						@RequestParam(value = "toDate" , required = false) String toDate,
+	        						@RequestParam(value = "reservationInfoAlert" , required = false) Integer reservationInfoAlert,
 	        						HttpServletRequest request, HttpServletResponse response, Model model, Locale locale) {
 
 		
@@ -98,6 +99,7 @@ public class MarinaController {
 		
 		model.addAttribute("hFromDate", fromDate);
 		model.addAttribute("hToDate", toDate);
+		model.addAttribute("reservationInfoAlert", reservationInfoAlert);
 		
 		return "marinaStatus"; 
 	}

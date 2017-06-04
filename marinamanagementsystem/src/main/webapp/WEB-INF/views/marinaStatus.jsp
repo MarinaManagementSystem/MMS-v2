@@ -71,7 +71,7 @@
 	   					'<b>Fuel Capacity:</b> ${listBerth.get(i).getFuelCapacity() } </br>'+
 	   					'<b>Length:</b> ${listBerth.get(i).getMinLength()} - ${listBerth.get(i).getMaxLength()} </br> '+
 	   					'<b>Width:</b> ${listBerth.get(i).minWidth} - ${listBerth.get(i).maxWidth} </br>' +
-	   					'<input type="button" class="btn btn-success" id="btnAdd" value="Reserve" onClick="openReservationPage(\"${listBerth.get(i).id}\", \"${hFromDate}\", \"${hToDate}\")">';
+	   					'<input type="button" class="btn btn-success" id="btnAdd" value="Reserve" onClick="openReservationPage(${listBerth.get(i).id})">';
 	   	                infoWindow.setContent(markerContent);
 	   	                infoWindow.open(map, this);
 	   	            });
@@ -103,12 +103,36 @@
             	map.setZoom(18);
         	});
         	});
+        
+        
+        
+		var x = 1;
+		
+		<c:choose>
+			<c:when test="${reservationInfoAlert != null && reservationInfoAlert == 1}">
+				$('.reservationInfoAlertWaitingDiv').show();
+			</c:when>
+			<c:when test="${reservationInfoAlert != null && reservationInfoAlert == 0}">
+				$('.reservationInfoAlertDiv').show();
+			</c:when>
+			<c:otherwise>
+				$('.reservationInfoAlertWaitingDiv').hide();
+				$('.reservationInfoAlertDiv').hide();
+			</c:otherwise>
+		</c:choose>
     }
 </script>
 
 <script>
-function openReservationPage(berthId, fromDate, toDate) {
-	location.href = "makeReservation?berthId=" + berthId+"&fromDate="+fromDate+"&toDate="+toDate;
+function openReservationPage(berthId) {
+	
+	var fromDate = '${hFromDate}';
+	var toDate = '${hToDate}';
+	
+	if(fromDate != null && fromDate != '' && toDate != null && toDate != '')
+		location.href = "makeReservation?berthId="+berthId+"&fromDate="+fromDate+"&toDate="+toDate;
+	else
+		location.href = "makeReservation?berthId="+berthId;
 	}
 
 </script>
@@ -330,6 +354,12 @@ window.onclick = function(event) {
 					</div>
 				</div>
 				<div class="row">
+					<div class="alert alert-danger alert-dismissable reservationInfoAlertWaitingDiv">
+						<strong>There is a waiting reservation request. You can check again when evaluation is made.</strong>
+					</div>
+					<div class="alert alert-success alert-dismissable reservationInfoAlertDiv">
+						<strong>Your reservation request is taken. You will be informed when evaluation is made.</strong>
+					</div>
 					<div class="col-sm-9">
 						<div id="dvMap" style="height: 500px;"></div>
 					</div>
