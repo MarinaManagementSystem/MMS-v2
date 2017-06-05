@@ -409,7 +409,7 @@ public class BaseService {
 				
 				// List all reservations with status APPLIED or APPROVED with respect to the given date range
 				criteriasDate += " b.id NOT IN " + 
-								 " (SELECT r.berth_id " +
+								 " (SELECT DISTINCT r.berth_id " +
 								 " FROM dbo.reservation r " +
 								 " WHERE (r.status = 0 " + // Meaning that the reservations is on APPLIED status
 								 " OR r.status = 100) AND "+ // Meaning that the reservation is on APPROVED status

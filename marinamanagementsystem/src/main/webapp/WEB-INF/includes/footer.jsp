@@ -66,5 +66,5 @@
 <script src="../resources/assets/js/datetimepicker/jquery.datetimepicker.js"></script>
 
 <!-- Please check http://xdsoft.net/jqplugins/datetimepicker/ for the below datetimepicker settings and functions -->
-<script src="../resources/assets/js/datetimepicker/datetimepickerForETS.js"></script>
+<script src="../resources/assets/js/datetimepicker/datetimepickerForMMS.js"></script>
 <!-- /REQUIRED FILES FOR DATE TIME PICKER -->
