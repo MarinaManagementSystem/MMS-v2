@@ -74,10 +74,10 @@
 			<div class="container">
 			
 			<div class=" alert alert-warning alert-dismissable passivePersonDiv">
-				<strong>User is passive. Please contact with your administrator.</strong>
+				<strong>Access of this user to the MMS is blocked. Please contact with your administrator.</strong>
 			</div>
 			<div class=" alert alert-danger alert-dismissable incorrectInfoDiv">
-				<strong>Your username or password is incorrect; but I cannot tell which one !!!</strong>
+				<strong>Your username or password is incorrect; but I cannot tell which one...</strong>
 			</div>
 			
 				<div class="row">

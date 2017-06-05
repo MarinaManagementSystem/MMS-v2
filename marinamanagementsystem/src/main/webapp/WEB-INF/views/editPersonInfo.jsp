@@ -7,7 +7,7 @@
 
 <head>
 
-    <title>Register - <fmt:message key="label.application.title"/></title>
+    <title>Create/Update an Account - <fmt:message key="label.application.title"/></title>
     
 	<%@include file="../includes/commonMeta.jsp"%>
 	<%@include file="../includes/commonStyles.jsp"%>
@@ -87,10 +87,12 @@
 <%-- 	<sec:authentication var="principal" property="principal"/>${principal.kisi.ad} ${principal.kisi.soyad} --%>
 
 	<%@include file="../includes/header.jsp"%>
+	<br />
+	<br />
 	<div class="grey content-area" id="iconbuttons" style="background-color: #FBFBFB;">
 	    <div class="container">
 				<div class="alert alert-success alert-dismissable savedPersonInfoDiv">
-					<strong>You have saved your changes successfully</strong>
+					<strong>You have saved your changes successfully.</strong>
 				</div>
 <!-- 			<div class="section-top"> -->
 			<div class="">
