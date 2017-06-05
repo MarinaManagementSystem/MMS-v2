@@ -77,6 +77,20 @@ $('#fromDate').datetimepicker({
 
 });
 
+$('#fromDateWithMinDayLimit').datetimepicker({
+	timepicker:false,
+	format:'d.m.Y',
+	formatDate:'d.m.Y',
+	defaultDate:'01.01.<%out.print(currentYear);%>',
+	minDate:'+1970/01/01', // today is the minimum pickable date and current date on calendar
+	
+	onGenerate: function(current_date, $input){
+
+		document.getElementById("hiddenFromDate").value=current_date.dateFormat('Y-m-d');
+	}
+
+});
+
 $('#toTime').datetimepicker({
 	datepicker:false,
 	format:'H:i',
@@ -103,24 +117,10 @@ $('#toDate').datetimepicker({
 
 });
 
-$('#fromDate').datetimepicker({
+$('#toDateWithoutTodayLimit').datetimepicker({
 	timepicker:false,
 	format:'d.m.Y',
 	formatDate:'d.m.Y',
-	defaultDate:'01.01.<%out.print(currentYear);%>',
-	
-	onGenerate: function(current_date, $input){
-
-		document.getElementById("hiddenFromDate").value=current_date.dateFormat('Y-m-d');
-	}
-
-});
-
-$('#toDate').datetimepicker({
-	timepicker:false,
-	format:'d.m.Y',
-	formatDate:'d.m.Y',
-	maxDate:'+1970/01/01', // today is the maximum pickable date and current date on calendar
 	
 	onGenerate: function(current_date, $input){
 

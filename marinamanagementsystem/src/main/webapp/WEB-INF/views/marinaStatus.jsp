@@ -64,13 +64,22 @@
    			 <c:choose>
    			 	<c:when test="${!empty hFromDate && !empty hToDate}">
 	   	       		google.maps.event.addListener(markers[i], 'click', function () {
-	   	                var markerContent = '<b>Name</b>: ${listBerth.get(i).name} </br>' + 
-	   	                '<b>Status:</b> ${listBerth.get(i).getStatus() } </br>' +
-	   					'<b>Electricity Capacity</b>: ${listBerth.get(i).getElectricityCapacity() } </br>'+
-	   					'<b>Water Capacity:</b> ${listBerth.get(i).getWaterCapacity() } </br>'+
-	   					'<b>Fuel Capacity:</b> ${listBerth.get(i).getFuelCapacity() } </br>'+
-	   					'<b>Length:</b> ${listBerth.get(i).getMinLength()} - ${listBerth.get(i).getMaxLength()} </br> '+
-	   					'<b>Width:</b> ${listBerth.get(i).minWidth} - ${listBerth.get(i).maxWidth} </br>' +
+	   	                var markerContent = '<b>Name</b>: <span style=\"font-style: italic\">${listBerth.get(i).name}</span></br>' + 
+	   	                '<b>Status: </b>';
+						<c:choose>
+							<c:when test="${listBerth.get(i).getStatus() == true}">
+								markerContent += '<span style=\"color: darkgreen\">Berth is operationable</span>';
+							</c:when>
+							<c:otherwise>
+								markerContent += '<span style=\"color: darkgreen\">Berth is non-operationable</span>';
+							</c:otherwise>
+						</c:choose>
+	   	                markerContent += '</br>' +
+	   					'<b>Electricity Capacity</b>: ${listBerth.get(i).getElectricityCapacity() } kW/h</br>'+
+	   					'<b>Water Capacity:</b> ${listBerth.get(i).getWaterCapacity() } gallons/h</br>'+
+	   					'<b>Fuel Capacity:</b> ${listBerth.get(i).getFuelCapacity() } gallons/h</br>'+
+	   					'<b>Length:</b> ${listBerth.get(i).getMinLength()}m - ${listBerth.get(i).getMaxLength()}m </br> '+
+	   					'<b>Width:</b> ${listBerth.get(i).minWidth}m - ${listBerth.get(i).maxWidth}m </br>' +
 	   					'<input type="button" class="btn btn-success" id="btnAdd" value="Reserve" onClick="openReservationPage(${listBerth.get(i).id})">';
 	   	                infoWindow.setContent(markerContent);
 	   	                infoWindow.open(map, this);
@@ -78,13 +87,22 @@
    			 	</c:when>
    			 	<c:otherwise>
 	   	       		google.maps.event.addListener(markers[i], 'click', function () {
-	   	                var markerContent = '<b>Name</b>: ${listBerth.get(i).name} </br>' + 
-	   	                '<b>Status:</b> ${listBerth.get(i).getStatus() } </br>' +
-	   					'<b>Electricity Capacity</b>: ${listBerth.get(i).getElectricityCapacity() } </br>'+
-	   					'<b>Water Capacity:</b> ${listBerth.get(i).getWaterCapacity() } </br>'+
-	   					'<b>Fuel Capacity:</b> ${listBerth.get(i).getFuelCapacity() } </br>'+
-	   					'<b>Length:</b> ${listBerth.get(i).getMinLength()} - ${listBerth.get(i).getMaxLength()} </br> '+
-	   					'<b>Width:</b> ${listBerth.get(i).minWidth} - ${listBerth.get(i).maxWidth} </br>' +
+	   	                var markerContent = '<b>Name</b>: <span style=\"font-style: italic\">${listBerth.get(i).name}</span></br>' + 
+	   	                '<b>Status: </b>';
+						<c:choose>
+							<c:when test="${listBerth.get(i).getStatus() == true}">
+								markerContent += '<span style=\"color: darkgreen\">Berth is operationable</span>';
+							</c:when>
+							<c:otherwise>
+								markerContent += '<span style=\"color: darkgreen\">Berth is non-operationable</span>';
+							</c:otherwise>
+						</c:choose>
+	   	                markerContent += '</br>' +
+	   					'<b>Electricity Capacity</b>: ${listBerth.get(i).getElectricityCapacity() } kW/h</br>'+
+	   					'<b>Water Capacity:</b> ${listBerth.get(i).getWaterCapacity() } gallons/h</br>'+
+	   					'<b>Fuel Capacity:</b> ${listBerth.get(i).getFuelCapacity() } gallons/h</br>'+
+	   					'<b>Length:</b> ${listBerth.get(i).getMinLength()}m - ${listBerth.get(i).getMaxLength()}m </br> '+
+	   					'<b>Width:</b> ${listBerth.get(i).minWidth}m - ${listBerth.get(i).maxWidth}m </br>' +
 	   					' ';
 	   	                infoWindow.setContent(markerContent);
 	   	                infoWindow.open(map, this);
@@ -109,11 +127,11 @@
 		var x = 1;
 		
 		<c:choose>
-			<c:when test="${reservationInfoAlert != null && reservationInfoAlert == 1}">
+			<c:when test="${reservationInfoAlert != null && reservationInfoAlert == 0}">
 				$('.reservationInfoAlertWaitingDiv').show();
 				$('.reservationInfoAlertDiv').hide();
 			</c:when>
-			<c:when test="${reservationInfoAlert != null && reservationInfoAlert == 0}">
+			<c:when test="${reservationInfoAlert != null && reservationInfoAlert == 1}">
 			$('.reservationInfoAlertWaitingDiv').hide();
 				$('.reservationInfoAlertDiv').show();
 			</c:when>
@@ -240,6 +258,13 @@ window.onclick = function(event) {
 		int year = Calendar.getInstance().get(Calendar.YEAR);
 		int month = Calendar.getInstance().get(Calendar.MONTH);
 		int day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+		
+		Calendar twoMonthsLater = Calendar.getInstance();
+		twoMonthsLater.add(Calendar.MONTH, 3);
+		
+		int twoMonthsLaterYear = twoMonthsLater.get(Calendar.YEAR);
+		int twoMonthsLaterMonth = twoMonthsLater.get(Calendar.MONTH);
+		int twoMonthsLaterDay = twoMonthsLater.get(Calendar.DAY_OF_MONTH);
 
 		month++;
 
@@ -259,9 +284,11 @@ window.onclick = function(event) {
 		<div class="grey content-area" id="iconbuttons"
 			style="background-color: #FBFBFB;">
 			<div class="container">
+				<br/><br/>
 				<button type="button" class="btn btn-primary btn-lg"
 					data-toggle="modal" data-target="#myModal">Advanced Search
 				</button>
+				<br/><br/>
 				<!-- Modal -->
 				<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 					aria-labelledby="myModalLabel">
@@ -275,7 +302,7 @@ window.onclick = function(event) {
 										<span aria-hidden="true">&times;</span>
 									</button>
 									<h4 class="modal-title" id="myModalLabel">
-										<b></b>Filtering Options</b>
+										<strong>Search for Available Berths to Make a Reservation</strong>
 									</h4>
 								</div>
 								<div class="modal-body">
@@ -283,61 +310,61 @@ window.onclick = function(event) {
 										<tr>
 											<td>From Date:</td>
 											<td><input type="text"
-												value="<%if (request.getParameter("fromDate") != null) {
-				out.print(request.getParameter("fromDate"));
+												value="<%if (request.getParameter("fromDateWithMinDayLimit") != null) {
+				out.print(request.getParameter("fromDateWithMinDayLimit"));
 			} else {
-				out.print("01.01." + year);
+				out.print(decimalFormatter.format(day) + "." + decimalFormatter.format(month) + "." + year);
 			}%>"
-												name="fromDate" id="fromDate" class="form-control input-sm"
+												name="fromDateWithMinDayLimit" id="fromDateWithMinDayLimit" class="form-control input-sm"
 												tabindex="1" required="required"/></td>
 										</tr>
 										<tr>
 											<td>To Date:</td>
 											<td><input type="text"
-												value="<%if (request.getParameter("toDate") != null) {
-				out.print(request.getParameter("toDate"));
+												value="<%if (request.getParameter("toDateWithoutTodayLimit") != null) {
+				out.print(request.getParameter("toDateWithoutTodayLimit"));
 			} else {
-				out.print(decimalFormatter.format(day) + "." + decimalFormatter.format(month) + "." + year);
+				out.print(decimalFormatter.format(twoMonthsLaterDay) + "." + decimalFormatter.format(twoMonthsLaterMonth) + "." + twoMonthsLaterYear);
 			}%>"
-												name="toDate" id="toDate" class="form-control input-sm"
+												name="toDateWithoutTodayLimit" id="toDateWithoutTodayLimit" class="form-control input-sm"
 												tabindex="2" required="required"/></td>
 										</tr>
 										<tr>
-											<td>Min Length:</td>
+											<td><b>Min Length:</b></td>
 											<td><input type="text" value="" name="minLength"
-												id="minLength" class="form-control input-sm" tabindex="3" /></td>
+												id="minLength" class="form-control input-sm" value="${minLength}" tabindex="3" /></td>
 										</tr>
 										<tr>
-											<td><b>Length:</b></td>
+											<td><b>Max Length:</b></td>
 											<td><input type="text" value="" name="maxLength"
-												id="maxLength" class="form-control input-sm" tabindex="4" /></td>
+												id="maxLength" class="form-control input-sm" value="${maxLength}" tabindex="4" /></td>
 										</tr>
 										<tr>
-											<td>Min Width:</td>
+											<td><b>Min Width:</b></td>
 											<td><input type="text" value="" name="minWidth"
-												id="minWidth" class="form-control input-sm" tabindex="5" /></td>
+												id="minWidth" class="form-control input-sm" value="${minWidth}" tabindex="5" /></td>
 										</tr>
 										<tr>
-											<td><b>Width:</b></td>
+											<td><b>Max Width:</b></td>
 											<td><input type="text" value="" name="maxWidth"
-												id="maxWidth" class="form-control input-sm" tabindex="6" /></td>
+												id="maxWidth" class="form-control input-sm" value="${maxWidth}" tabindex="6" /></td>
 										</tr>
 										<tr>
 											<td><b>Fuel Capacity:</b></td>
 											<td><input type="text" value="" name="fuelCapacity"
-												id="fuelCapacity" class="form-control input-sm" tabindex="7" /></td>
+												id="fuelCapacity" class="form-control input-sm" value="${fuelCapacity}" tabindex="7" /></td>
 										</tr>
 										<tr>
 											<td><b>Water Capacity:</b></td>
 											<td><input type="text" value="" name="waterCapacity"
 												id="waterCapacity" class="form-control input-sm"
-												tabindex="8" /></td>
+												value="${waterCapacity}" tabindex="8" /></td>
 										</tr>
 										<tr>
 											<td><b>Electricity Capacity:</b></td>
 											<td><input type="text" value=""
 												name="electricityCapacity" id="electricityCapacity"
-												class="form-control input-sm" tabindex="9" /></td>
+												class="form-control input-sm" value="${electricityCapacity}" tabindex="9" /></td>
 										</tr>
 										<tr>
 											<input type="hidden" name="hiddenFromDate"
@@ -357,10 +384,10 @@ window.onclick = function(event) {
 				</div>
 				<div class="row">
 					<div class="alert alert-danger alert-dismissable reservationInfoAlertWaitingDiv">
-						<strong>There is a waiting reservation request. You can check again when evaluation is made.</strong>
+						<strong>There is a pending reservation request for the berth you are interested in. Please check again later.</strong>
 					</div>
 					<div class="alert alert-success alert-dismissable reservationInfoAlertDiv">
-						<strong>Your reservation request is taken. You will be informed when evaluation is made.</strong>
+						<strong>Your enquiry is successfully received! You will be informed when the evaluation of your enquiry is completed.</strong>
 					</div>
 					<div class="col-sm-9">
 						<div id="dvMap" style="height: 500px;"></div>
@@ -370,19 +397,36 @@ window.onclick = function(event) {
 							<table id="dynamicTable"
 								style="max-height: 550px !important; overflow-y: scroll; display: -webkit-box;">
 								<tbody>
-									<c:forEach items="${listBerth}" var="berth">
-										<%-- 										<tr class='clickableRow${berth.id}'> --%>
-										<tr>
-											<td>Name: ${berth.getName() } </br>Status:
-												${berth.getStatus() } </br>Electricity Capacity:
-												${berth.getElectricityCapacity() } </br>Water Capacity
-												${berth.getWaterCapacity() } </br>Fuel Capacity:
-												${berth.getFuelCapacity() } </br>Length: ${berth.getMinLength()}
-												- ${berth.getMaxLength()} </br>Width: ${berth.minWidth} -
-												${berth.maxWidth} <br></br>
-											</td>
-										</tr>
-									</c:forEach>
+									<c:choose>
+										<c:when test="${!empty listBerth}">
+											<c:forEach items="${listBerth}" var="berth">
+												<%-- 										<tr class='clickableRow${berth.id}'> --%>
+												<tr>
+													<td><strong>Name: </strong><span style="font-style: italic">${berth.getName() }</span>
+													</br><strong></strong>Status: </strong>
+														<c:choose>
+															<c:when test="${berth.getStatus() == true}">
+																<span style="color: darkgreen">Berth is operationable</span>
+															</c:when>
+															<c:otherwise>
+																<span style="color: darkgreen">Berth is non-operationable</span>
+															</c:otherwise>
+														</c:choose>
+														</br><strong>Electricity Capacity: </strong>${berth.getElectricityCapacity() } kW/h
+														</br><strong>Water Capacity: </strong>${berth.getWaterCapacity() } gallons/h
+														</br><strong>Fuel Capacity: </strong>${berth.getFuelCapacity() } gallons/h
+														</br><strong>Length: </strong>${berth.getMinLength()}m - ${berth.getMaxLength()}m
+														</br><strong>Width: </strong>${berth.minWidth}m - ${berth.maxWidth}m </br></br>
+													</td>
+												</tr>
+											</c:forEach>
+										</c:when>
+										<c:otherwise>
+											<tr>
+												<td style="vertical-align:middle">Sorry, no available berths found according to your search criteria!</td>
+											</tr>
+										</c:otherwise>
+									</c:choose>
 								</tbody>
 							</table>
 						</div>

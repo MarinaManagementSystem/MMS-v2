@@ -84,7 +84,7 @@
 		                <li><a class="btn btn-border" style="border-color: #DF2D1C; background: #DF2D1C; font-size: 14px; font-weight: normal;" href="#" onclick="return askForLogout();">Logout</a></li>
 		                <br/>
 		                <div align="right">Welcome, <a href="editPersonInfo?id=${kisiSessiondaBulunan.id}">${kisiSessiondaBulunan.name}.</a></div>
-		                <div align="right">${activeRoleName}</div>
+		                <div align="right"><span style="font-style: italic">${activeRoleName}</span></div>
             		</c:when>
             	</c:choose>
 	            

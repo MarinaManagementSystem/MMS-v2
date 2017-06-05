@@ -185,7 +185,7 @@
 														</td>
 														<td>
 															<!-- Please check the resources/assets/datetimepicker/dateTimePickerForETS.js by searching toDate to see the date picker details -->
-															<input type="text" value="<% if(request.getParameter("toDate") != null) { out.print(request.getParameter("toDate")); } else { out.print(decimalFormatter.format(day)+"."+decimalFormatter.format(month)+"."+year); } %>" name="toDate" id="toDate" class="form-control input-sm" tabindex="2" />
+															<input type="text" value="<% if(request.getParameter("toDateWithoutTodayLimit") != null) { out.print(request.getParameter("toDateWithoutTodayLimit")); } else { out.print(decimalFormatter.format(day)+"."+decimalFormatter.format(month)+"."+year); } %>" name="toDateWithoutTodayLimit" id="toDateWithoutTodayLimit" class="form-control input-sm" tabindex="2" />
 														</td>
 													</tr>
 												</table>

@@ -47,8 +47,8 @@ public class MarinaController {
 	        						@RequestParam(required = false, value = "maxLength") String maxLength,
 	        						@RequestParam(required = false, value = "minWidth") String minWidth,
 	        						@RequestParam(required = false, value = "maxWidth") String maxWidth,
-	        						@RequestParam(value = "fromDate" , required = false) String fromDate,
-	        						@RequestParam(value = "toDate" , required = false) String toDate,
+	        						@RequestParam(value = "fromDateWithMinDayLimit" , required = false) String fromDate,
+	        						@RequestParam(value = "toDateWithoutTodayLimit" , required = false) String toDate,
 	        						@RequestParam(value = "reservationInfoAlert" , required = false) Integer reservationInfoAlert,
 	        						HttpServletRequest request, HttpServletResponse response, Model model, Locale locale) {
 
@@ -57,48 +57,56 @@ public class MarinaController {
 		if(status != null && status != "" && !status.isEmpty() )
 		{
 			filterMap.put("status", status);
+			model.addAttribute("status", status);
 		}
 		if(electricityCapacity != null && electricityCapacity != "" && !electricityCapacity.isEmpty())
 		{
 			filterMap.put("electricity_capacity", electricityCapacity);
+			model.addAttribute("electricityCapacity", electricityCapacity);
 		}
 		if(waterCapacity != null && waterCapacity != "" && !waterCapacity.isEmpty())
 		{
 			filterMap.put("water_capacity", waterCapacity);
+			model.addAttribute("waterCapacity", waterCapacity);
 		}
 		if(fuelCapacity!= null && fuelCapacity!= "" && !fuelCapacity.isEmpty())
 		{
 			filterMap.put("fuel_capacity", fuelCapacity);
+			model.addAttribute("fuelCapacity", fuelCapacity);
 		}
 		if(minLength!=null && minLength!= "" && !minLength.isEmpty())
 		{
 			filterMap.put("min_length", minLength);
+			model.addAttribute("minLength", minLength);
 		}
 		if( maxLength!= null && maxLength != "" && !maxLength.isEmpty())
 		{
 			filterMap.put("max_length", maxLength);
+			model.addAttribute("maxLength", maxLength);
 		}
 		if(minWidth!= null && minWidth != "" && !minWidth.isEmpty())
 		{
 			filterMap.put("min_width", minWidth);
+			model.addAttribute("minWidth", minWidth);
 		}
 		if(maxWidth != null && maxWidth != "" && !maxWidth.isEmpty())
 		{
 			filterMap.put("max_width", maxWidth);
+			model.addAttribute("maxWidth", maxWidth);
 		}
 		if(fromDate != null && fromDate != "" && !fromDate.isEmpty())
 		{
 			filterMap.put("reservation_start_date", fromDate);
+			model.addAttribute("hFromDate", fromDate);
 		}
 		if(toDate != null && toDate != "" && !toDate.isEmpty())
 		{
 			filterMap.put("reservation_end_date", toDate);
+			model.addAttribute("hToDate", toDate);
 		}
 		
 		model.addAttribute("listBerth", dao.listBerthByFilteringCriterias(filterMap) );
 		
-		model.addAttribute("hFromDate", fromDate);
-		model.addAttribute("hToDate", toDate);
 		model.addAttribute("reservationInfoAlert", reservationInfoAlert);
 		
 		return "marinaStatus"; 

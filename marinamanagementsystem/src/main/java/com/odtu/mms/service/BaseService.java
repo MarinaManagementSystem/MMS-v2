@@ -311,7 +311,7 @@ public class BaseService {
 		String criterias = "";
 		String queryStr = "";
 		String criteriasDate = "";
-		Integer counterCriteria = 2;
+		Integer counterCriteria = 0;
 		
 		if(filterMap.isEmpty() == false)
 		{ 
@@ -356,14 +356,17 @@ public class BaseService {
 			}
 			if(filterMap.containsKey("max_width") == true && filterMap.containsKey("min_width") == false)
 			{
-				criterias += " b.max_width>=" + filterMap.get("max_width");
+				criterias += " b.max_width<=" + filterMap.get("max_width");
 				counterCriteria++;
 				if(counterCriteria < filterMap.size())
 					criterias += " AND ";
 			}
 			if(filterMap.containsKey("max_width") == true && filterMap.containsKey("min_width") == true)
 			{
-				criterias += " b.max_width BETWEEN " + filterMap.get("min_width")+  " AND " + filterMap.get("max_width");
+				criterias += " b.min_width BETWEEN " + filterMap.get("min_width") + " AND " + filterMap.get("max_width") + " OR " +
+						 " b.max_width BETWEEN " + filterMap.get("min_width") + " AND " + filterMap.get("max_width") + " OR " +
+						 " b.min_width >= " + filterMap.get("min_width") + " AND b.max_length <= " + filterMap.get("max_width");
+				
 				counterCriteria++;
 				if(counterCriteria < filterMap.size())
 					criterias += " AND ";
@@ -384,50 +387,60 @@ public class BaseService {
 			if(filterMap.containsKey("max_length") == true && filterMap.containsKey("min_length") == false)
 			{
 				
-				criterias += " b.max_length>=" + filterMap.get("max_length");
+				criterias += " b.max_length<=" + filterMap.get("max_length");
 				counterCriteria++;
 				if(counterCriteria < filterMap.size())
 					criterias += " AND ";
 			}
 			if(filterMap.containsKey("max_length") == true && filterMap.containsKey("min_length") == true)
 			{
-				criterias += " b.max_length BETWEEN " + filterMap.get("min_length")+  " AND " + filterMap.get("max_width");
+				criterias += " b.min_length BETWEEN " + filterMap.get("min_length") + " AND " + filterMap.get("max_length") + " OR " +
+				 " b.max_length BETWEEN " + filterMap.get("min_length") + " AND " + filterMap.get("max_length") + " OR " +
+				 " b.min_length >= " + filterMap.get("min_length") + " AND b.max_length <= " + filterMap.get("max_length");
+				
 				counterCriteria++;
 				if(counterCriteria < filterMap.size())
 					criterias += " AND ";
 			}
 			
 
-			if(filterMap.containsKey("reservation_start_date") == true)
+			if(filterMap.containsKey("reservation_start_date") == true && filterMap.containsKey("reservation_end_date") == true)
 			{
-//				criteriasDate += " r.reservation_start_date < CONVERT(Datetime, '"+filterMap.get("reservation_start_date")+"', 120)  AND  r.reservation_end_date > CONVERT(Datetime, '"+filterMap.get("reservation_start_date")+"', 120)"; 
-				criteriasDate += " r.reservation_start_date BETWEEN CONVERT(Datetime, '"+filterMap.get("reservation_start_date")+"', 120) AND CONVERT(Datetime, '"+filterMap.get("reservation_end_date")+"', 120)";
-			}
-			if(filterMap.containsKey("reservation_end_date") == true)
-			{
-//				criteriasDate += " AND r.reservation_start_date < CONVERT(Datetime, '"+filterMap.get("reservation_end_date")+"', 120)  AND  r.reservation_end_date > CONVERT(Datetime, '"+filterMap.get("reservation_end_date")+"', 120)";
-				criteriasDate += " AND r.reservation_end_date BETWEEN CONVERT(Datetime, '"+filterMap.get("reservation_start_date")+"', 120) AND CONVERT(Datetime, '"+filterMap.get("reservation_end_date")+"', 120)";
+				
+				// List all reservations with status APPLIED or APPROVED with respect to the given date range
+				criteriasDate += " b.id NOT IN " + 
+								 " (SELECT r.berth_id " +
+								 " FROM dbo.reservation r " +
+								 " WHERE (r.status = 0 " + // Meaning that the reservations is on APPLIED status
+								 " OR r.status = 100) AND "+ // Meaning that the reservation is on APPROVED status
+								 " r.reservation_start_date BETWEEN CONVERT(Datetime, '"+filterMap.get("reservation_start_date")+"', 120) AND CONVERT(Datetime, '"+filterMap.get("reservation_end_date")+"', 120) OR " +
+								 " r.reservation_end_date BETWEEN CONVERT(Datetime, '"+filterMap.get("reservation_start_date")+"', 120) AND CONVERT(Datetime, '"+filterMap.get("reservation_end_date")+"', 120) OR " +
+								 " r.reservation_start_date <= CONVERT(Datetime, '"+filterMap.get("reservation_start_date")+"', 120) AND r.reservation_end_date >= CONVERT(Datetime, '"+filterMap.get("reservation_end_date")+"', 120)) ";
 			}
 		}
 		
+		// If any of the filtering options are typed, process the related query
 		if(criterias != "")
 		{
-			queryStr = " select * from dbo.berth b2 where b2.id NOT IN ( " +					
-						" select DISTINCT (b.id) as berthid  from " + Constant.SCHEMA_ADI + ".berth b " + 
-						" inner join " + Constant.SCHEMA_ADI + ".reservation r on r.status=1 and " + criteriasDate+
-						" where " + criterias + 
-						" and r.berth_id=b.id )";
+			queryStr = " SELECT * FROM " + Constant.SCHEMA_ADI + ".berth b " +
+					   " WHERE " + criterias;
+						
+						// If date range is also specified in the filtering options, add it to the query
+						if(criteriasDate != "") {
+							queryStr += criteriasDate;
+						}
+						
 		}
-		else if(criteriasDate != "")
-		{
-			queryStr = " select * from dbo.berth b2 where b2.id NOT IN ( " +					
-						" select DISTINCT (b.id) as berthid  from " + Constant.SCHEMA_ADI + ".berth b " + 
-						" inner join " + Constant.SCHEMA_ADI + ".reservation r on r.status=1 and " + criteriasDate+
-						" where r.berth_id=b.id )";
+		// If only the date range is specified in the filtering options, only process the date range to the query
+		else if (criteriasDate != "") {
+			
+			queryStr = " SELECT * FROM " + Constant.SCHEMA_ADI + ".berth b " +
+					   " WHERE " + criteriasDate;
 		}
+		// If nothing is specified in the filtering options, run a default query to gather everything
 		else
 		{
-			queryStr = " select * from " + Constant.SCHEMA_ADI + ".berth";
+			queryStr = " SELECT * FROM " + Constant.SCHEMA_ADI + ".berth";
 			//return null;
 		}
 		
@@ -438,8 +451,10 @@ public class BaseService {
 		query.addEntity("b", Berth.class);
 		List<Berth> list = query.list();
 		
-		if(list != null && !list.isEmpty())
+		if(list != null && !list.isEmpty()) {
 			return list;
+		}
+		
 		return null;		
 	}
 	

@@ -56,7 +56,7 @@ public class ReservationsController {
 	@RequestMapping(value = "/reservations", method = RequestMethod.GET)
 	public String reservationsGet(
 			@RequestParam(value = "fromDate" , required = false) String fromDate,
-			@RequestParam(value = "toDate" , required = false) String toDate,
+			@RequestParam(value = "toDateWithoutTodayLimit" , required = false) String toDate,
 			@RequestParam(value = "hiddenFromDate" , required = false) String fromDateForDB,
 			@RequestParam(value = "hiddenToDate" , required = false) String toDateForDB,
 			@RequestParam(value = "submitCount" , required = false) Long submitCount,
